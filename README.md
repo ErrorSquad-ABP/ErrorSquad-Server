@@ -7,7 +7,7 @@
     <a href="https://www.cps.sp.gov.br/">
       <img src="./Images/CPS-removebg-preview.png" height="90" alt="Logo CPS"/>
     </a>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <a href="https://fatecjacarei.cps.sp.gov.br/">
       <img src="./Images/Fatec-removebg-preview.png" height="90" alt="Logo Fatec"/>
     </a>
