@@ -1,7 +1,8 @@
-# ErrorSquad-Server
-Repositório de arquivos Back-End
+# Repositório de arquivos Back-End
 <div align="center">
-  <h1>Error Squad - Sistema de Horários FATEC</h1>
+  <h1>
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=30&duration=3000&pause=1000&color=4A90E2&center=true&vCenter=true&repeat=true&width=535&lines=Sistema+de+Horários+FATEC" alt="Typing SVG" />
+  </h1>
   
   <div>
     <img src="https://img.shields.io/badge/Status-Em_Desenvolvimento-4a90e2?style=for-the-badge&logo=clockify&logoColor=1A1B27"/>
@@ -232,21 +233,114 @@ src/
 
 ## 👥 Nossa Equipe
 
-### Gestão
-- **Tiago Jardel Costa** - *Product Owner*
-- **Arthur Facchinetti Peixoto** - *Scrum Master*
-
-### Desenvolvimento
-- João Victor Lopes Rosa
-- Alícia Silva Dias
-- Leonardo da Silva Irineu
-- Felipe Ferreira Pacheco
-- Carlos Eduardo Espirito Santo
-- Caio Araujo
-
-### Orientação
-- **Prof. Marcelo Sudo** - *Focal Point*
-- **Prof. Arley Souza**
+<div align="center">
+    <table>
+        <tr>
+            <td align="center"><b>Gestão</b></td>
+        </tr>
+        <tr>
+            <td align="center">
+                <table>
+                    <tr>
+                        <td align="center">
+                            <b>Tiago Jardel Costa</b><br>
+                            <i>Product Owner</i><br>
+                            <a href="https://github.com/Tiago199516">
+                                <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
+                            </a>
+                            <a href="https://www.linkedin.com/in/tiago-jardel/">
+                                <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
+                            </a>
+                        </td>
+                        <td align="center">
+                            <b>Arthur Facchinetti Peixoto</b><br>
+                            <i>Scrum Master</i><br>
+                            <a href="https://github.com/ArthurFacchinetti">
+                                <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
+                            </a>
+                            <a href="https://www.linkedin.com/in/arthur-facchinetti/">
+                                <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td align="center"><b>Desenvolvimento</b></td>
+        </tr>
+        <tr>
+            <td align="center">
+                <table>
+                    <tr>
+                        <td align="center">
+                            <b>João Victor Lopes Rosa</b><br>
+                            <i>Desenvolvedor</i><br>
+                            <a href="https://github.com/JV-L0pes">
+                                <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
+                            </a>
+                            <a href="https://www.linkedin.com/in/joao-victor-lopes/">
+                                <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
+                            </a>
+                        </td>
+                        <td align="center">
+                            <b>Alícia Silva Dias</b><br>
+                            <i>Desenvolvedora</i><br>
+                            <a href="https://github.com/TIALICIA">
+                                <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
+                            </a>
+                            <a href="https://www.linkedin.com/in/alicia-dias/">
+                                <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
+                            </a>
+                        </td>
+                        <td align="center">
+                            <b>Leonardo da Silva Irineu</b><br>
+                            <i>Desenvolvedor</i><br>
+                            <a href="https://github.com/Leo-Slv">
+                                <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
+                            </a>
+                            <a href="https://www.linkedin.com/in/leonardo-irineu/">
+                                <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <b>Felipe Ferreira Pacheco</b><br>
+                            <i>Desenvolvedor</i><br>
+                            <a href="https://github.com/FelipePacheco30">
+                                <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
+                            </a>
+                            <a href="https://www.linkedin.com/in/felipe-pacheco/">
+                                <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
+                            </a>
+                        </td>
+                        <td align="center">
+                            <b>Carlos Eduardo Espirito Santo</b><br>
+                            <i>Desenvolvedor</i><br>
+                            <a href="https://github.com/PromptdComando">
+                                <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
+                            </a>
+                            <a href="https://www.linkedin.com/in/carlos-eduardo/">
+                                <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
+                            </a>
+                        </td>
+                        <td align="center">
+                            <b>Caio Araujo</b><br>
+                            <i>Desenvolvedor</i><br>
+                            <a href="https://github.com/Caiuuutecnologico">
+                                <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
+                            </a>
+                            <a href="https://www.linkedin.com/in/caio-araujo/">
+                                <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
 
 ---
 
@@ -273,7 +367,7 @@ src/
                         </td>
                         <td align="center">
                             <b>Prof. Marcelo Sudo</b><br>
-                            <i>Orientador ABP</i><br>
+                            <i>Focal Point</i><br>
                             <a href="https://github.com/marcelosudo">
                                 <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
                             </a>
@@ -307,10 +401,11 @@ src/
 
 <div align="center">
     <a href="https://github.com/ErrorSquad-ABP/ErrorSquadABP/blob/main/LICENSE">
-        <img src="https://img.shields.io/badge/📄_Licença-MIT-4a90e2?style=for-the-badge"/>
+        <img src="https://img.shields.io-badge/📄_Licença-MIT-4a90e2?style=for-the-badge"/>
     </a>
 </div>
 
 <div align="center">
     <img src="https://capsule-render.vercel.app/api?type=waving&color=4a90e2&height=100&section=footer" width="100%"/>
 </div>
+
