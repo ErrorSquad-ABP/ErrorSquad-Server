@@ -249,6 +249,7 @@ src/
     <table>
         <tr>
             <td align="center"><b>Gestão</b></td>
+            <td align="center"><b>Desenvolvimento</b></td>
         </tr>
         <tr>
             <td align="center">
@@ -260,90 +261,82 @@ src/
                             <a href="https://github.com/Tiago199516">
                                 <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
                             </a>
-                            <a href="https://www.linkedin.com/in/tiago-jardel/">
+                            <a href="https://www.linkedin.com/in/tiago-jardel-da-costa-0b595bba/">
                                 <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
                             </a>
                         </td>
+                    </tr>
+                    <tr>
                         <td align="center">
                             <b>Arthur Facchinetti Peixoto</b><br>
                             <i>Scrum Master</i><br>
                             <a href="https://github.com/ArthurFacchinetti">
                                 <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
                             </a>
-                            <a href="https://www.linkedin.com/in/arthur-facchinetti/">
+                            <a href="https://www.linkedin.com/in/arthur-facchinetti-peixoto/">
                                 <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
                             </a>
                         </td>
                     </tr>
                 </table>
             </td>
-        </tr>
-        <tr>
-            <td align="center"><b>Desenvolvimento</b></td>
-        </tr>
-        <tr>
             <td align="center">
                 <table>
                     <tr>
                         <td align="center">
                             <b>João Victor Lopes Rosa</b><br>
-                            <i>Desenvolvedor</i><br>
                             <a href="https://github.com/JV-L0pes">
                                 <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
                             </a>
-                            <a href="https://www.linkedin.com/in/joao-victor-lopes/">
+                            <a href="https://www.linkedin.com/in/arthur-facchinetti-peixoto/">
                                 <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
                             </a>
                         </td>
                         <td align="center">
                             <b>Alícia Silva Dias</b><br>
-                            <i>Desenvolvedora</i><br>
                             <a href="https://github.com/TIALICIA">
                                 <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
                             </a>
-                            <a href="https://www.linkedin.com/in/alicia-dias/">
-                                <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
-                            </a>
-                        </td>
-                        <td align="center">
-                            <b>Leonardo da Silva Irineu</b><br>
-                            <i>Desenvolvedor</i><br>
-                            <a href="https://github.com/Leo-Slv">
-                                <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
-                            </a>
-                            <a href="https://www.linkedin.com/in/leonardo-irineu/">
+                            <a href="https://www.linkedin.com/in/alícia-silva-dias/">
                                 <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
                             </a>
                         </td>
                     </tr>
                     <tr>
                         <td align="center">
-                            <b>Felipe Ferreira Pacheco</b><br>
-                            <i>Desenvolvedor</i><br>
-                            <a href="https://github.com/FelipePacheco30">
+                            <b>Leonardo da Silva Irineu</b><br>
+                            <a href="https://github.com/Leo-Slv">
                                 <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
                             </a>
-                            <a href="https://www.linkedin.com/in/felipe-pacheco/">
+                            <a href="https://www.linkedin.com/in/leonardo-irineu-8418b0288/">
                                 <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
                             </a>
                         </td>
                         <td align="center">
+                            <b>Felipe Ferreira Pacheco</b><br>
+                            <a href="https://github.com/FelipePacheco30">
+                                <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
+                            </a>
+                            <a href="https://www.linkedin.com/in/felipe-ferreira-pacheco-621443347/">
+                                <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
                             <b>Carlos Eduardo Espirito Santo</b><br>
-                            <i>Desenvolvedor</i><br>
                             <a href="https://github.com/PromptdComando">
                                 <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
                             </a>
-                            <a href="https://www.linkedin.com/in/carlos-eduardo/">
+                            <a href="https://www.linkedin.com/in/carlos-eduardo-espirito-santo/">
                                 <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
                             </a>
                         </td>
                         <td align="center">
                             <b>Caio Araujo</b><br>
-                            <i>Desenvolvedor</i><br>
                             <a href="https://github.com/Caiuuutecnologico">
                                 <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
                             </a>
-                            <a href="https://www.linkedin.com/in/caio-araujo/">
+                            <a href="https://www.linkedin.com/in/caio-arauj/">
                                 <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
                             </a>
                         </td>
@@ -353,6 +346,7 @@ src/
         </tr>
     </table>
 </div>
+
 
 ---
 
@@ -413,7 +407,7 @@ src/
 
 <div align="center">
     <a href="https://github.com/ErrorSquad-ABP/ErrorSquadABP/blob/main/LICENSE">
-        <img src="https://img.shields.io-badge/📄_Licença-MIT-4a90e2?style=for-the-badge"/>
+        <img src="https://img.shields.io/badge/📄_Licença-MIT-4a90e2?style=for-the-badge"/>
     </a>
 </div>
 
