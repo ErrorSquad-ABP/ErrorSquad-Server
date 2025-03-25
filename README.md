@@ -1,2 +1,316 @@
 # ErrorSquad-Server
 Repositório de arquivos Back-End
+<div align="center">
+  <h1>Error Squad - Sistema de Horários FATEC</h1>
+  
+  <div>
+    <img src="https://img.shields.io/badge/Status-Em_Desenvolvimento-4a90e2?style=for-the-badge&logo=clockify&logoColor=1A1B27"/>
+  </div>
+
+  <br>
+  
+  <p align="center">
+    <a href="#-descrição">
+      <img src="https://img.shields.io/badge/📝_Descrição-4a90e2?style=for-the-badge"/>
+    </a>
+    &nbsp;
+    <a href="#-status-do-projeto">
+      <img src="https://img.shields.io/badge/📊_Status-4a90e2?style=for-the-badge"/>
+    </a>
+    &nbsp;
+    <a href="#%EF%B8%8F-tecnologias-previstas">
+      <img src="https://img.shields.io/badge/🛠️_Tecnologias-4a90e2?style=for-the-badge"/>
+    </a>
+    &nbsp;
+    <a href="#-instalação-e-execução">
+      <img src="https://img.shields.io/badge/⚙️_Execução-4a90e2?style=for-the-badge"/>
+    </a>
+    &nbsp;
+    <a href="#-nossa-equipe">
+      <img src="https://img.shields.io/badge/👥_Equipe-4a90e2?style=for-the-badge"/>
+    </a>
+  </p>
+</div>
+
+<hr>
+
+---
+
+## 📝 Descrição
+
+Backend do sistema de gestão de horários acadêmicos da FATEC Jacareí, desenvolvido pela equipe Error Squad. O projeto visa automatizar o processo de divulgação e consulta de horários de aulas, substituindo o sistema manual atual por uma solução digital integrada.
+
+### Problema
+A secretaria acadêmica necessita refazer manualmente os informes de horários a cada alteração, tornando o processo ineficiente e propenso a erros.
+
+### Solução
+Sistema web que permite:
+- Consulta de horários por curso, ambiente, turno e turma
+- Importação e gerenciamento de dados via CSV
+- Validação automática de conflitos
+- Geração de relatórios em PDF
+- Consultas dinâmicas e filtradas
+
+## 🎯 Requisitos
+
+### Funcionais
+- **RF01**: Ingestão de dados via arquivo CSV
+- **RF02**: Gerenciamento CRUD dos dados (opcional)
+- **RF03**: Validação de regras de alocação
+  - Evitar conflitos de horários
+  - Evitar conflitos de salas
+- **RF04**: Exportação de relatórios em PDF
+- **RF05**: Sistema de consultas dinâmicas
+
+### Não Funcionais
+- **RNF01**: Mapa interativo de salas
+- **RNF02**: Interface responsiva
+
+### Restrições
+- Prototipação no Figma
+- Backend em JavaScript
+- Banco de dados PostgreSQL
+- Documentação no GitHub
+- Gerenciamento via GitHub Projects/Trello
+
+---
+
+## 📊 Status do Projeto
+
+| Status | Fase                                  |
+| ------ | ------------------------------------- |
+| ✅     | Fase 1: Definição do Projeto e Equipe |
+| ⏳     | Fase 2: Planejamento e Design         |
+| ⏳     | Fase 3: Desenvolvimento               |
+| ⏳     | Fase 4: Testes e Validação            |
+| ⏳     | Fase 5: Entrega e Apresentação        |
+
+---
+
+## 🛠️ Tecnologias
+
+- **Backend**: JavaScript (Node.js)
+- **Banco de Dados**: PostgreSQL
+- **Controle de Versão**: Git/GitHub
+- **Gestão**: GitHub Projects
+
+### Ferramentas de Desenvolvimento
+- **Git**: Controle de versão.
+- **GitHub**: Repositório para colaboração e versionamento.
+- **Figma**: Prototipação e validação do design.
+- **Trello/GitHub Projects**: Gerenciamento de tarefas e sprints.
+
+### Estrutura do Backend (Express.js)
+- Roteamento com Express Router
+- Middlewares personalizados para validação
+- Gerenciamento de sessões com express-session
+- Sistema de arquivos para manipulação de CSV
+- Queries SQL nativas com node-postgres
+
+---
+
+## 📥 Instalação e Execução
+
+### Pré-requisitos
+- **Node.js**: [Download](https://nodejs.org/)
+- **PostgreSQL**: [Download](https://www.postgresql.org/)
+
+### Dependências principais
+- **Express.js**: Framework web minimalista para Node.js
+```json
+{
+  "dependencies": {
+    "express": "^4.18.3"
+  }
+}
+```
+
+### Passos para execução
+```bash
+# Clone o repositório
+git clone https://github.com/ErrorSquad-ABP/ErrorSquad-Server.git
+
+# Entre na pasta do projeto
+cd ErrorSquad-Server
+
+# Instale as dependências
+npm install express
+
+# Configure o banco de dados no arquivo .env
+# Exemplo do arquivo .env:
+# DB_HOST=localhost
+# DB_PORT=5432
+# DB_USER=seu_usuario
+# DB_PASSWORD=sua_senha
+# DB_NAME=nome_do_banco
+
+# Inicie o servidor
+npm start
+```
+
+---
+
+## 🚀 Funcionalidades do Backend
+
+1. **Ingestão de Dados**:
+   - Importação de horários e alocações a partir de arquivos CSV.
+   - Validação automática para evitar conflitos de horários e ambientes.
+
+2. **Gerenciamento de Dados (CRUD)**:
+   - Operações de criação, leitura, atualização e exclusão de horários, professores, turmas e ambientes.
+
+3. **Consultas Dinâmicas**:
+   - Filtros por turma, turno, professor, ambiente e data.
+
+4. **Geração de Relatórios**:
+   - Exportação de relatórios em formato PDF com os horários e alocações.
+
+5. **Validação de Regras**:
+   - Garantia de que duas turmas não sejam alocadas no mesmo ambiente ao mesmo tempo.
+   - Verificação de conflitos de horários para professores.
+
+---
+
+## 🎯 Requisitos do Backend
+
+### Requisitos Funcionais
+- **RF01**: Sistema de ingestão de dados via CSV
+  - Parsing e validação automática de arquivos CSV
+  - Mapeamento de dados para o modelo do banco
+  - Tratamento de erros e inconsistências
+
+- **RF02**: API para gerenciamento CRUD
+  - Endpoints para gestão de horários
+  - Autenticação para secretaria/coordenação
+  - Validação de dados em tempo real
+
+- **RF03**: Sistema de validação de regras
+  - Verificação de conflitos de sala
+  - Verificação de conflitos de horários de professores
+  - Validação de capacidade dos ambientes
+
+- **RF04**: Geração de relatórios PDF
+  - Templates personalizáveis
+  - Formatação automática de dados
+  - Diferentes layouts por tipo de consulta
+
+- **RF05**: API de consultas
+  - Filtros por turma/turno/professor/data
+  - Paginação e ordenação de resultados
+  - Cache para otimização de performance
+
+### Requisitos Não Funcionais
+- Performance otimizada para consultas simultâneas
+- Documentação completa da API (Swagger/OpenAPI)
+- Logs detalhados para monitoramento
+- Testes automatizados (unitários e integração)
+
+---
+
+## ⚙️ Arquitetura Backend
+
+```plaintext
+src/
+├── api/           # Endpoints da API
+│   ├── routes/    # Rotas da aplicação
+│   └── handlers/  # Manipuladores de requisições
+├── database/      # Conexão e queries do PostgreSQL
+├── models/        # Modelos de dados
+├── services/      # Lógica de negócios
+├── utils/         # Funções utilitárias
+└── config/        # Configurações do sistema
+```
+
+### Estrutura do Backend (Vanilla JS)
+- Roteamento manual de requisições HTTP
+- Implementação própria de middlewares
+- Gerenciamento de sessões sem frameworks
+- Validações customizadas
+- Queries SQL nativas ou com driver básico
+
+---
+
+## 👥 Nossa Equipe
+
+### Gestão
+- **Tiago Jardel Costa** - *Product Owner*
+- **Arthur Facchinetti Peixoto** - *Scrum Master*
+
+### Desenvolvimento
+- João Victor Lopes Rosa
+- Alícia Silva Dias
+- Leonardo da Silva Irineu
+- Felipe Ferreira Pacheco
+- Carlos Eduardo Espirito Santo
+- Caio Araujo
+
+### Orientação
+- **Prof. Marcelo Sudo** - *Focal Point*
+- **Prof. Arley Souza**
+
+---
+
+## 👨‍🏫 Coordenação e Orientação
+
+<div align="center">
+    <table>
+        <tr>
+            <td align="center"><b>Professores</b></td>
+        </tr>
+        <tr>
+            <td align="center">
+                <table>
+                    <tr>
+                        <td align="center">
+                            <b>Prof. Arley Souza</b><br>
+                            <i>Orientador ABP</i><br>
+                            <a href="https://github.com/arleysouza">
+                                <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
+                            </a>
+                            <a href="https://www.linkedin.com/in/arley-souza/">
+                                <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
+                            </a>
+                        </td>
+                        <td align="center">
+                            <b>Prof. Marcelo Sudo</b><br>
+                            <i>Orientador ABP</i><br>
+                            <a href="https://github.com/marcelosudo">
+                                <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
+                            </a>
+                            <a href="https://www.linkedin.com/in/marcelo-sudo/">
+                                <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+---
+
+## 📅 Cronograma
+
+- **18/03**: Kick-off e Definição da Equipe
+- **24/03**: Início Sprint 1
+- **15/04**: Review Sprint 1
+- **16/04**: Início Sprint 2
+- **15/05**: Review Sprint 2
+- **16/05**: Início Sprint 3
+- **10/06**: Review Sprint 3
+- **11/06**: Apresentação Final
+
+---
+
+## 📜 Licença
+
+<div align="center">
+    <a href="https://github.com/ErrorSquad-ABP/ErrorSquadABP/blob/main/LICENSE">
+        <img src="https://img.shields.io/badge/📄_Licença-MIT-4a90e2?style=for-the-badge"/>
+    </a>
+</div>
+
+<div align="center">
+    <img src="https://capsule-render.vercel.app/api?type=waving&color=4a90e2&height=100&section=footer" width="100%"/>
+</div>
