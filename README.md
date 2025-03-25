@@ -3,6 +3,18 @@
   <h1>
     <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=30&duration=3000&pause=1000&color=4A90E2&center=true&vCenter=true&repeat=true&width=535&lines=Sistema+de+Horários+FATEC" alt="Typing SVG" />
   </h1>
+
+  <div align="center">
+    <a href="https://www.cps.sp.gov.br/">
+      <img src="./Images/CPS-removebg-preview.png" height="90" alt="Logo CPS"/>
+    </a>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="https://fatecjacarei.cps.sp.gov.br/">
+      <img src="./Images/Fatec-removebg-preview.png" height="90" alt="Logo Fatec"/>
+    </a>
+  </div>
+  
+  <br>
   
   <div>
     <img src="https://img.shields.io/badge/Status-Em_Desenvolvimento-4a90e2?style=for-the-badge&logo=clockify&logoColor=1A1B27"/>
