@@ -1,8 +1,7 @@
 # Repositório de arquivos Back-End
 <div align="center">
   <h1>
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=30&duration=3000&pause=1000&color=4A90E2&center=true&vCenter=true&repeat=true&width=535&lines=Sistema+de+Horários+FATEC" alt="Typing SVG" />
-  </h1>
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=30&duration=3000&pause=1000&color=4A90E2&center=true&vCenter=true&repeat=true&width=1000&lines=Interface+Web+de+Hor%C3%A1rios+Acad%C3%AAmicos+%7C+Backend+%F0%9F%92%BB" alt="Typing SVG" />
 
   <div align="center">
     <a href="https://www.cps.sp.gov.br/">
