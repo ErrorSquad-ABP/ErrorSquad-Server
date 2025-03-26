@@ -5,11 +5,11 @@
 
   <div align="center">
     <a href="https://www.cps.sp.gov.br/">
-      <img src="./Images/CPS-removebg-preview.png" height="90" alt="Logo CPS"/>
+      <img src="https://github.com/ErrorSquad-ABP/ErrorSquad-Assets1/blob/main/Images/CPS-removebg-preview.png" height="90" alt="Logo CPS"/>
     </a>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <a href="https://fatecjacarei.cps.sp.gov.br/">
-      <img src="./Images/Fatec-removebg-preview.png" height="90" alt="Logo Fatec"/>
+      <img src="https://github.com/ErrorSquad-ABP/ErrorSquad-Assets1/blob/main/Images/Fatec-removebg-preview.png" height="90" alt="Logo Fatec"/>
     </a>
   </div>
   
@@ -346,7 +346,6 @@ src/
     </table>
 </div>
 
-
 ---
 
 ## 👨‍🏫 Coordenação e Orientação
@@ -354,22 +353,12 @@ src/
 <div align="center">
     <table>
         <tr>
-            <td align="center"><b>Professores</b></td>
+            <td align="center"><b>Professor</b></td>
         </tr>
         <tr>
             <td align="center">
                 <table>
                     <tr>
-                        <td align="center">
-                            <b>Prof. Arley Souza</b><br>
-                            <i>Orientador ABP</i><br>
-                            <a href="https://github.com/arleysouza">
-                                <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
-                            </a>
-                            <a href="https://www.linkedin.com/in/arley-souza/">
-                                <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
-                            </a>
-                        </td>
                         <td align="center">
                             <b>Prof. Marcelo Sudo</b><br>
                             <i>Focal Point</i><br>
@@ -413,4 +402,5 @@ src/
 <div align="center">
     <img src="https://capsule-render.vercel.app/api?type=waving&color=4a90e2&height=100&section=footer" width="100%"/>
 </div>
+````
 
