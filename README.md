@@ -402,5 +402,4 @@ src/
 <div align="center">
     <img src="https://capsule-render.vercel.app/api?type=waving&color=4a90e2&height=100&section=footer" width="100%"/>
 </div>
-````
 
