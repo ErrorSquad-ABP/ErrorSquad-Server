@@ -46,8 +46,6 @@
 
 <hr>
 
----
-
 ## 📝 Descrição
 
 Backend do sistema de gestão de horários acadêmicos da FATEC Jacareí, desenvolvido pela equipe Error Squad. O projeto visa automatizar o processo de divulgação e consulta de horários de aulas, substituindo o sistema manual atual por uma solução digital integrada.
