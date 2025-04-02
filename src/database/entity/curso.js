@@ -6,6 +6,14 @@ class curso {
     this.nome = nome;
 
   }
+  getId() {
+    return this.id;
+  }
+
+  setId(id) {
+    this.id = id;
+  }
+
   getNome() {
     return this.nome;
   }
@@ -78,8 +86,6 @@ class curso {
     }catch (erro){
 
        return { status: "erro", mensagem: erro.message };
-      
     }
-
   }
 }
