@@ -11,4 +11,61 @@ class periodo {
     this.ambiente_id = ambiente_id;
     
   }
+
+  getId() {
+    return this.id;
+  }
+
+  setId(id) {
+    this.id = id;
+  }
+
+  getDia_id() {
+    return this.dia_id;
+  }
+
+  setDia(dia_id) {
+    this.dia_id = dia_id;
+  }
+
+  getHorario_id() {
+    return this.horario_id;
+  }
+
+  setHorario(horario_id) {
+    this.horario_id = horario_id;
+  }
+
+  getDisciplina_id() {
+    return this.disciplina_id;
+  }
+
+  setDisciplina(disciplina_id) {
+    this.disciplina_id = disciplina_id;
+  }
+
+  getDocente_id() {
+    return this.docente_id;
+  }
+
+  setDocente(docente_id) {
+    this.docente_id = docente_id;
+  }
+
+  getSemestre_id() {
+    return this.semestre_id;
+  }
+
+  setSemestre(semestre_id) {
+    this.semestre_id = semestre_id;
+  }
+
+  getAmbiente_id() {
+    return this.ambiente_id;
+  }
+
+  setAmbiente(ambiente_id) {
+    this.ambiente_id = ambiente_id;
+  }
+
 }
