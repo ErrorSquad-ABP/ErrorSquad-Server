@@ -18,20 +18,37 @@ class curso {
     try{
 
       const Entity = new curso(null, createCursoDto.nome);
-      return Entity;
+      //Lógica de inserção de dados no banco...
+
+      return { "status": "sucesso", "mensagem": "Curso cadastrado!" };
 
     } catch (erro){
 
-      return erro.message;
+       return { status: "erro", mensagem: erro.message };
       
     }
   }
 
   getAllCurso() {
+    try{
+
+     //Buscar todos os cursos no banco (ainda a ser implementado)
+
+     const allEntitys = []; // Aqui será preenchido com os dados do banco
+
+      return allEntitys
+
+    }catch (erro){
+
+       return { status: "erro", mensagem: erro.message };
+
+    }
+
 
   }
 
   updateCurso(id) {
+    
 
   }
 
