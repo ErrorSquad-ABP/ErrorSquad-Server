@@ -105,4 +105,43 @@ class periodo {
     }
   }
 
+  updatePeriodo(id) {
+    try{
+      //Buscar periodo no banco pelo ID (ainda a ser implementado)
+
+      const periodo = new periodo(); // Aqui será preenchido com os dados do banco
+
+      if (periodo.dia_id != null) {
+          //Atualizar o periodo no banco (ainda a ser implementado)
+      }
+
+      if (periodo.horario_id != null) {
+        //Atualizar o periodo no banco (ainda a ser implementado)
+      }
+
+      if (periodo.disciplina_id != null) {
+        //Atualizar o periodo no banco (ainda a ser implementado)
+      }
+
+      if (periodo.docente_id != null) {
+        //Atualizar o periodo no banco (ainda a ser implementado)
+      }
+
+      if (periodo.semestre_id != null) {
+        //Atualizar o periodo no banco (ainda a ser implementado)
+      }
+
+      if (periodo.ambiente_id != null) {
+        //Atualizar o periodo no banco (ainda a ser implementado)
+      }
+
+      return { status: "sucesso", mensagem: "Periodo atualizado!" };
+
+    }catch (erro){
+
+       return { status: "erro", mensagem: erro.message };
+      
+    }
+  }
+
 }
