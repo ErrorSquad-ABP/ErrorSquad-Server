@@ -14,8 +14,17 @@ class curso {
     this.nome = nome;
   }
 
-  createCurso(createCursoDto) {
+  static createCurso(createCursoDto) {
+    try{
 
+      const Entity = new curso(null, createCursoDto.nome);
+      return Entity;
+
+    } catch (erro){
+
+      return erro.message;
+      
+    }
   }
 
   getAllCurso() {
