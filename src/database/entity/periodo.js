@@ -144,4 +144,22 @@ class periodo {
     }
   }
 
+  deletePeriodo(id) {
+
+    try{
+      //Buscar periodo no banco pelo ID (ainda a ser implementado)
+
+      const periodoExists = []; // Aqui será feito um boolean verificando se o periodo existe no banco ou não
+
+      if (periodoExists) {
+          //Atualizar o periodo no banco (ainda a ser implementado)
+      }
+      return { status: "sucesso", mensagem: "Periodo deletado!" };
+
+    }catch (erro){
+
+       return { status: "erro", mensagem: erro.message };
+    }
+  }
+
 }
