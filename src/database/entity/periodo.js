@@ -68,4 +68,25 @@ class periodo {
     this.ambiente_id = ambiente_id;
   }
 
+  static createPeriodo(createPeriodoDto) {
+    try{
+
+      const Entity = new periodo(null, 
+                                 createPeriodoDto.dia_id,
+                                 createPeriodoDto.horario_id,
+                                 createPeriodoDto.disciplina_id,
+                                 createPeriodoDto.docente_id,
+                                 createPeriodoDto.semestre_id,
+                                 createPeriodoDto.ambiente_id);
+      //Lógica de inserção de dados no banco...
+
+      return { "status": "sucesso", "mensagem": "Periodo cadastrado!" };
+
+    } catch (erro){
+
+       return { status: "erro", mensagem: erro.message };
+      
+    }
+  }
+
 }
