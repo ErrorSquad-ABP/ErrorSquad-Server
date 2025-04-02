@@ -89,4 +89,20 @@ class periodo {
     }
   }
 
+  getAllPeriodo() {
+    try{
+
+     //Buscar todos os cursos no banco (ainda a ser implementado)
+     
+     const allEntitys = []; // Aqui será preenchido com os dados do banco
+
+      return allEntitys
+
+    }catch (erro){
+
+       return { status: "erro", mensagem: erro.message };
+
+    }
+  }
+
 }
