@@ -65,5 +65,21 @@ class curso {
 
   deleteCurso(id) {
 
+    try{
+      //Buscar curso no banco pelo ID (ainda a ser implementado)
+
+      const cursoExists = []; // Aqui será feito um boolean verificando se o curso existe no banco ou não
+
+      if (cursoExists) {
+          //Atualizar o curso no banco (ainda a ser implementado)
+      }
+      return { status: "sucesso", mensagem: "Curso deletado!" };
+
+    }catch (erro){
+
+       return { status: "erro", mensagem: erro.message };
+      
+    }
+
   }
 }
