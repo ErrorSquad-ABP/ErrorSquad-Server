@@ -55,4 +55,19 @@ class Horario {
       return { status: "erro", mensagem: erro.message };
     }
   }
+
+  updateHorario(id) {
+    try {
+      //Buscar horário no banco pelo ID (ainda a ser implementado)
+
+      const horario = new Horario(); // Aqui será preenchido com os dados do banco
+
+      if (horario.hr_inicio != null && horario.hr_fim != null) {
+        //Atualizar o horário no banco (ainda a ser implementado)
+      }
+      return { status: "sucesso", mensagem: "Horário atualizado!" };
+    } catch (erro) {
+      return { status: "erro", mensagem: erro.message };
+    }
+  }
 }
