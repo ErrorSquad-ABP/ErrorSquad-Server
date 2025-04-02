@@ -43,4 +43,16 @@ class Horario {
       return { status: "erro", mensagem: erro.message };
     }
   }
+
+  getAllHorario() {
+    try {
+      //Buscar todos os horários no banco (ainda a ser implementado)
+
+      const allEntitys = []; // Aqui será preenchido com os dados do banco
+
+      return allEntitys;
+    } catch (erro) {
+      return { status: "erro", mensagem: erro.message };
+    }
+  }
 }
