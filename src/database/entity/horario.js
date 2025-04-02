@@ -70,4 +70,19 @@ class Horario {
       return { status: "erro", mensagem: erro.message };
     }
   }
+
+  deleteHorario(id) {
+    try {
+      //Buscar horário no banco pelo ID (ainda a ser implementado)
+
+      const horarioExists = []; // Aqui será feito um boolean verificando se o horário existe no banco ou não
+
+      if (horarioExists) {
+        //Deletar o horário no banco (ainda a ser implementado)
+      }
+      return { status: "sucesso", mensagem: "Horário deletado!" };
+    } catch (erro) {
+      return { status: "erro", mensagem: erro.message };
+    }
+  }
 }
