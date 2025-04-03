@@ -28,7 +28,7 @@ class curso {
       const Entity = new curso(null, createCursoDto.nome);
       //Lógica de inserção de dados no banco...
 
-      return { "status": "sucesso", "mensagem": "Curso cadastrado!" };
+      return { status: "sucesso", mensagem: "Curso cadastrado!" };
 
     } catch (erro){
 
