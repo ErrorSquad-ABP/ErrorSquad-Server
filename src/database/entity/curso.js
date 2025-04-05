@@ -24,9 +24,11 @@ class curso {
     this.nome = nome;
   }
 
-  static async createCurso(id , nome) {
+  static async createCurso(createCursoDto) {
 
-    return await cursoQuery.createNewCurso(id , nome); 
+    const nome = createCursoDto.nome;
+
+    return await cursoQuery.createNewCurso(nome); 
 
   }
 

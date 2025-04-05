@@ -1,16 +1,17 @@
 const bigquery = require('../../lib/bigquery');
 
-async function createNewCurso( id, nome ) {
+async function createNewCurso( nome ) {
 
   const query = 
    `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.curso (id, nome)
-    VALUES (@id, @nome)`;
+    SELECT 
+    COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.curso), 0) + 1,
+   @nome;`;
 
   const options = {
     query,
     params: {
-      id,
-      nome
+      nome: String(nome)
     },
   };
 

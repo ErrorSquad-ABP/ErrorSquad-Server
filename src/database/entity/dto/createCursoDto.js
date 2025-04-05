@@ -4,3 +4,5 @@ class createCursoDto {
     this.nome = nome;
   }
 }
+
+module.exports = createCursoDto;

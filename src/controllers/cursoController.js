@@ -1,12 +1,12 @@
 const curso = require('../database/entity/curso');
-const cursoDto = require('../database/entity/dto/createCursoDto');
+const createCursoDto = require('../database/entity/dto/createCursoDto');
 
 async function requestNewCurso(req, res) {
 
-  const {id, nome } = req.body;
+const newCursoDto = new createCursoDto( req.body.nome );
 
   try {
-    const newCurso = await curso.createCurso( id, nome );
+    const newCurso = await curso.createCurso( newCursoDto );
     res.status(200).json(newCurso);
   } catch (error) {
     console.error('Erro ao criar curso:', error);
