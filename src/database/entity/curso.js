@@ -1,3 +1,5 @@
+const cursoQuery = require('../migrations/cursoQuery');
+
 class curso {
 
   constructor(id, nome) {
@@ -22,35 +24,16 @@ class curso {
     this.nome = nome;
   }
 
-  static createCurso(createCursoDto) {
-    try{
+  static async createCurso(id , nome) {
 
-      const Entity = new curso(null, createCursoDto.nome);
-      //Lógica de inserção de dados no banco...
+    return await cursoQuery.createNewCurso(id , nome); 
 
-      return { status: "sucesso", mensagem: "Curso cadastrado!" };
-
-    } catch (erro){
-
-       return { status: "erro", mensagem: erro.message };
-      
-    }
   }
 
-  getAllCurso() {
-    try{
+  static async getAllCurso() {
 
-     //Buscar todos os cursos no banco (ainda a ser implementado)
-     
-     const allEntitys = []; // Aqui será preenchido com os dados do banco
+    return await cursoQuery.searchAllCursos();
 
-      return allEntitys
-
-    }catch (erro){
-
-       return { status: "erro", mensagem: erro.message };
-
-    }
   }
 
   updateCurso(id) {
@@ -89,3 +72,5 @@ class curso {
     }
   }
 }
+
+module.exports = curso;

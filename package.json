@@ -3,16 +3,20 @@
   "version": "1.0.0",
   "description": "<div align=\"center\">\r   <h1>\r     <img src=\"https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=30&duration=3000&pause=1000&color=4A90E2&center=true&vCenter=true&repeat=true&width=1000&lines=Interface+Web+de+Hor%C3%A1rios+Acad%C3%AAmicos+%7C+Backend+%F0%9F%92%BB\" alt=\"Typing SVG\" />",
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/bigquery": "^7.9.3",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "install": "^0.13.0",
+    "npm": "^11.2.0",
     "pg": "^8.14.1"
   }
 }
