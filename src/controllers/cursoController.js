@@ -6,8 +6,10 @@ async function requestNewCurso(req, res) {
 const newCursoDto = new createCursoDto( req.body.nome );
 
   try {
-    const newCurso = await curso.createCurso( newCursoDto );
-    res.status(200).json(newCurso);
+    const newCurso = new curso(null, newCursoDto.nome)
+
+    const createCurso = await newCurso.createCurso( newCurso );
+    res.status(createCurso.status).json(createCurso);
   } catch (error) {
     console.error('Erro ao criar curso:', error);
     res.status(500).json({ erro: 'Erro interno ao criar curso' });
@@ -25,7 +27,35 @@ async function listCursos(req, res) {
   }
 }
 
+async function requestAlterCurso(req, res) {
+
+  const alterCurso = new curso( req.body.id, req.body.nome );
+  
+    try {
+      const updateCurso = await alterCurso.updateCurso( alterCurso );
+      res.status(updateCurso.status).json(updateCurso);
+    } catch (error) {
+      console.error('Erro ao atualizar curso:', error);
+      res.status(500).json({ erro: 'Erro interno ao atualizar curso' });
+    }
+  }
+
+  async function requestDeleteCurso(req, res) {
+
+    const id = req.body.id;
+    
+      try {
+        const deleteCurso = await curso.deleteCurso( id );
+        res.status(deleteCurso.status).json(deleteCurso);
+      } catch (error) {
+        console.error('Erro ao atualizar curso:', error);
+        res.status(500).json({ erro: 'Erro interno ao atualizar curso' });
+      }
+    }
+
 module.exports = {
   listCursos,
   requestNewCurso,
+  requestAlterCurso,
+  requestDeleteCurso
 };

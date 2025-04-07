@@ -24,11 +24,11 @@ class curso {
     this.nome = nome;
   }
 
-  static async createCurso(createCursoDto) {
+  async createCurso(newCurso) {
 
-    const nome = createCursoDto.nome;
+    const nome = newCurso.nome;
 
-    return await cursoQuery.createNewCurso(nome); 
+    return await cursoQuery.createNewCurso(nome);
 
   }
 
@@ -38,39 +38,66 @@ class curso {
 
   }
 
-  updateCurso(id) {
-    try{
-      //Buscar curso no banco pelo ID (ainda a ser implementado)
+  async updateCurso( alterCurso ) {
+    try {
 
-      const curso = new curso(); // Aqui será preenchido com os dados do banco
-
-      if (curso.name != null) {
-          //Atualizar o curso no banco (ainda a ser implementado)
-      }
-      return { status: "sucesso", mensagem: "Curso atualizado!" };
-
-    }catch (erro){
-
-       return { status: "erro", mensagem: erro.message };
+      const id = alterCurso.id;
       
+      const nome = alterCurso.nome;
+
+      const cursoExists = await cursoQuery.cursoExistsOrNotById( id );
+      
+      if ( cursoExists ) {
+        if ( nome != null ) {
+          await cursoQuery.updateExistingCurso( id, nome )
+        }
+
+        if ( !nome ) {
+
+          throw new Error("Nome do curso é obrigatório para atualização.");
+
+        }
+        return { status: 200, mensagem: "Curso atualizado!" };
+      }
+    
+      if ( !cursoExists ){
+
+        throw new Error("Curso não encontrado.");
+
+      }
+
+    } catch (erro) {
+
+      return { status: 400, mensagem: erro.message };
+
     }
   }
 
-  deleteCurso(id) {
 
-    try{
-      //Buscar curso no banco pelo ID (ainda a ser implementado)
+  static async deleteCurso( id ) {
 
-      const cursoExists = []; // Aqui será feito um boolean verificando se o curso existe no banco ou não
+    try {
 
-      if (cursoExists) {
-          //Atualizar o curso no banco (ainda a ser implementado)
+      const cursoExists = await cursoQuery.cursoExistsOrNotById( id );
+      
+      if ( cursoExists ) {
+        
+          await cursoQuery.deleteExistingCurso( id )
+        
+        return { status: 200, mensagem: "Curso deletado!" };
+
       }
-      return { status: "sucesso", mensagem: "Curso deletado!" };
+    
+      if ( !cursoExists ){
 
-    }catch (erro){
+        throw new Error("Curso não encontrado.");
 
-       return { status: "erro", mensagem: erro.message };
+      }
+
+    } catch (erro) {
+
+      return { status: 400, mensagem: erro.message };
+
     }
   }
 }
