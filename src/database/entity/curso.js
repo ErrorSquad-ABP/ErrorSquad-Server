@@ -26,9 +26,20 @@ class curso {
 
   async createCurso(newCurso) {
 
-    const nome = newCurso.nome;
-
-    return await cursoQuery.createNewCurso(nome);
+    try {
+      const nome = newCurso.nome;
+  
+      // Verificar se o nome é nulo ou vazio
+      if (!nome || nome.trim() === "") {
+          throw new Error("Nome do curso é obrigatório para criação.");
+      }
+  
+      // Caso o nome seja válido, continuar com a lógica
+      return await cursoQuery.createNewCurso(nome);
+  
+  } catch (erro) {
+      return { status: 400, mensagem: erro.message };
+  }
 
   }
 
@@ -38,29 +49,25 @@ class curso {
 
   }
 
-  async updateCurso( alterCurso ) {
+  async updateCurso(alterCurso) {
     try {
 
       const id = alterCurso.id;
-      
+
       const nome = alterCurso.nome;
 
-      const cursoExists = await cursoQuery.cursoExistsOrNotById( id );
-      
-      if ( cursoExists ) {
-        if ( nome != null ) {
-          await cursoQuery.updateExistingCurso( id, nome )
-        }
+      const cursoExists = await cursoQuery.cursoExistsOrNotById(id);
 
-        if ( !nome ) {
+      if (cursoExists) {
 
+        if (!nome || nome.trim() === "") {
           throw new Error("Nome do curso é obrigatório para atualização.");
 
-        }
-        return { status: 200, mensagem: "Curso atualizado!" };
       }
-    
-      if ( !cursoExists ){
+      return await cursoQuery.updateExistingCurso(id, nome)
+    }
+
+      if (!cursoExists) {
 
         throw new Error("Curso não encontrado.");
 
@@ -74,21 +81,21 @@ class curso {
   }
 
 
-  static async deleteCurso( id ) {
+  static async deleteCurso(id) {
 
     try {
 
-      const cursoExists = await cursoQuery.cursoExistsOrNotById( id );
-      
-      if ( cursoExists ) {
-        
-          await cursoQuery.deleteExistingCurso( id )
-        
+      const cursoExists = await cursoQuery.cursoExistsOrNotById(id);
+
+      if (cursoExists) {
+
+        await cursoQuery.deleteExistingCurso(id)
+
         return { status: 200, mensagem: "Curso deletado!" };
 
       }
-    
-      if ( !cursoExists ){
+
+      if (!cursoExists) {
 
         throw new Error("Curso não encontrado.");
 
