@@ -1,3 +1,5 @@
+const cursoQuery = require('../migrations/cursoQuery');
+
 class curso {
 
   constructor(id, nome) {
@@ -22,70 +24,89 @@ class curso {
     this.nome = nome;
   }
 
-  static createCurso(createCursoDto) {
-    try{
+  async createCurso(newCurso) {
 
-      const Entity = new curso(null, createCursoDto.nome);
-      //Lógica de inserção de dados no banco...
-
-      return { status: "sucesso", mensagem: "Curso cadastrado!" };
-
-    } catch (erro){
-
-       return { status: "erro", mensagem: erro.message };
-      
-    }
-  }
-
-  getAllCurso() {
-    try{
-
-     //Buscar todos os cursos no banco (ainda a ser implementado)
-     
-     const allEntitys = []; // Aqui será preenchido com os dados do banco
-
-      return allEntitys
-
-    }catch (erro){
-
-       return { status: "erro", mensagem: erro.message };
-
-    }
-  }
-
-  updateCurso(id) {
-    try{
-      //Buscar curso no banco pelo ID (ainda a ser implementado)
-
-      const curso = new curso(); // Aqui será preenchido com os dados do banco
-
-      if (curso.name != null) {
-          //Atualizar o curso no banco (ainda a ser implementado)
+    try {
+      const nome = newCurso.nome;
+  
+      // Verificar se o nome é nulo ou vazio
+      if (!nome || nome.trim() === "") {
+          throw new Error("Nome do curso é obrigatório para criação.");
       }
-      return { status: "sucesso", mensagem: "Curso atualizado!" };
-
-    }catch (erro){
-
-       return { status: "erro", mensagem: erro.message };
-      
-    }
+  
+      // Caso o nome seja válido, continuar com a lógica
+      return await cursoQuery.createNewCurso(nome);
+  
+  } catch (erro) {
+      return { status: 400, mensagem: erro.message };
   }
 
-  deleteCurso(id) {
+  }
 
-    try{
-      //Buscar curso no banco pelo ID (ainda a ser implementado)
+  static async getAllCurso() {
 
-      const cursoExists = []; // Aqui será feito um boolean verificando se o curso existe no banco ou não
+    return await cursoQuery.searchAllCursos();
+
+  }
+
+  async updateCurso(alterCurso) {
+    try {
+
+      const id = alterCurso.id;
+
+      const nome = alterCurso.nome;
+
+      const cursoExists = await cursoQuery.cursoExistsOrNotById(id);
 
       if (cursoExists) {
-          //Atualizar o curso no banco (ainda a ser implementado)
+
+        if (!nome || nome.trim() === "") {
+          throw new Error("Nome do curso é obrigatório para atualização.");
+
       }
-      return { status: "sucesso", mensagem: "Curso deletado!" };
+      return await cursoQuery.updateExistingCurso(id, nome)
+    }
 
-    }catch (erro){
+      if (!cursoExists) {
 
-       return { status: "erro", mensagem: erro.message };
+        throw new Error("Curso não encontrado.");
+
+      }
+
+    } catch (erro) {
+
+      return { status: 400, mensagem: erro.message };
+
+    }
+  }
+
+
+  static async deleteCurso(id) {
+
+    try {
+
+      const cursoExists = await cursoQuery.cursoExistsOrNotById(id);
+
+      if (cursoExists) {
+
+        await cursoQuery.deleteExistingCurso(id)
+
+        return { status: 200, mensagem: "Curso deletado!" };
+
+      }
+
+      if (!cursoExists) {
+
+        throw new Error("Curso não encontrado.");
+
+      }
+
+    } catch (erro) {
+
+      return { status: 400, mensagem: erro.message };
+
     }
   }
 }
+
+module.exports = curso;
