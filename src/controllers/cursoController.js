@@ -1,9 +1,12 @@
 const curso = require('../database/entity/curso');
 const createCursoDto = require('../database/entity/dto/createCursoDto');
+const defaultStrings = require('../utils/firstLetterUppercase')
 
 async function requestNewCurso(req, res) {
 
-const newCursoDto = new createCursoDto( req.body.nome );
+const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
+
+const newCursoDto = new createCursoDto( defaultNomeString );
 
   try {
     const newCurso = new curso(null, newCursoDto.nome)
@@ -29,7 +32,9 @@ async function listCursos(req, res) {
 
 async function requestAlterCurso(req, res) {
 
-  const alterCurso = new curso( req.body.id, req.body.nome );
+  const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
+
+  const alterCurso = new curso( req.body.id, defaultNomeString );
   
     try {
       const updateCurso = await alterCurso.updateCurso( alterCurso );
