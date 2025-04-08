@@ -31,7 +31,7 @@ async function searchAllCursos() {
   const query = 
    `SELECT * 
     FROM \`sitefatecdsm-01-2025.SiteFatecDSM.curso\`
-    LIMIT 10`;
+    order by id asc`;
 
   const [rows] = await bigquery.query({ query });
 
