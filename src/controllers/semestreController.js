@@ -41,3 +41,23 @@ async function listSemestre(req, res) {
       res.status(500).json({ erro: "Erro interno ao atualizar semestre" });
     }
   }
+  
+  async function requestDeleteSemestre(req, res) {
+    const id = req.body.id;
+  
+    try {
+      const deleteSemestre = await semestre.deleteSemestre(id);
+      res.status(deleteSemestre.status).json(deleteSemestre);
+    } catch (error) {
+      console.error("Erro ao atualizar semestre:", error);
+      res.status(500).json({ erro: "Erro interno ao atualizar semestre" });
+    }
+  }
+  
+  module.exports = {
+    listSemestre,
+    requestNewSemestre,
+    requestAlterSemestre,
+    requestDeleteSemestre,
+  };
+  
