@@ -1,3 +1,5 @@
+const disciplinaQuery = require('../migrations/disciplinaQuery');
+
 class disciplina {
     constructor(id, nome, docente_id) {
        this.id = id;
@@ -29,59 +31,89 @@ class disciplina {
         this.docente_id = docente_id;
       }
 
-      static createDisciplina(createDisciplinaDto) {
+      async createDisciplina(newDisciplina) {
         try {
-          const Entity = new disciplina(null, createDisciplinaDto.nome);
-    
-          return { status: "sucesso", mensagem: "Disciplina cadastrada!" };
-        } catch (erro) {
-          return { status: "erro", mensagem: erro.message };
-        }
-      }
-    
-      getAllDisciplina() {
-        try {
-          //Buscar todos os dados no banco (ainda a ser implementado)
-    
-          const allEntitys = []; // Aqui será preenchido com os dados do banco
-    
-          return allEntitys;
-        } catch (erro) {
-          return { status: "erro", mensagem: erro.message };
-        }
-      }
-    
-      updateDisciplina(id) {
-        try {
-          //Buscar disciplina no banco pelo ID (ainda a ser implementado)
-    
-          const disciplina = new disciplina(); // Aqui será preenchido com os dados do banco
-    
-          if (ambiente.name != null) {
-            //Atualizar a disciplina no banco (ainda a ser implementado)
+          const nome = newDisciplina.nome;
+      
+          // Verificar se o nome é nulo ou vazio
+          if (!nome || nome.trim() === "") {
+              throw new Error("Nome da disciplina é obrigatório para criação.");
           }
-          return { status: "sucesso", mensagem: "Disciplina atualizada!" };
-        } catch (erro) {
-          return { status: "erro", mensagem: erro.message };
-        }
+      
+          // Caso o nome seja válido, continuar com a lógica
+          return await disciplinaQuery.createNewDisciplina(nome);
+      
+      } catch (erro) {
+          return { status: 400, mensagem: erro.message };
       }
     
-      deleteDisciplina(id) {
+      }
     
-        try{
-          //Buscar disciplina no banco pelo ID (ainda a ser implementado)
+      static async getAllDisciplina() {
+       return await disciplinaQuery.searchAllDisciplinas();
+      }
     
-          const disciplinaExists = []; // Aqui será feito um boolean verificando se a disciplina existe no banco ou não
+      async updateDisciplina(alterDisciplina) {
+        try {
+       
+          const id = alterDisciplina.id;
+    
+          const nome = alterDisciplina.nome;
+
+          const docente_id = alterDisciplina.docente_id;
+    
+          const disciplinaExists = await disciplinaQuery.disciplinaExistsOrNotById(id);
     
           if (disciplinaExists) {
-              //Atualizar a disciplina no banco (ainda a ser implementado)
+    
+            if (!nome || nome.trim() === "") {
+              throw new Error("Nome da disciplina é obrigatório para atualização.");
+    
           }
-          return { status: "sucesso", mensagem: "Disciplina deletada!" };
+          return await disciplinaQuery.updateExistingDisciplina(id, nome, docente_id)
+        }
     
-        }catch (erro){
+          if (!disciplinaExists) {
     
-           return { status: "erro", mensagem: erro.message };
+            throw new Error("Disciplina não encontrada.");
+    
+          }
+    
+        } catch (erro) {
+    
+          return { status: 400, mensagem: erro.message };
+    
         }
       }
-    }
+       
+      
+    
+static async deleteDisciplina(id) {
 
+    try {
+
+      const disciplinaExists = await disciplinaQuery.disciplinaExistsOrNotById(id);
+
+      if (disciplinaExists) {
+
+        await disciplinaQuery.deleteExistingDisciplina(id)
+
+        return { status: 200, mensagem: "Disciplina deletada!" };
+
+      }
+
+      if (!disciplinaExists) {
+
+        throw new Error("Disciplina não encontrada.");
+
+      }
+
+    } catch (erro) {
+
+      return { status: 400, mensagem: erro.message };
+
+    }
+  }
+}
+  
+module.exports = disciplina;
