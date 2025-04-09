@@ -28,3 +28,18 @@ async function listDocente(req, res) {
       res.status(500).json({ erro: 'Erro interno ao buscar docente' });
     }
   }
+
+  async function requestAlterDocente(req, res) {
+
+    const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
+  
+    const alterDocente = new docente( req.body.id, defaultNomeString );
+    
+      try {
+        const updateDocente = await alterDocente.updateDocente( alterDocente );
+        res.status(updateDocente.status).json(updateDocente);
+      } catch (error) {
+        console.error('Erro ao atualizar docente:', error);
+        res.status(500).json({ erro: 'Erro interno ao atualizar docente' });
+      }
+    }
