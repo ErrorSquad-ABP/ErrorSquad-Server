@@ -43,3 +43,22 @@ async function listDocente(req, res) {
         res.status(500).json({ erro: 'Erro interno ao atualizar docente' });
       }
     }
+    async function requestDeleteDocente(req, res) {
+
+        const id = req.body.id;
+        
+          try {
+            const deleteDOcente = await Docente.deleteDocente( id );
+            res.status(deleteDocente.status).json(deleteDocente);
+          } catch (error) {
+            console.error('Erro ao atualizar Docente:', error);
+            res.status(500).json({ erro: 'Erro interno ao atualizar DOcente' });
+          }
+        }
+    
+    module.exports = {
+      listDocente,
+      requestNewDocente,
+      requestAlterDocente,
+      requestDeleteDocente
+    };
