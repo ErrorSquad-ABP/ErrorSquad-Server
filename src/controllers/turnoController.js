@@ -28,3 +28,18 @@ async function listTurnos(req, res) {
       res.status(500).json({ erro: 'Erro interno ao buscar turnos' });
     }
   }
+
+  async function requestAlterTurno(req, res) {
+
+    const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
+  
+    const alterTurno = new turno( req.body.id, defaultNomeString );
+    
+      try {
+        const updateTurno = await alterTurno.updateTurno( alterTurno );
+        res.status(updateTurno.status).json(updateTurno);
+      } catch (error) {
+        console.error('Erro ao atualizar turno:', error);
+        res.status(500).json({ erro: 'Erro interno ao atualizar turno' });
+      }
+    }
