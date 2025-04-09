@@ -88,7 +88,7 @@ class turno {
     
         }catch (erro){
     
-           return { status: "erro", mensagem: erro.message };
+           return { status: 400, mensagem: erro.message };
         }
       }
 
