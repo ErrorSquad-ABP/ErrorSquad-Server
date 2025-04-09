@@ -18,3 +18,13 @@ const newTurnoDto = new createTurnoDto( defaultNomeString );
     res.status(500).json({ erro: 'Erro interno ao criar turno' });
   }
 }
+
+async function listTurnos(req, res) {
+    try {
+      const turnos = await turno.getAllTurno();
+      res.status(200).json(turnos);
+    } catch (error) {
+      console.error('Erro ao listar turnos:', error);
+      res.status(500).json({ erro: 'Erro interno ao buscar turnos' });
+    }
+  }
