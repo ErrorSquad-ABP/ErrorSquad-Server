@@ -38,3 +38,22 @@ async function requestAlterDia(req, res) {
     res.status(500).json({ erro: 'Erro interno ao atualizar dia' });
   }
 }
+
+async function requestDeleteDia(req, res) {
+  const id = req.body.id;
+  
+  try {
+    const deleteDia = await dia.deleteDia(id);
+    res.status(deleteDia.status).json(deleteDia);
+  } catch (error) {
+    console.error('Erro ao deletar dia:', error);
+    res.status(500).json({ erro: 'Erro interno ao deletar dia' });
+  }
+}
+
+module.exports = {
+  listDias,
+  requestNewDia,
+  requestAlterDia,
+  requestDeleteDia
+}; 
