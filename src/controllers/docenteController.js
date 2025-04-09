@@ -48,7 +48,7 @@ async function listDocente(req, res) {
         const id = req.body.id;
         
           try {
-            const deleteDOcente = await Docente.deleteDocente( id );
+            const deleteDocente = await docente.deleteDocente( id );
             res.status(deleteDocente.status).json(deleteDocente);
           } catch (error) {
             console.error('Erro ao atualizar Docente:', error);
