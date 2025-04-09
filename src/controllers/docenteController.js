@@ -18,3 +18,13 @@ const newDocenteDto = new createDocenteDto( defaultNomeString );
     res.status(500).json({ erro: 'Erro interno ao criar docente' });
   }
 }
+
+async function listDocente(req, res) {
+    try {
+      const docente = await docente.getAllDocente();
+      res.status(200).json(docente);
+    } catch (error) {
+      console.error('Erro ao listar docente:', error);
+      res.status(500).json({ erro: 'Erro interno ao buscar docente' });
+    }
+  }
