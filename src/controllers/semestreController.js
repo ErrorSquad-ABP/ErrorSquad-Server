@@ -28,4 +28,16 @@ async function listSemestre(req, res) {
     }
   }
 
+  async function requestAlterSemestre(req, res) {
+    const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
   
+    const alterSemestre = new semestre(req.body.id, defaultNomeString);
+  
+    try {
+      const updateSemestre = await alterSemestre.updateSemestre(alterSemestre);
+      res.status(updateSemestre.status).json(updateSemestre);
+    } catch (error) {
+      console.error("Erro ao atualizar semestre:", error);
+      res.status(500).json({ erro: "Erro interno ao atualizar semestre" });
+    }
+  }
