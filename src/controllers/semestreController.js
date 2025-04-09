@@ -8,7 +8,7 @@ async function requestNewSemestre(req, res) {
   const newSemestreDto = new createSemestreDto(defaultNomeString);
 
   try {
-    const newSemestre = new semestre(null, newSemestreDto.nome);
+    const newSemestre = new semestre(null, newSemestreDto.nivel);
 
     const createSemestre = await newSemestre.createSemestre(newSemestre);
     res.status(createSemestre.status).json(createSemestre);
@@ -17,3 +17,15 @@ async function requestNewSemestre(req, res) {
     res.status(500).json({ erro: "Erro interno ao criar semestre" });
   }
 }
+
+async function listSemestre(req, res) {
+    try {
+      const semestres = await semestres.getAllSemestre();
+      res.status(200).json(semestre);
+    } catch (error) {
+      console.error("Erro ao listar semestre:", error);
+      res.status(500).json({ erro: "Erro interno ao buscar semestres" });
+    }
+  }
+
+  
