@@ -15,3 +15,13 @@ async function requestNewDia(req, res) {
     res.status(500).json({ erro: 'Erro interno ao criar dia' });
   }
 }
+
+sync function listDias(req, res) {
+  try {
+    const dias = await dia.getAllDia();
+    res.status(200).json(dias);
+  } catch (error) {
+    console.error('Erro ao listar dias:', error);
+    res.status(500).json({ erro: 'Erro interno ao buscar dias' });
+  }
+}
