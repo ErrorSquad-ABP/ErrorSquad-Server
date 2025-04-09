@@ -25,3 +25,16 @@ sync function listDias(req, res) {
     res.status(500).json({ erro: 'Erro interno ao buscar dias' });
   }
 }
+
+async function requestAlterDia(req, res) {
+  const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
+  const alterDia = new dia(req.body.id, defaultNomeString);
+  
+  try {
+    const updateDia = await alterDia.updateDia(alterDia);
+    res.status(updateDia.status).json(updateDia);
+  } catch (error) {
+    console.error('Erro ao atualizar dia:', error);
+    res.status(500).json({ erro: 'Erro interno ao atualizar dia' });
+  }
+}
