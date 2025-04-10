@@ -1,4 +1,4 @@
-# Repositório de arquivos Back-End
+# ErrorSquad Server - Backend do Sistema de Horários Acadêmicos
 <div align="center">
   <h1>
     <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=30&duration=3000&pause=1000&color=4A90E2&center=true&vCenter=true&repeat=true&width=1000&lines=Interface+Web+de+Hor%C3%A1rios+Acad%C3%AAmicos+%7C+Backend+%F0%9F%92%BB" alt="Typing SVG" />
@@ -16,231 +16,151 @@
   <br>
   
   <div>
-    <img src="https://img.shields.io/badge/Status-Em_Desenvolvimento-4a90e2?style=for-the-badge&logo=clockify&logoColor=1A1B27"/>
+    <img src="https://img.shields.io/badge/Status-Em_Desenvolvimento-FF6B6B?style=for-the-badge&logo=clockify&logoColor=white"/>
+    <img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white"/>
+    <img src="https://img.shields.io/badge/Express.js-404D59?style=for-the-badge"/>
+    <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white"/>
+    <img src="https://img.shields.io/badge/version-1.0.0-6C5CE7?style=for-the-badge"/>
+    <img src="https://img.shields.io/badge/license-MIT-00B894?style=for-the-badge"/>
   </div>
 
   <br>
   
   <p align="center">
-    <a href="#-descrição">
-      <img src="https://img.shields.io/badge/📝_Descrição-4a90e2?style=for-the-badge"/>
-    </a>
-    &nbsp;
-    <a href="#-status-do-projeto">
-      <img src="https://img.shields.io/badge/📊_Status-4a90e2?style=for-the-badge"/>
-    </a>
-    &nbsp;
-    <a href="#%EF%B8%8F-tecnologias-previstas">
-      <img src="https://img.shields.io/badge/🛠️_Tecnologias-4a90e2?style=for-the-badge"/>
-    </a>
-    &nbsp;
-    <a href="#-instalação-e-execução">
-      <img src="https://img.shields.io/badge/⚙️_Execução-4a90e2?style=for-the-badge"/>
-    </a>
-    &nbsp;
-    <a href="#-nossa-equipe">
-      <img src="https://img.shields.io/badge/👥_Equipe-4a90e2?style=for-the-badge"/>
-    </a>
+    <!-- Navegação removida para simplificar o visual -->
   </p>
 </div>
-
-<hr>
 
 ## 📝 Descrição
 
 Backend do sistema de gestão de horários acadêmicos da FATEC Jacareí, desenvolvido pela equipe Error Squad. O projeto visa automatizar o processo de divulgação e consulta de horários de aulas, substituindo o sistema manual atual por uma solução digital integrada.
 
-### Problema
-A secretaria acadêmica necessita refazer manualmente os informes de horários a cada alteração, tornando o processo ineficiente e propenso a erros.
+### 🎯 Objetivo
+Automatizar e otimizar o processo de gestão de horários acadêmicos, reduzindo erros manuais e melhorando a eficiência operacional.
 
-### Solução
-Sistema web que permite:
-- Consulta de horários por curso, ambiente, turno e turma
-- Importação e gerenciamento de dados via CSV
+### 💡 Principais Funcionalidades
+- Gestão completa de cursos e horários
+- API RESTful para integração com frontend
 - Validação automática de conflitos
-- Geração de relatórios em PDF
-- Consultas dinâmicas e filtradas
+- Sistema de logs para auditoria
 
-## 🎯 Requisitos
-
-### Funcionais
-- **RF01**: Ingestão de dados via arquivo CSV
-- **RF02**: Gerenciamento CRUD dos dados (opcional)
-- **RF03**: Validação de regras de alocação
-  - Evitar conflitos de horários
-  - Evitar conflitos de salas
-- **RF04**: Exportação de relatórios em PDF
-- **RF05**: Sistema de consultas dinâmicas
-
-### Não Funcionais
-- **RNF01**: Mapa interativo de salas
-- **RNF02**: Interface responsiva
-
-### Restrições
-- Prototipação no Figma
-- Backend em JavaScript
-- Banco de dados PostgreSQL
-- Documentação no GitHub
-- Gerenciamento via GitHub Projects/Trello
-
----
-
-## 📊 Status do Projeto
-
-| Status | Fase                                  |
-| ------ | ------------------------------------- |
-| ✅     | Fase 1: Definição do Projeto e Equipe |
-| ⏳     | Fase 2: Planejamento e Design         |
-| ⏳     | Fase 3: Desenvolvimento               |
-| ⏳     | Fase 4: Testes e Validação            |
-| ⏳     | Fase 5: Entrega e Apresentação        |
-
----
-
-## 🛠️ Tecnologias
-
-- **Backend**: JavaScript (Node.js)
-- **Banco de Dados**: PostgreSQL
-- **Controle de Versão**: Git/GitHub
-- **Gestão**: GitHub Projects
-
-### Ferramentas de Desenvolvimento
-- **Git**: Controle de versão.
-- **GitHub**: Repositório para colaboração e versionamento.
-- **Figma**: Prototipação e validação do design.
-- **Trello/GitHub Projects**: Gerenciamento de tarefas e sprints.
-
-### Estrutura do Backend (Express.js)
-- Roteamento com Express Router
-- Middlewares personalizados para validação
-- Gerenciamento de sessões com express-session
-- Sistema de arquivos para manipulação de CSV
-- Queries SQL nativas com node-postgres
-
----
-
-## 📥 Instalação e Execução
-
-### Pré-requisitos
-- **Node.js**: [Download](https://nodejs.org/)
-- **PostgreSQL**: [Download](https://www.postgresql.org/)
-
-### Dependências principais
-- **Express.js**: Framework web minimalista para Node.js
-```json
-{
-  "dependencies": {
-    "express": "^4.18.3"
-  }
-}
-```
-
-### Passos para execução
-```bash
-# Clone o repositório
-git clone https://github.com/ErrorSquad-ABP/ErrorSquad-Server.git
-
-# Entre na pasta do projeto
-cd ErrorSquad-Server
-
-# Instale as dependências
-npm install express
-
-# Configure o banco de dados no arquivo .env
-# Exemplo do arquivo .env:
-# DB_HOST=localhost
-# DB_PORT=5432
-# DB_USER=seu_usuario
-# DB_PASSWORD=sua_senha
-# DB_NAME=nome_do_banco
-
-# Inicie o servidor
-npm start
-```
-
----
-
-## 🚀 Funcionalidades do Backend
-
-1. **Ingestão de Dados**:
-   - Importação de horários e alocações a partir de arquivos CSV.
-   - Validação automática para evitar conflitos de horários e ambientes.
-
-2. **Gerenciamento de Dados (CRUD)**:
-   - Operações de criação, leitura, atualização e exclusão de horários, professores, turmas e ambientes.
-
-3. **Consultas Dinâmicas**:
-   - Filtros por turma, turno, professor, ambiente e data.
-
-4. **Geração de Relatórios**:
-   - Exportação de relatórios em formato PDF com os horários e alocações.
-
-5. **Validação de Regras**:
-   - Garantia de que duas turmas não sejam alocadas no mesmo ambiente ao mesmo tempo.
-   - Verificação de conflitos de horários para professores.
-
----
-
-## 🎯 Requisitos do Backend
-
-### Requisitos Funcionais
-- **RF01**: Sistema de ingestão de dados via CSV
-  - Parsing e validação automática de arquivos CSV
-  - Mapeamento de dados para o modelo do banco
-  - Tratamento de erros e inconsistências
-
-- **RF02**: API para gerenciamento CRUD
-  - Endpoints para gestão de horários
-  - Autenticação para secretaria/coordenação
-  - Validação de dados em tempo real
-
-- **RF03**: Sistema de validação de regras
-  - Verificação de conflitos de sala
-  - Verificação de conflitos de horários de professores
-  - Validação de capacidade dos ambientes
-
-- **RF04**: Geração de relatórios PDF
-  - Templates personalizáveis
-  - Formatação automática de dados
-  - Diferentes layouts por tipo de consulta
-
-- **RF05**: API de consultas
-  - Filtros por turma/turno/professor/data
-  - Paginação e ordenação de resultados
-  - Cache para otimização de performance
-
-### Requisitos Não Funcionais
-- Performance otimizada para consultas simultâneas
-- Documentação completa da API (Swagger/OpenAPI)
-- Logs detalhados para monitoramento
-- Testes automatizados (unitários e integração)
-
----
-
-## ⚙️ Arquitetura Backend
+## 🏗️ Arquitetura
 
 ```plaintext
 src/
-├── api/           # Endpoints da API
-│   ├── routes/    # Rotas da aplicação
-│   └── handlers/  # Manipuladores de requisições
-├── database/      # Conexão e queries do PostgreSQL
-├── models/        # Modelos de dados
+├── controllers/    # Controladores da aplicação
+├── database/      # Configuração e modelos do banco
+├── lib/           # Bibliotecas e utilitários
+├── routes/        # Definição de rotas
 ├── services/      # Lógica de negócios
-├── utils/         # Funções utilitárias
+├── utils/         # Funções auxiliares
 └── config/        # Configurações do sistema
 ```
 
-### Estrutura do Backend (Vanilla JS)
-- Roteamento manual de requisições HTTP
-- Implementação própria de middlewares
-- Gerenciamento de sessões sem frameworks
-- Validações customizadas
-- Queries SQL nativas ou com driver básico
+### 🔄 Fluxo de Dados
+1. Requisição HTTP → Routes
+2. Routes → Controllers
+3. Controllers → Services
+4. Services → Database
+5. Database → Response
 
----
+## 🛠️ Tecnologias
 
-## 👥 Nossa Equipe
+### Core
+- **Node.js**: Runtime JavaScript
+- **Express**: Framework web
+- **PostgreSQL**: Banco de dados relacional
+- **Google BigQuery**: Analytics e relatórios
+
+### Desenvolvimento
+- **Git**: Controle de versão
+- **npm**: Gerenciador de pacotes
+
+## ⚙️ Instalação
+
+### Pré-requisitos
+- Node.js >= 14.x
+- PostgreSQL >= 12
+- npm >= 6.x
+
+### Configuração
+1. Clone o repositório:
+```bash
+git clone https://github.com/ErrorSquad-ABP/ErrorSquad-Server.git
+cd ErrorSquad-Server
+```
+
+2. Instale as dependências:
+```bash
+npm install
+```
+
+3. Configure as variáveis de ambiente:
+```env
+PORT=3000
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=seu_usuario
+DB_PASSWORD=sua_senha
+DB_NAME=errorsquad
+```
+
+4. Inicie o servidor:
+```bash
+# Desenvolvimento
+npm run dev
+
+# Produção
+npm start
+```
+
+## 🔌 API
+
+### Endpoints Principais
+
+#### Cursos
+- `GET /cursos` - Lista todos os cursos
+- `POST /cursos` - Cria novo curso
+- `PUT /cursos/:id` - Atualiza curso
+- `DELETE /cursos/:id` - Remove curso
+
+#### Usuários
+- `GET /users` - Lista todos os usuários
+- `POST /users` - Cria novo usuário
+
+#### Health Check
+- `GET /health` - Status do servidor
+
+### Exemplos de Uso
+
+#### Criar um novo curso
+```bash
+curl -X POST http://localhost:3000/cursos \
+  -H "Content-Type: application/json" \
+  -d '{"nome": "Análise e Desenvolvimento de Sistemas"}'
+```
+
+#### Listar todos os cursos
+```bash
+curl http://localhost:3000/cursos
+```
+
+## 🤝 Contribuição
+
+### Como Contribuir
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+### Padrões de Código
+- Siga o estilo de código existente
+- Mantenha as funções pequenas e focadas
+- Adicione comentários explicativos quando necessário
+- Atualize a documentação quando necessário
+
+## 👥 Equipe
 
 <div align="center">
     <table>
@@ -316,6 +236,7 @@ src/
                             </a>
                             <a href="https://www.linkedin.com/in/felipe-ferreira-pacheco-621443347/">
                                 <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
+                            </a>
                         </td>
                     </tr>
                     <tr>
@@ -344,15 +265,10 @@ src/
     </table>
 </div>
 
----
-
-## 👨‍🏫 Coordenação e Orientação
+## 👨‍🏫 Focal Point
 
 <div align="center">
     <table>
-        <tr>
-            <td align="center"><b>Professor</b></td>
-        </tr>
         <tr>
             <td align="center">
                 <table>
@@ -374,28 +290,9 @@ src/
     </table>
 </div>
 
----
+## 📄 Licença
 
-## 📅 Cronograma
-
-- **18/03**: Kick-off e Definição da Equipe
-- **24/03**: Início Sprint 1
-- **15/04**: Review Sprint 1
-- **16/04**: Início Sprint 2
-- **15/05**: Review Sprint 2
-- **16/05**: Início Sprint 3
-- **10/06**: Review Sprint 3
-- **11/06**: Apresentação Final
-
----
-
-## 📜 Licença
-
-<div align="center">
-    <a href="https://github.com/ErrorSquad-ABP/ErrorSquadABP/blob/main/LICENSE">
-        <img src="https://img.shields.io/badge/📄_Licença-MIT-4a90e2?style=for-the-badge"/>
-    </a>
-</div>
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 <div align="center">
     <img src="https://capsule-render.vercel.app/api?type=waving&color=4a90e2&height=100&section=footer" width="100%"/>
