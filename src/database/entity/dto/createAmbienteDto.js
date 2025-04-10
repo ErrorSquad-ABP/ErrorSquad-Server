@@ -5,3 +5,4 @@ class createAmbienteDto {
     }
   }
   
+  module.exports = createAmbienteDto;
