@@ -3,9 +3,9 @@ const createSemestreDto = require('../database/entity/dto/createSemestreDto');
 const defaultStrings = require('../utils/firstLetterUppercase');
 
 async function requestNewSemestre(req, res) {
-  const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
+  const defaultnivelString = defaultStrings.firstLetterUppercase(req.body.nivel);
 
-  const newSemestreDto = new createSemestreDto(defaultNomeString);
+  const newSemestreDto = new createSemestreDto(defaultnivelString, req.body.ano, req.body.curso_id,req.body.turno_id);
 
   try {
     const newSemestre = new semestre(null, newSemestreDto.nivel);
@@ -29,9 +29,9 @@ async function listSemestre(req, res) {
   }
 
   async function requestAlterSemestre(req, res) {
-    const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
+    const defaultnivelString = defaultStrings.firstLetterUppercase(req.body.nivel);
   
-    const alterSemestre = new semestre(req.body.id, defaultNomeString);
+    const alterSemestre = new semestre(req.body.id, defaultnivelString, req.body.ano, req.body.curso_id, req.body.turno_id);
   
     try {
       const updateSemestre = await alterSemestre.updateSemestre(alterSemestre);

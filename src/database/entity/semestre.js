@@ -4,7 +4,7 @@ class semestre {
         this.id = id;
         this.nivel = nivel;
         this.ano = ano,
-            this.curso_id = curso_id;
+        this.curso_id = curso_id;
         this.turno_id = turno_id;
     }
     getId() {
