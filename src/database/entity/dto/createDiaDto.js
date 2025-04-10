@@ -5,3 +5,4 @@ class createDiaDto {
     }
   }
   
+  module.exports = createDiaDto;

@@ -16,7 +16,7 @@ async function requestNewDia(req, res) {
   }
 }
 
-sync function listDias(req, res) {
+async function listDias(req, res) {
   try {
     const dias = await dia.getAllDia();
     res.status(200).json(dias);

@@ -7,7 +7,7 @@ const cursosRoutes = require("./cursoRoutes");
 
 // Adicionamos a rota de verificação de saúde no endpoint "/health"
 router.use("/health", healthRoutes);
-router.use("/dias", diasRoutes);
+router.use("/dia", diasRoutes);
 router.use("/cursos", cursosRoutes);
 
 module.exports = router;
