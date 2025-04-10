@@ -34,14 +34,19 @@ class disciplina {
       async createDisciplina(newDisciplina) {
         try {
           const nome = newDisciplina.nome;
+          const docente_id = newDisciplina.docente_id;
       
           // Verificar se o nome é nulo ou vazio
           if (!nome || nome.trim() === "") {
               throw new Error("Nome da disciplina é obrigatório para criação.");
           }
+
+          if (!docente_id) {
+            throw new Error("ID do docente é obrigatório para criação.");
+        }
       
           // Caso o nome seja válido, continuar com a lógica
-          return await disciplinaQuery.createNewDisciplina(nome);
+          return await disciplinaQuery.createNewDisciplina(nome, docente_id);
       
       } catch (erro) {
           return { status: 400, mensagem: erro.message };
@@ -70,6 +75,11 @@ class disciplina {
               throw new Error("Nome da disciplina é obrigatório para atualização.");
     
           }
+
+          if (!docente_id) {
+            throw new Error("ID do docente é obrigatório para atualização.");
+  
+        }
           return await disciplinaQuery.updateExistingDisciplina(id, nome, docente_id)
         }
     
