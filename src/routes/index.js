@@ -10,8 +10,8 @@ const semestreRoutes = require("./semestreRoutes");
 // Adicionamos a rota de verificação de saúde no endpoint "/health"
 router.use("/health", healthRoutes);
 router.use("/cursos", cursosRoutes);
-router.use("/turnos", turnosRoutes);
+router.use("/turno", turnosRoutes);
 router.use("/docente", docenteRoutes);
-router.use("/semestre", docenteSemestre);
+router.use("/semestre", semestreRoutes);
 
 module.exports = router;

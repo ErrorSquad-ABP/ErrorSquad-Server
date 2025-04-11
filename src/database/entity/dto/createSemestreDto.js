@@ -7,3 +7,5 @@ class createSemestreDto{
         this.turno_id = turno_id;
     }
 }
+
+module.exports = createSemestreDto;

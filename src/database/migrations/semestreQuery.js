@@ -1,17 +1,20 @@
 const bigquery = require('../../lib/bigquery');
 
-async function createNewSemestre( nivel ) {
+async function createNewSemestre( nivel, ano, curso_id, turno_id ) {
 
   const query = 
-   `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.semestre (id, nivel, ano, curso_id, turno_id)
+   `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma (id, nivel, ano, id_curso, id_turno)
     SELECT 
-    COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.semestre), 0) + 1,
+    COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma), 0) + 1,
    @nivel, @ano, @curso_id, @turno_id;`;
 
   const options = {
     query,
     params: {
-      nivel: String(nivel)
+      nivel: parseInt(nivel),
+      ano: parseInt(ano),
+      curso_id: parseInt(curso_id),
+      turno_id: parseInt(turno_id)
     },
     useLegacySql: false
   };
@@ -26,11 +29,11 @@ async function createNewSemestre( nivel ) {
 }
 
 
-async function searchAllSemestre() {
+async function searchAllSemestres() {
   
   const query = 
    `SELECT * 
-    FROM \`sitefatecdsm-01-2025.SiteFatecDSM.semestre\`
+    FROM \`sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma\`
     order by id asc`;
 
   const [rows] = await bigquery.query({ query });
@@ -52,14 +55,14 @@ async function searchAllSemestre() {
 
 async function semestreExistsOrNotById(id) {
   const query = `
-    SELECT * FROM \`sitefatecdsm-01-2025.SiteFatecDSM.semestre\`
+    SELECT * FROM \`sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma\`
     WHERE id = @id;
   `;
 
   const options = {
     query,
     params: {
-      id: parseInt(id)
+      id: parseInt(id),
     },
     useLegacySql: false
   };
@@ -70,13 +73,13 @@ async function semestreExistsOrNotById(id) {
 }
 
 
-async function updateExistingSemestre(id, nivel) {
+async function updateExistingSemestre(id, nivel, ano, curso_id, turno_id) {
   const query = `
-    UPDATE \`sitefatecdsm-01-2025.SiteFatecDSM.semestre\`
-    SET nivel = @nivel
-    SET ano = @ano
-    SET turno_id = @turno_id
-    SET curso_id = @turno_id
+    UPDATE \`sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma\`
+    SET nivel = @nivel,
+    ano = @ano,
+    id_curso = @curso_id,
+    id_turno = @turno_id
     WHERE id = @id;
   `;
 
@@ -84,7 +87,10 @@ async function updateExistingSemestre(id, nivel) {
     query,
     params: {
       id: parseInt(id),      
-      nivel: String(nivel)     
+      nivel: parseInt(nivel),
+      ano: parseInt(ano),
+      curso_id: parseInt(curso_id),
+      turno_id: parseInt(turno_id)    
     },
     useLegacySql: false      
   };
@@ -102,7 +108,7 @@ async function updateExistingSemestre(id, nivel) {
 
 async function deleteExistingSemestre( id ) {
   const query = `
-    DELETE FROM \`sitefatecdsm-01-2025.SiteFatecDSM.semestre\`
+    DELETE FROM \`sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma\`
     WHERE id = @id;
   `;
 
@@ -127,7 +133,7 @@ async function deleteExistingSemestre( id ) {
 
 
 module.exports = {
-  searchAllSemestre,
+  searchAllSemestres,
   createNewSemestre,
   semestreExistsOrNotById,
   updateExistingSemestre,

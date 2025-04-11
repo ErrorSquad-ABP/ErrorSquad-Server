@@ -3,35 +3,33 @@ const createSemestreDto = require('../database/entity/dto/createSemestreDto');
 const defaultStrings = require('../utils/firstLetterUppercase');
 
 async function requestNewSemestre(req, res) {
-  const defaultnivelString = defaultStrings.firstLetterUppercase(req.body.nivel);
-
-  const newSemestreDto = new createSemestreDto(defaultnivelString, req.body.ano, req.body.curso_id,req.body.turno_id);
-
-  try {
-    const newSemestre = new semestre(null, newSemestreDto.nivel);
-
-    const createSemestre = await newSemestre.createSemestre(newSemestre);
-    res.status(createSemestre.status).json(createSemestre);
-  } catch (error) {
-    console.error("Erro ao criar semestre:", error);
-    res.status(500).json({ erro: "Erro interno ao criar semestre" });
-  }
-}
-
-async function listSemestre(req, res) {
+  
+  const newSemestreDto = new createSemestreDto( req.body.nivel,req.body.ano, req.body.curso_id, req.body.turno_id );
+  
     try {
-      const semestres = await semestres.getAllSemestre();
-      res.status(200).json(semestre);
+      const newSemestre = new semestre(null, newSemestreDto.nivel, newSemestreDto.ano, newSemestreDto.curso_id, newSemestreDto.turno_id)
+  
+      const createSemestre = await newSemestre.createSemestre( newSemestre );
+      res.status(createSemestre.status).json(createSemestre);
     } catch (error) {
-      console.error("Erro ao listar semestre:", error);
-      res.status(500).json({ erro: "Erro interno ao buscar semestres" });
+      console.error('Erro ao criar semestre:', error);
+      res.status(500).json({ erro: 'Erro interno ao criar semestre' });
+    }
+  }
+
+  async function listSemestres(req, res) {
+    try {
+      const semestres = await semestre.getAllSemestre();
+      res.status(200).json(semestres);
+    } catch (error) {
+      console.error('Erro ao listar semestres:', error);
+      res.status(500).json({ erro: 'Erro interno ao buscar semestres' });
     }
   }
 
   async function requestAlterSemestre(req, res) {
-    const defaultnivelString = defaultStrings.firstLetterUppercase(req.body.nivel);
-  
-    const alterSemestre = new semestre(req.body.id, defaultnivelString, req.body.ano, req.body.curso_id, req.body.turno_id);
+
+    const alterSemestre = new semestre(req.body.id, req.body.nivel, req.body.ano, req.body.curso_id, req.body.turno_id);
   
     try {
       const updateSemestre = await alterSemestre.updateSemestre(alterSemestre);
@@ -55,7 +53,7 @@ async function listSemestre(req, res) {
   }
   
   module.exports = {
-    listSemestre,
+    listSemestres,
     requestNewSemestre,
     requestAlterSemestre,
     requestDeleteSemestre,

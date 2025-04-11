@@ -1,3 +1,5 @@
+const docenteQuery = require('../migrations/docenteQuery');
+
 class docente{
 
     constructor(id, nome, cor){
@@ -30,76 +32,99 @@ class docente{
         this.cor = cor;
     }
 
-    static createDocente(createDocenteDto) {
+    async createDocente(newDocente) {
 
         try {
+          const nome = newDocente.nome;
+          const cor = newDocente.cor;
+      
+          // Verificar se o nome é nulo ou vazio
+          if (!nome || nome.trim() === "") {
+              throw new Error("Nome do docente é obrigatório para criação.");
+          }
 
-            const Entity = new docente(null, createDocenteDto.nivel);
-            //Lógica de inserção de dados no banco...
-
-            return { status: "sucesso", mensagem: "docente cadastrado!" };
-
-        } catch (erro) {
-
-            return { status: "erro", mensagem: erro.message };
-
+          if (!cor || cor.trim() === "") {
+            throw new Error("Cor do docente é obrigatório para criação.");
         }
-
-    }
-
-    getAllDocente() {
-
-        try {
-
-            //Buscar todos os docentes no banco (ainda a ser implementado)
-
-            const allEntitys = []; // Aqui será preenchido com os dados do banco
-
-            return allEntitys
-
-        } catch (erro) {
-
-            return { status: "erro", mensagem: erro.message };
-
-        }
-
-    }
-
-    updateDocente(id) {
-
-        try {
-            //Buscar docente no banco pelo ID (ainda a ser implementado)
-
-            const docente = new docente(); // Aqui será preenchido com os dados do banco
-
-            if (docente.nivel != null) {
-                //Atualizar o docente no banco (ainda a ser implementado)
-            }
-            return { status: "sucesso", mensagem: "docente atualizado!" };
-
-        } catch (erro) {
-
-            return { status: "erro", mensagem: erro.message };
-
-        }
-
-    }
-
-    deleteDocente(id) {
-
-        try{
-          //Buscar docente no banco pelo ID (ainda a ser implementado)
+      
+          // Caso o nome seja válido, continuar com a lógica
+          return await docenteQuery.createNewDocente(nome, cor);
+      
+      } catch (erro) {
+          return { status: 400, mensagem: erro.message };
+      }
     
-          const docenteExists = []; // Aqui será feito um boolean verificando se o docente existe no banco ou não
+      }
+
+      static async getAllDocente() {
+
+        return await docenteQuery.searchAllDocentes();
+    
+      }
+
+      async updateDocente(alterDocente) {
+        try {
+    
+          const id = alterDocente.id;
+    
+          const nome = alterDocente.nome;
+
+          const cor = alterDocente.cor;
+    
+          const docenteExists = await docenteQuery.docenteExistsOrNotById(id);
     
           if (docenteExists) {
-              //Atualizar o docente no banco (ainda a ser implementado)
+    
+            if (!nome || nome.trim() === "") {
+              throw new Error("Nome do docente é obrigatório para atualização.");
+    
           }
-          return { status: "sucesso", mensagem: "docente deletado!" };
+          if (!cor || cor.trim() === "") {
+            throw new Error("cor do docente é obrigatório para atualização.");
+  
+        }
+          return await docenteQuery.updateExistingDocente(id, nome, cor)
+        }
     
-        }catch (erro){
+          if (!docenteExists) {
     
-           return { status: "erro", mensagem: erro.message };
+            throw new Error("Docente não encontrado.");
+    
+          }
+    
+        } catch (erro) {
+    
+          return { status: 400, mensagem: erro.message };
+    
         }
       }
-}
+
+      static async deleteDocente(id) {
+
+        try {
+    
+          const docenteExists = await docenteQuery.docenteExistsOrNotById(id);
+    
+          if (docenteExists) {
+    
+            await docenteQuery.deleteExistingDocente(id)
+    
+            return { status: 200, mensagem: "Docente deletado!" };
+    
+          }
+    
+          if (!docenteExists) {
+    
+            throw new Error("Docente não encontrado.");
+    
+          }
+    
+        } catch (erro) {
+    
+          return { status: 400, mensagem: erro.message };
+    
+        }
+      }
+    }
+    
+    module.exports = docente;

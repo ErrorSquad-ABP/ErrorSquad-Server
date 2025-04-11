@@ -4,12 +4,11 @@ const defaultStrings = require('../utils/firstLetterUppercase')
 
 async function requestNewDocente(req, res) {
 
-const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
-
-const newDocenteDto = new createDocenteDto( defaultNomeString );
+  const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
+  const newDocenteDto = new createDocenteDto( defaultNomeString, req.body.cor );
 
   try {
-    const newDocente = new docente(null, newDocenteDto.nome)
+    const newDocente = new docente(null, newDocenteDto.nome, newDocenteDto.cor)
 
     const createDocente = await newDocente.createDocente( newDocente );
     res.status(createDocente.status).json(createDocente);
@@ -21,8 +20,8 @@ const newDocenteDto = new createDocenteDto( defaultNomeString );
 
 async function listDocente(req, res) {
     try {
-      const docente = await docente.getAllDocente();
-      res.status(200).json(docente);
+      const docentes = await docente.getAllDocente();
+      res.status(200).json(docentes);
     } catch (error) {
       console.error('Erro ao listar docente:', error);
       res.status(500).json({ erro: 'Erro interno ao buscar docente' });
@@ -33,7 +32,7 @@ async function listDocente(req, res) {
 
     const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
   
-    const alterDocente = new docente( req.body.id, defaultNomeString );
+    const alterDocente = new docente( req.body.id, defaultNomeString, req.body.cor );
     
       try {
         const updateDocente = await alterDocente.updateDocente( alterDocente );

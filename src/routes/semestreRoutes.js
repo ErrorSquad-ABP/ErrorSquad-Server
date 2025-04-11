@@ -6,7 +6,7 @@ const semestreController = require("../controllers/semestreController");
 router.post("/", semestreController.requestNewSemestre);
 
 // Rota para listar semesrte
-router.get("/", semestreController.listSemestre);
+router.get("/", semestreController.listSemestres);
 
 // Rota para alterar semesrte
 router.put("/", semestreController.requestAlterSemestre);

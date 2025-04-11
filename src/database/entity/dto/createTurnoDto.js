@@ -5,3 +5,5 @@ class createTurnoDto {
   }
   
 }
+
+module.exports = createTurnoDto;
