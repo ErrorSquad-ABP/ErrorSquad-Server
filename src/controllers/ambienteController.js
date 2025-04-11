@@ -38,3 +38,22 @@ async function requestAlterAmbiente(req, res) {
     res.status(500).json({ erro: 'Erro interno ao atualizar ambiente' });
   }
 }
+
+async function requestDeleteAmbiente(req, res) {
+  const id = req.body.id;
+
+  try {
+    const deleteAmbiente = await ambiente.deleteAmbiente(id);
+    res.status(deleteAmbiente.status).json(deleteAmbiente);
+  } catch (error) {
+    console.error('Erro ao deletar ambiente:', error);
+    res.status(500).json({ erro: 'Erro interno ao deletar ambiente' });
+  }
+}
+
+module.exports = {
+  listAmbientes,
+  requestNewAmbiente,
+  requestAlterAmbiente,
+  requestDeleteAmbiente
+};
