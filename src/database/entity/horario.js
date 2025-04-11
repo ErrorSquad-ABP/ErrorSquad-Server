@@ -1,3 +1,5 @@
+const bigquery = require("../../lib/bigquery");
+
 class Horario {
   constructor(id, hr_inicio, hr_fim) {
     this.id = id;
@@ -29,60 +31,60 @@ class Horario {
     this.hr_fim = hr_fim;
   }
 
-  static createHorario(createHorarioDto) {
+  static async createHorario({ hr_inicio, hr_fim }) {
+    const query = `INSERT INTO horarios (hr_inicio, hr_fim) VALUES (@hr_inicio, @hr_fim)`;
+    const options = {
+      query,
+      params: { hr_inicio, hr_fim },
+      useLegacySql: false,
+    };
     try {
-      const Entity = new Horario(
-        null,
-        createHorarioDto.hr_inicio,
-        createHorarioDto.hr_fim
-      );
-      //Lógica de inserção de dados no banco
-
-      return { status: "sucesso", mensagem: "Horário cadastrado!" };
-    } catch (erro) {
-      return { status: "erro", mensagem: erro.message };
+      await bigquery.query(options);
+      return { status: "success", message: "Horário criado com sucesso!" };
+    } catch (error) {
+      throw new Error("Erro ao criar horário: " + error.message);
     }
   }
 
-  getAllHorario() {
+  static async getAllHorario() {
+    const query = `SELECT * FROM horarios`;
     try {
-      //Buscar todos os horários no banco (ainda a ser implementado)
-
-      const allEntitys = []; // Aqui será preenchido com os dados do banco
-
-      return allEntitys;
-    } catch (erro) {
-      return { status: "erro", mensagem: erro.message };
+      const [rows] = await bigquery.query({ query });
+      return rows;
+    } catch (error) {
+      throw new Error("Erro ao listar horários: " + error.message);
     }
   }
 
-  updateHorario(id) {
+  static async updateHorario(id, { hr_inicio, hr_fim }) {
+    const query = `UPDATE horarios SET hr_inicio = @hr_inicio, hr_fim = @hr_fim WHERE id = @id`;
+    const options = {
+      query,
+      params: { id, hr_inicio, hr_fim },
+      useLegacySql: false,
+    };
     try {
-      //Buscar horário no banco pelo ID (ainda a ser implementado)
-
-      const horario = new Horario(); // Aqui será preenchido com os dados do banco
-
-      if (horario.hr_inicio != null && horario.hr_fim != null) {
-        //Atualizar o horário no banco (ainda a ser implementado)
-      }
-      return { status: "sucesso", mensagem: "Horário atualizado!" };
-    } catch (erro) {
-      return { status: "erro", mensagem: erro.message };
+      await bigquery.query(options);
+      return { status: "success", message: "Horário atualizado com sucesso!" };
+    } catch (error) {
+      throw new Error("Erro ao atualizar horário: " + error.message);
     }
   }
 
-  deleteHorario(id) {
+  static async deleteHorario(id) {
+    const query = `DELETE FROM horarios WHERE id = @id`;
+    const options = {
+      query,
+      params: { id },
+      useLegacySql: false,
+    };
     try {
-      //Buscar horário no banco pelo ID (ainda a ser implementado)
-
-      const horarioExists = []; // Aqui será feito um boolean verificando se o horário existe no banco ou não
-
-      if (horarioExists) {
-        //Deletar o horário no banco (ainda a ser implementado)
-      }
-      return { status: "sucesso", mensagem: "Horário deletado!" };
-    } catch (erro) {
-      return { status: "erro", mensagem: erro.message };
+      await bigquery.query(options);
+      return { status: "success", message: "Horário deletado com sucesso!" };
+    } catch (error) {
+      throw new Error("Erro ao deletar horário: " + error.message);
     }
   }
 }
+
+module.exports = Horario;
