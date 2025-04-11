@@ -1,13 +1,13 @@
 class createPeriodoDto {
 
-  constructor( dia_id, horario_id, disciplina_id, docente_id, semestre_id, ambiente_id) {
+  constructor( id_dia, id_horario, id_disciplina, id_docente_disciplina, id_cronograma_semestre, id_ambiente) {
 
-    this.dia_id = dia_id;
-    this.horario_id = horario_id;
-    this.disciplina_id = disciplina_id;
-    this.docente_id = docente_id;
-    this.semestre_id = semestre_id;
-    this.ambiente_id = ambiente_id;
+    this.id_dia = id_dia;
+    this.id_horario = id_horario;
+    this.id_disciplina = id_disciplina;
+    this.id_docente_disciplina = id_docente_disciplina;
+    this.id_cronograma_semestre = id_cronograma_semestre;
+    this.id_ambiente = id_ambiente;
     
   }
 }
