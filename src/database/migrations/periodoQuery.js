@@ -55,7 +55,9 @@ async function updateExistingPeriodo(id, disciplina, docente, ambiente) {
     query,
     params: {
       id: parseInt(id),      
-      nome: String(nome)     
+      disciplina: parseInt(disciplina), 
+      docente: parseInt(docente), 
+      ambiente: parseInt(ambiente),     
     },
     useLegacySql: false      
   };
@@ -71,7 +73,7 @@ async function updateExistingPeriodo(id, disciplina, docente, ambiente) {
   }
 }
 
-async function deleteExistingperiodo( id ) {
+async function deleteExistingPeriodo( id ) {
   const query = `
     DELETE FROM \`sitefatecdsm-01-2025.SiteFatecDSM.periodo\`
     WHERE id = @id;
@@ -98,9 +100,8 @@ async function deleteExistingperiodo( id ) {
 
 
 module.exports = {
-  searchAllperiodos,
-  createNewperiodo,
+  searchAllPeriodos,
   periodoExistsOrNotById,
-  updateExistingperiodo,
-  deleteExistingperiodo
+  updateExistingPeriodo,
+  deleteExistingPeriodo
 };
