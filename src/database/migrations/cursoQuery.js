@@ -7,7 +7,7 @@ async function createNewCurso( nome ) {
     SELECT 
     COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.curso), 0) + 1,
    @nome;`;
-
+''
   const options = {
     query,
     params: {

@@ -1,4 +1,5 @@
-const bigquery = require("../../lib/bigquery");
+const horarioQuery = require('../migrations/horarioQuery');
+const timeValidator = require('../../utils/isValidTime')
 
 class Horario {
   constructor(id, hr_inicio, hr_fim) {
@@ -31,58 +32,119 @@ class Horario {
     this.hr_fim = hr_fim;
   }
 
-  static async createHorario({ hr_inicio, hr_fim }) {
-    const query = `INSERT INTO horarios (hr_inicio, hr_fim) VALUES (@hr_inicio, @hr_fim)`;
-    const options = {
-      query,
-      params: { hr_inicio, hr_fim },
-      useLegacySql: false,
-    };
+  async createHorario(newHorario) {
+
     try {
-      await bigquery.query(options);
-      return { status: "success", message: "Horário criado com sucesso!" };
-    } catch (error) {
-      throw new Error("Erro ao criar horário: " + error.message);
+
+      const hr_inicio = (newHorario.hr_inicio);
+
+      const hr_fim = (newHorario.hr_fim);
+
+      const hrFimIsTime = timeValidator.isValidTime(newHorario.hr_fim);
+
+      const hrInicioIsTime = timeValidator.isValidTime(newHorario.hr_inicio);
+
+      if (!hr_inicio) {
+        throw new Error("Horário de inicio da aula é obrigatório para criação.");
+      }
+
+      if (!hrInicioIsTime) {
+        throw new Error("Formato do horário de inicio da aula não é valido.");
+      }
+
+      if (!hr_fim) {
+        throw new Error("Horário de fim da aula é obrigatório para criação.");
+      }
+
+      if (!hrFimIsTime) {
+        throw new Error("Formato do horário de fim da aula não é valido.");
+      }
+
+      // Caso o nome seja válido, continuar com a lógica
+      return await horarioQuery.createNewHorario(hr_inicio, hr_fim);
+
+    } catch (erro) {
+      return { status: 400, mensagem: erro.message };
     }
+
   }
 
   static async getAllHorario() {
-    const query = `SELECT * FROM horarios`;
+
+    return await horarioQuery.searchAllHorarios();
+
+  }
+
+  async updateHorario(alterHorario) {
     try {
-      const [rows] = await bigquery.query({ query });
-      return rows;
-    } catch (error) {
-      throw new Error("Erro ao listar horários: " + error.message);
+
+      const id = (alterHorario.id);
+
+      const hr_inicio = (alterHorario.hr_inicio);
+
+      const hr_fim = (alterHorario.hr_fim);
+
+      const horarioExists = await horarioQuery.horarioExistsOrNotById(id);
+
+      const hrFimIsTime = timeValidator.isValidTime(alterHorario.hr_fim);
+
+      const hrInicioIsTime = timeValidator.isValidTime(alterHorario.hr_inicio);
+
+      if (!horarioExists) {
+
+        throw new Error("Horário não encontrado.");
+
+      }
+
+      if (!hr_inicio) {
+        throw new Error("Horário de inicio da aula é obrigatório para alteração.");
+      }
+
+      if (!hrInicioIsTime) {
+        throw new Error("Formato do horário de inicio da aula não é valido.");
+      }
+
+      if (!hr_fim) {
+        throw new Error("Horário de fim da aula é obrigatório para alteração.");
+      }
+
+      if (!hrFimIsTime) {
+        throw new Error("Formato do horário de fim da aula não é valido.");
+      }
+
+      // Caso o nome seja válido, continuar com a lógica
+      return await horarioQuery.updateExistingHorario(id, hr_inicio, hr_fim );
+
+    } catch (erro) {
+      return { status: 400, mensagem: erro.message };
     }
   }
 
-  static async updateHorario(id, { hr_inicio, hr_fim }) {
-    const query = `UPDATE horarios SET hr_inicio = @hr_inicio, hr_fim = @hr_fim WHERE id = @id`;
-    const options = {
-      query,
-      params: { id, hr_inicio, hr_fim },
-      useLegacySql: false,
-    };
-    try {
-      await bigquery.query(options);
-      return { status: "success", message: "Horário atualizado com sucesso!" };
-    } catch (error) {
-      throw new Error("Erro ao atualizar horário: " + error.message);
-    }
-  }
 
   static async deleteHorario(id) {
-    const query = `DELETE FROM horarios WHERE id = @id`;
-    const options = {
-      query,
-      params: { id },
-      useLegacySql: false,
-    };
+
     try {
-      await bigquery.query(options);
-      return { status: "success", message: "Horário deletado com sucesso!" };
-    } catch (error) {
-      throw new Error("Erro ao deletar horário: " + error.message);
+
+      const horarioExists = await horarioQuery.horarioExistsOrNotById(id);
+
+      if (horarioExists) {
+
+        await horarioQuery.deleteExistingHorario(id)
+
+        return { status: 200, mensagem: "Horário deletado!" };
+
+      }
+
+      if (!horarioExists) {
+
+        throw new Error("Horário não encontrado.");
+
+      }
+
+    } catch (erro) {
+
+      return { status: 400, mensagem: erro.message };
+
     }
   }
 }

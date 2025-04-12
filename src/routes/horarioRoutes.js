@@ -2,16 +2,16 @@ const express = require("express");
 const router = express.Router();
 const horarioController = require("../controllers/horarioController");
 
-// Rota para criar um horário
-router.post("/", horarioController.createHorario);
+router.post("/", horarioController.requestNewHorario);
 
-// Rota para listar horários
+// Rota para listar horario
 router.get("/", horarioController.listHorarios);
 
-// Rota para atualizar um horário
-router.put("/:id", horarioController.updateHorario);
+// Rota para alterar horario
+router.put("/", horarioController.requestAlterHorario);
 
-// Rota para deletar um horário
-router.delete("/:id", horarioController.deleteHorario);
+// Rota para alterar horario
+router.delete("/", horarioController.requestDeleteHorario)
+
 
 module.exports = router;
