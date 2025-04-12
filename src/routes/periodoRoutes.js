@@ -2,9 +2,6 @@ const express = require("express");
 const router = express.Router();
 const periodoController = require("../controllers/periodoController");
 
-// Rota para criar um periodo
-router.post("/", periodoController.requestNewPeriodo);
-
 // Rota para listar periodo
 router.get("/", periodoController.listPeriodos);
 

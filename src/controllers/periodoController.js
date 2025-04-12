@@ -3,20 +3,17 @@ const createPeriodoDto = require('../database/entity/dto/createPeriodoDto');
 
 async function requestNewPeriodo(req, res) {
 
-const newPeriodoDto = new createPeriodoDto(req.body.id_dia, 
-                                            req.body.id_horario , 
-                                            req.body.id_disciplina , 
+const newPeriodoDto = new createPeriodoDto( req.body.id_disciplina , 
                                             req.body.id_docente_disciplina , 
-                                            req.body.id_semestre_cronograma , 
                                             req.body.id_ambiente);
 
   try {
     const newPeriodo = new periodo(null, 
-                                    newPeriodoDto.id_dia,
-                                    newPeriodoDto.id_horario ,
+                                    null,
+                                    null,
                                     newPeriodoDto.id_disciplina ,
                                     newPeriodoDto.id_docente_disciplina ,
-                                    newPeriodoDto.id_cronograma_semestre ,
+                                    null,
                                     newPeriodoDto.id_ambiente
     )
 
@@ -41,13 +38,17 @@ async function listPeriodos(req, res) {
 
 async function requestAlterPeriodo(req, res) {
 
+  const alterPeriodoDto = new createPeriodoDto( req.body.id_disciplina , 
+                                              req.body.id_docente_disciplina , 
+                                              req.body.id_ambiente);
+
   const alterPeriodo = new periodo( req.body.id,
-                                    req.body.id_dia, 
-                                    req.body.id_horario , 
-                                    req.body.id_disciplina , 
-                                    req.body.id_docente_disciplina , 
-                                    req.body.id_semestre_cronograma , 
-                                    req.body.id_ambiente
+                                    null,
+                                    null,
+                                    alterPeriodoDto.id_disciplina ,
+                                    alterPeriodoDto.id_docente_disciplina ,
+                                    null,
+                                    alterPeriodoDto.id_ambiente
    );
   
     try {
