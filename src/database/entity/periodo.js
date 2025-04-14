@@ -76,12 +76,12 @@ class periodo {
 
   }
 
-  static async updatePeriodo(updatePeriodo) {
+  async updatePeriodo( alterPeriodo ) {
     try {
-      const id = updatePeriodo.id
-      const disciplina = updatePeriodo.disciplina_id
-      const docente = updatePeriodo.docente_id
-      const ambiente = updatePeriodo.ambiente_id
+      const id = alterPeriodo.id
+      const disciplina = alterPeriodo.disciplina_id
+      const docente = alterPeriodo.docente_id
+      const ambiente = alterPeriodo.ambiente_id
       const periodoExists = await periodoQuery.periodoExistsOrNotById(id);
 
       if (periodoExists) {
@@ -98,9 +98,9 @@ class periodo {
         if (!ambiente) {
           throw new Error("Necessário inserir uma sala ou laboratório.");
         }
-
-        // Caso o nome seja válido, continuar com a lógica
+        
         return await periodoQuery.updateExistingPeriodo(id, disciplina, docente, ambiente);
+        
       }
 
       if (!periodoExists) {
@@ -108,7 +108,6 @@ class periodo {
         throw new Error("periodo não encontrado.");
 
       }
-
 
     } catch (erro) {
       return { status: 400, mensagem: erro.message };
@@ -142,5 +141,6 @@ class periodo {
   
       }
     }
-
 }
+
+module.exports = periodo;
