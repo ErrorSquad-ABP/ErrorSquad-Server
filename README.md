@@ -189,40 +189,41 @@ ErrorSquad-Server/
 ├── src/
 │   ├── server.js              # Ponto de entrada da aplicação
 │   ├── config/                # Configurações do sistema
-│   │   └── configExample.js   # Exemplo de configuração
-│   ├── controllers/           # Controladores da API
+│   │   └── configExample.js
+│   ├── controllers/           # Controladores da API (CRUDs finalizados)
+│   │   ├── ambienteController.js
 │   │   ├── cursoController.js
-│   │   └── healthController.js
-│   ├── database/              # Camada de acesso a dados
-│   │   ├── entity/            # Entidades do banco
-│   │   │   ├── ambiente.js
-│   │   │   ├── curso.js
-│   │   │   ├── dia.js
-│   │   │   ├── disciplina.js
-│   │   │   ├── docente.js
-│   │   │   ├── horario.js
-│   │   │   ├── periodo.js
-│   │   │   ├── semestre.js
-│   │   │   ├── turno.js
-│   │   │   └── dto/           # Data Transfer Objects
-│   │   │       └── createAmbienteDto.js
-│   │   │       └── createCursoDto.js
-│   │   │       └── createDiaDto.js
-│   │   │       └── ...
-│   │   └── migrations/        # Scripts de migração
-│   │       ├── cursoQuery.js
-│   │       └── migrationsExample.js
-│   ├── lib/                   # Bibliotecas e utilitários
-│   │   └── bigquery.js        # Integração com Google BigQuery
+│   │   ├── diaController.js
+│   │   ├── disciplinaController.js
+│   │   ├── docenteController.js
+│   │   ├── healthController.js
+│   │   ├── horarioController.js
+│   │   ├── periodoController.js
+│   │   ├── semestreController.js
+│   │   └── turnoController.js
+│   ├── database/
+│   │   ├── entity/
+│   │   └── migrations/
+│   ├── lib/
+│   │   └── bigquery.js
 │   ├── routes/                # Rotas da API
+│   │   ├── ambienteRoutes.js
 │   │   ├── cursoRoutes.js
+│   │   ├── diaRoutes.js
+│   │   ├── disciplinaRoutes.js
+│   │   ├── docenteRoutes.js
 │   │   ├── healthRoutes.js
+│   │   ├── horarioRoutes.js
 │   │   ├── index.js
+│   │   ├── periodoRoutes.js
+│   │   ├── semestreRoutes.js
+│   │   ├── turnoRoutes.js
 │   │   └── userRoutes.js
-│   ├── services/              # Serviços de negócio
+│   ├── services/
 │   │   └── servicesExample.js
-│   └── utils/                 # Funções auxiliares
+│   └── utils/
 │       ├── firstLetterUppercase.js
+│       ├── isValidTime.js
 │       └── utilsExample.js
 ```
 
