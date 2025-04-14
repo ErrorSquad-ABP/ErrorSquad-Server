@@ -1,3 +1,5 @@
+const ambienteQuery = require('../migrations/ambienteQuery');
+
 class ambiente {
   constructor(id, nome) {
     this.id = id;
@@ -20,59 +22,88 @@ class ambiente {
     this.nome = nome;
   }
 
-  static createAmbiente(createAmbienteDto) {
-    try {
-      const Entity = new ambiente(null, createAmbienteDto.nome);
-
-      return { status: "sucesso", mensagem: "Ambiente cadastrado!" };
+  async createAmbiente(newAmbiente) {
+  
+      try {
+        const nome = newAmbiente.nome;
+    
+        // Verificar se o nome é nulo ou vazio
+        if (!nome || nome.trim() === "") {
+            throw new Error("Nome do ambiente é obrigatório para criação.");
+        }
+    
+        // Caso o nome seja válido, continuar com a lógica
+        return await ambienteQuery.createNewAmbiente(nome);
+    
     } catch (erro) {
-      return { status: "erro", mensagem: erro.message };
+        return { status: 400, mensagem: erro.message };
     }
-  }
-
-  getAllAmbiente() {
-    try {
-      //Buscar todos os dados no banco (ainda a ser implementado)
-
-      const allEntitys = []; // Aqui será preenchido com os dados do banco
-
-      return allEntitys;
-    } catch (erro) {
-      return { status: "erro", mensagem: erro.message };
+  
     }
-  }
 
-  updateAmbiente(id) {
-    try {
-      //Buscar ambiente no banco pelo ID (ainda a ser implementado)
+  static async getAllAmbiente() {
+  
+      return await ambienteQuery.searchAllAmbientes();
+  
+    }
 
-      const ambiente = new ambiente(); // Aqui será preenchido com os dados do banco
-
-      if (ambiente.name != null) {
-        //Atualizar o ambiente no banco (ainda a ser implementado)
+  async updateAmbiente(alterAmbiente) {
+      try {
+  
+        const id = alterAmbiente.id;
+  
+        const nome = alterAmbiente.nome;
+  
+        const ambienteExists = await ambienteQuery.ambienteExistsOrNotById(id);
+  
+        if (ambienteExists) {
+  
+          if (!nome || nome.trim() === "") {
+            throw new Error("Nome do ambiente é obrigatório para atualização.");
+  
+        }
+        return await ambienteQuery.updateExistingAmbiente(id, nome)
       }
-      return { status: "sucesso", mensagem: "Ambiente atualizado!" };
-    } catch (erro) {
-      return { status: "erro", mensagem: erro.message };
-    }
-  }
-
-  deleteAmbiente(id) {
-
-    try{
-      //Buscar ambiente no banco pelo ID (ainda a ser implementado)
-
-      const ambienteExists = []; // Aqui será feito um boolean verificando se o ambiente existe no banco ou não
-
-      if (ambienteExists) {
-          //Atualizar o ambiente no banco (ainda a ser implementado)
+  
+        if (!ambienteExists) {
+  
+          throw new Error("Ambiente não encontrado.");
+  
+        }
+  
+      } catch (erro) {
+  
+        return { status: 400, mensagem: erro.message };
+  
       }
-      return { status: "sucesso", mensagem: "Ambiente deletado!" };
-
-    }catch (erro){
-
-       return { status: "erro", mensagem: erro.message };
     }
-  }
+  
+  static async deleteAmbiente(id) {
+  
+      try {
+  
+        const ambienteExists = await ambienteQuery.ambienteExistsOrNotById(id);
+  
+        if (ambienteExists) {
+  
+          await ambienteQuery.deleteExistingAmbiente(id)
+  
+          return { status: 200, mensagem: "Ambiente deletado!" };
+  
+        }
+  
+        if (!ambienteExists) {
+  
+          throw new Error("Ambiente não encontrado.");
+  
+        }
+  
+      } catch (erro) {
+  
+        return { status: 400, mensagem: erro.message };
+  
+      }
+    }
 }
 
+module.exports = ambiente;
