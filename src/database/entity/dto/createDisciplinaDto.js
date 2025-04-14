@@ -6,3 +6,4 @@ class createDisciplinaDto {
     }
   }
   
+module.exports = createDisciplinaDto;

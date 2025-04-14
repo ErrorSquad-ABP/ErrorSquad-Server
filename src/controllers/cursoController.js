@@ -53,8 +53,8 @@ async function requestAlterCurso(req, res) {
         const deleteCurso = await curso.deleteCurso( id );
         res.status(deleteCurso.status).json(deleteCurso);
       } catch (error) {
-        console.error('Erro ao atualizar curso:', error);
-        res.status(500).json({ erro: 'Erro interno ao atualizar curso' });
+        console.error('Erro ao deletar curso:', error);
+        res.status(500).json({ erro: 'Erro interno ao deletar curso' });
       }
     }
 
