@@ -4,6 +4,7 @@ const router = express.Router();
 const healthRoutes = require("./healthRoutes");
 const diasRoutes = require("./diaRoutes");
 const cursosRoutes = require("./cursoRoutes");
+const disciplinaRoutes = require("./disciplinaRoutes");
 const horarioRoutes = require("./horarioRoutes");
 const periodosRoutes = require("./periodoRoutes");
 
@@ -11,6 +12,7 @@ const periodosRoutes = require("./periodoRoutes");
 router.use("/health", healthRoutes);
 router.use("/dia", diasRoutes);
 router.use("/cursos", cursosRoutes);
+router.use("/disciplina", disciplinaRoutes);
 router.use("/horarios", horarioRoutes);
 router.use("/periodos", periodosRoutes);
 
