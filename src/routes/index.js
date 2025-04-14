@@ -2,13 +2,21 @@ const express = require("express");
 const router = express.Router();
 
 const healthRoutes = require("./healthRoutes");
+const diasRoutes = require("./diaRoutes");
 const cursosRoutes = require("./cursoRoutes");
 const ambienteRoutes = require("./ambienteRoutes");
+const disciplinaRoutes = require("./disciplinaRoutes");
+const horarioRoutes = require("./horarioRoutes");
+const periodosRoutes = require("./periodoRoutes");
 
 // Adicionamos a rota de verificação de saúde no endpoint "/health"
 router.use("/health", healthRoutes);
+router.use("/dia", diasRoutes);
 router.use("/cursos", cursosRoutes);
 router.use("/ambientes", ambienteRoutes);
+router.use("/disciplina", disciplinaRoutes);
+router.use("/horarios", horarioRoutes);
+router.use("/periodos", periodosRoutes);
 
 module.exports = router;
 
