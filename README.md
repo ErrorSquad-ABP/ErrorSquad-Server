@@ -127,7 +127,7 @@ Sistema web que permite:
 - **Git**: Controle de versão.
 - **GitHub**: Repositório para colaboração e versionamento.
 - **Figma**: Prototipação e validação do design.
-- **Trello/GitHub Projects**: Gerenciamento de tarefas e sprints.
+- **Trello**: Gerenciamento de tarefas e sprints.
 
 ### Estrutura do Backend (Express.js)
 - Roteamento com Express Router
@@ -201,11 +201,11 @@ ErrorSquad-Server/
 │   │   ├── periodoController.js
 │   │   ├── semestreController.js
 │   │   └── turnoController.js
-│   ├── database/
-│   │   ├── entity/
-│   │   └── migrations/
-│   ├── lib/
-│   │   └── bigquery.js
+│   ├── database/              # Conexão e queries do PostgreSQL
+│   │   ├── entity/            # Modelos de dados
+│   │   └── migrations/        # Scripts de migração
+│   ├── lib/                   # Bibliotecas e integrações externas
+│   │   └── bigquery.js        # Integração com Google BigQuery
 │   ├── routes/                # Rotas da API
 │   │   ├── ambienteRoutes.js
 │   │   ├── cursoRoutes.js
@@ -219,13 +219,15 @@ ErrorSquad-Server/
 │   │   ├── semestreRoutes.js
 │   │   ├── turnoRoutes.js
 │   │   └── userRoutes.js
-│   ├── services/
+│   ├── services/              # Lógica de negócios e integrações
 │   │   └── servicesExample.js
-│   └── utils/
+│   └── utils/                 # Funções utilitárias
 │       ├── firstLetterUppercase.js
 │       ├── isValidTime.js
 │       └── utilsExample.js
 ```
+
+> Organização baseada em arquitetura modular, separando responsabilidades por domínio (controllers, routes, services, database, utils, etc.), facilitando manutenção, testes e escalabilidade.
 
 ## 📦 Dependências
 
@@ -293,65 +295,6 @@ BIGQUERY_DATASET=seu_dataset
 5. **Validação de Regras**:
    - Garantia de que duas turmas não sejam alocadas no mesmo ambiente ao mesmo tempo.
    - Verificação de conflitos de horários para professores.
-
----
-
-## 🎯 Requisitos do Backend
-
-### Requisitos Funcionais
-- **RF01**: Sistema de ingestão de dados via CSV
-  - Parsing e validação automática de arquivos CSV
-  - Mapeamento de dados para o modelo do banco
-  - Tratamento de erros e inconsistências
-
-- **RF02**: API para gerenciamento CRUD
-  - Endpoints para gestão de horários
-  - Autenticação para secretaria/coordenação
-  - Validação de dados em tempo real
-
-- **RF03**: Sistema de validação de regras
-  - Verificação de conflitos de sala
-  - Verificação de conflitos de horários de professores
-  - Validação de capacidade dos ambientes
-
-- **RF04**: Geração de relatórios PDF
-  - Templates personalizáveis
-  - Formatação automática de dados
-  - Diferentes layouts por tipo de consulta
-
-- **RF05**: API de consultas
-  - Filtros por turma/turno/professor/data
-  - Paginação e ordenação de resultados
-  - Cache para otimização de performance
-
-### Requisitos Não Funcionais
-- Performance otimizada para consultas simultâneas
-- Documentação completa da API (Swagger/OpenAPI)
-- Logs detalhados para monitoramento
-- Testes automatizados (unitários e integração)
-
----
-
-## ⚙️ Arquitetura Backend
-
-```plaintext
-src/
-├── api/           # Endpoints da API
-│   ├── routes/    # Rotas da aplicação
-│   └── handlers/  # Manipuladores de requisições
-├── database/      # Conexão e queries do PostgreSQL
-├── models/        # Modelos de dados
-├── services/      # Lógica de negócios
-├── utils/         # Funções utilitárias
-└── config/        # Configurações do sistema
-```
-
-### Estrutura do Backend (Vanilla JS)
-- Roteamento manual de requisições HTTP
-- Implementação própria de middlewares
-- Gerenciamento de sessões sem frameworks
-- Validações customizadas
-- Queries SQL nativas ou com driver básico
 
 ---
 
