@@ -1,3 +1,6 @@
+const horarioQuery = require('../migrations/horarioQuery');
+const timeValidator = require('../../utils/isValidTime')
+
 class Horario {
   constructor(id, hr_inicio, hr_fim) {
     this.id = id;
@@ -29,60 +32,121 @@ class Horario {
     this.hr_fim = hr_fim;
   }
 
-  static createHorario(createHorarioDto) {
+  async createHorario(newHorario) {
+
     try {
-      const Entity = new Horario(
-        null,
-        createHorarioDto.hr_inicio,
-        createHorarioDto.hr_fim
-      );
-      //Lógica de inserção de dados no banco
 
-      return { status: "sucesso", mensagem: "Horário cadastrado!" };
-    } catch (erro) {
-      return { status: "erro", mensagem: erro.message };
-    }
-  }
+      const hr_inicio = (newHorario.hr_inicio);
 
-  getAllHorario() {
-    try {
-      //Buscar todos os horários no banco (ainda a ser implementado)
+      const hr_fim = (newHorario.hr_fim);
 
-      const allEntitys = []; // Aqui será preenchido com os dados do banco
+      const hrFimIsTime = timeValidator.isValidTime(newHorario.hr_fim);
 
-      return allEntitys;
-    } catch (erro) {
-      return { status: "erro", mensagem: erro.message };
-    }
-  }
+      const hrInicioIsTime = timeValidator.isValidTime(newHorario.hr_inicio);
 
-  updateHorario(id) {
-    try {
-      //Buscar horário no banco pelo ID (ainda a ser implementado)
-
-      const horario = new Horario(); // Aqui será preenchido com os dados do banco
-
-      if (horario.hr_inicio != null && horario.hr_fim != null) {
-        //Atualizar o horário no banco (ainda a ser implementado)
+      if (!hr_inicio) {
+        throw new Error("Horário de inicio da aula é obrigatório para criação.");
       }
-      return { status: "sucesso", mensagem: "Horário atualizado!" };
+
+      if (!hrInicioIsTime) {
+        throw new Error("Formato do horário de inicio da aula não é valido.");
+      }
+
+      if (!hr_fim) {
+        throw new Error("Horário de fim da aula é obrigatório para criação.");
+      }
+
+      if (!hrFimIsTime) {
+        throw new Error("Formato do horário de fim da aula não é valido.");
+      }
+
+      // Caso o nome seja válido, continuar com a lógica
+      return await horarioQuery.createNewHorario(hr_inicio, hr_fim);
+
     } catch (erro) {
-      return { status: "erro", mensagem: erro.message };
+      return { status: 400, mensagem: erro.message };
+    }
+
+  }
+
+  static async getAllHorario() {
+
+    return await horarioQuery.searchAllHorarios();
+
+  }
+
+  async updateHorario(alterHorario) {
+    try {
+
+      const id = (alterHorario.id);
+
+      const hr_inicio = (alterHorario.hr_inicio);
+
+      const hr_fim = (alterHorario.hr_fim);
+
+      const horarioExists = await horarioQuery.horarioExistsOrNotById(id);
+
+      const hrFimIsTime = timeValidator.isValidTime(alterHorario.hr_fim);
+
+      const hrInicioIsTime = timeValidator.isValidTime(alterHorario.hr_inicio);
+
+      if (!horarioExists) {
+
+        throw new Error("Horário não encontrado.");
+
+      }
+
+      if (!hr_inicio) {
+        throw new Error("Horário de inicio da aula é obrigatório para alteração.");
+      }
+
+      if (!hrInicioIsTime) {
+        throw new Error("Formato do horário de inicio da aula não é valido.");
+      }
+
+      if (!hr_fim) {
+        throw new Error("Horário de fim da aula é obrigatório para alteração.");
+      }
+
+      if (!hrFimIsTime) {
+        throw new Error("Formato do horário de fim da aula não é valido.");
+      }
+
+      // Caso o nome seja válido, continuar com a lógica
+      return await horarioQuery.updateExistingHorario(id, hr_inicio, hr_fim );
+
+    } catch (erro) {
+      return { status: 400, mensagem: erro.message };
     }
   }
 
-  deleteHorario(id) {
-    try {
-      //Buscar horário no banco pelo ID (ainda a ser implementado)
 
-      const horarioExists = []; // Aqui será feito um boolean verificando se o horário existe no banco ou não
+  static async deleteHorario(id) {
+
+    try {
+
+      const horarioExists = await horarioQuery.horarioExistsOrNotById(id);
 
       if (horarioExists) {
-        //Deletar o horário no banco (ainda a ser implementado)
+
+        await horarioQuery.deleteExistingHorario(id)
+
+        return { status: 200, mensagem: "Horário deletado!" };
+
       }
-      return { status: "sucesso", mensagem: "Horário deletado!" };
+
+      if (!horarioExists) {
+
+        throw new Error("Horário não encontrado.");
+
+      }
+
     } catch (erro) {
-      return { status: "erro", mensagem: erro.message };
+
+      return { status: 400, mensagem: erro.message };
+
     }
   }
 }
+
+module.exports = Horario;
