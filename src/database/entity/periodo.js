@@ -1,3 +1,5 @@
+const periodoQuery = require('../migrations/periodoQuery');
+
 class periodo {
 
   constructor(id, dia_id, horario_id, disciplina_id, docente_id, semestre_id, ambiente_id) {
@@ -9,7 +11,7 @@ class periodo {
     this.docente_id = docente_id;
     this.semestre_id = semestre_id;
     this.ambiente_id = ambiente_id;
-    
+
   }
 
   getId() {
@@ -68,98 +70,77 @@ class periodo {
     this.ambiente_id = ambiente_id;
   }
 
-  static createPeriodo(createPeriodoDto) {
-    try{
+  static async getAllPeriodo() {
 
-      const Entity = new periodo(null, 
-                                 createPeriodoDto.dia_id,
-                                 createPeriodoDto.horario_id,
-                                 createPeriodoDto.disciplina_id,
-                                 createPeriodoDto.docente_id,
-                                 createPeriodoDto.semestre_id,
-                                 createPeriodoDto.ambiente_id);
-      //Lógica de inserção de dados no banco...
+    return await periodoQuery.searchAllPeriodos();
 
-      return { "status": "sucesso", "mensagem": "Periodo cadastrado!" };
-
-    } catch (erro){
-
-       return { status: "erro", mensagem: erro.message };
-      
-    }
   }
 
-  getAllPeriodo() {
-    try{
-
-     //Buscar todos os cursos no banco (ainda a ser implementado)
-     
-     const allEntitys = []; // Aqui será preenchido com os dados do banco
-
-      return allEntitys
-
-    }catch (erro){
-
-       return { status: "erro", mensagem: erro.message };
-
-    }
-  }
-
-  updatePeriodo(id) {
-    try{
-      //Buscar periodo no banco pelo ID (ainda a ser implementado)
-
-      const periodo = new periodo(); // Aqui será preenchido com os dados do banco
-
-      if (periodo.dia_id != null) {
-          //Atualizar o periodo no banco (ainda a ser implementado)
-      }
-
-      if (periodo.horario_id != null) {
-        //Atualizar o periodo no banco (ainda a ser implementado)
-      }
-
-      if (periodo.disciplina_id != null) {
-        //Atualizar o periodo no banco (ainda a ser implementado)
-      }
-
-      if (periodo.docente_id != null) {
-        //Atualizar o periodo no banco (ainda a ser implementado)
-      }
-
-      if (periodo.semestre_id != null) {
-        //Atualizar o periodo no banco (ainda a ser implementado)
-      }
-
-      if (periodo.ambiente_id != null) {
-        //Atualizar o periodo no banco (ainda a ser implementado)
-      }
-
-      return { status: "sucesso", mensagem: "Periodo atualizado!" };
-
-    }catch (erro){
-
-       return { status: "erro", mensagem: erro.message };
-      
-    }
-  }
-
-  deletePeriodo(id) {
-
-    try{
-      //Buscar periodo no banco pelo ID (ainda a ser implementado)
-
-      const periodoExists = []; // Aqui será feito um boolean verificando se o periodo existe no banco ou não
+  async updatePeriodo( alterPeriodo ) {
+    try {
+      const id = alterPeriodo.id
+      const disciplina = alterPeriodo.disciplina_id
+      const docente = alterPeriodo.docente_id
+      const ambiente = alterPeriodo.ambiente_id
+      const periodoExists = await periodoQuery.periodoExistsOrNotById(id);
 
       if (periodoExists) {
-          //Atualizar o periodo no banco (ainda a ser implementado)
+
+        // Verificar se o nome é nulo ou vazio
+        if (!disciplina) {
+          throw new Error("Necessário inserir uma disciplina.");
+        }
+
+        if (!docente) {
+          throw new Error("Necessário inserir um professor.");
+        }
+
+        if (!ambiente) {
+          throw new Error("Necessário inserir uma sala ou laboratório.");
+        }
+        
+        return await periodoQuery.updateExistingPeriodo(id, disciplina, docente, ambiente);
+        
       }
-      return { status: "sucesso", mensagem: "Periodo deletado!" };
 
-    }catch (erro){
+      if (!periodoExists) {
 
-       return { status: "erro", mensagem: erro.message };
+        throw new Error("periodo não encontrado.");
+
+      }
+
+    } catch (erro) {
+      return { status: 400, mensagem: erro.message };
     }
+
   }
 
+  static async deletePeriodo(id) {
+  
+      try {
+  
+        const periodoExists = await periodoQuery.periodoExistsOrNotById(id);
+  
+        if (periodoExists) {
+  
+          await periodoQuery.deleteExistingPeriodo(id)
+  
+          return { status: 200, mensagem: "periodo deletado!" };
+  
+        }
+  
+        if (!periodoExists) {
+  
+          throw new Error("periodo não encontrado.");
+  
+        }
+  
+      } catch (erro) {
+  
+        return { status: 400, mensagem: erro.message };
+  
+      }
+    }
 }
+
+module.exports = periodo;

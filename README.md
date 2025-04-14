@@ -21,6 +21,12 @@
 
   <br>
   
+  <div>
+    <img src="https://img.shields.io/badge/Backend-Operacional-success?style=for-the-badge"/>
+    <img src="https://img.shields.io/badge/Sprint_1-Concluída-success?style=for-the-badge"/>
+    <img src="https://img.shields.io/badge/API-Funcional-success?style=for-the-badge"/>
+  </div>
+
   <p align="center">
     <a href="#-descrição">
       <img src="https://img.shields.io/badge/📝_Descrição-4a90e2?style=for-the-badge"/>
@@ -61,6 +67,19 @@ Sistema web que permite:
 - Geração de relatórios em PDF
 - Consultas dinâmicas e filtradas
 
+## 📅 Cronograma
+
+- **18/03**: Kick-off e Definição da Equipe
+- **24/03**: Início Sprint 1
+- **15/04**: Review Sprint 1
+- **16/04**: Início Sprint 2
+- **15/05**: Review Sprint 2
+- **16/05**: Início Sprint 3
+- **10/06**: Review Sprint 3
+- **11/06**: Apresentação Final
+
+---
+
 ## 🎯 Requisitos
 
 ### Funcionais
@@ -81,7 +100,7 @@ Sistema web que permite:
 - Backend em JavaScript
 - Banco de dados PostgreSQL
 - Documentação no GitHub
-- Gerenciamento via GitHub Projects/Trello
+- Gerenciamento via Trello
 
 ---
 
@@ -90,9 +109,9 @@ Sistema web que permite:
 | Status | Fase                                  |
 | ------ | ------------------------------------- |
 | ✅     | Fase 1: Definição do Projeto e Equipe |
-| ⏳     | Fase 2: Planejamento e Design         |
-| ⏳     | Fase 3: Desenvolvimento               |
-| ⏳     | Fase 4: Testes e Validação            |
+| ✅     | Fase 2: Planejamento e Design         |
+| ✅     | Fase 3: Desenvolvimento               |
+| ✅     | Fase 4: Testes e Validação            |
 | ⏳     | Fase 5: Entrega e Apresentação        |
 
 ---
@@ -373,19 +392,6 @@ src/
         </tr>
     </table>
 </div>
-
----
-
-## 📅 Cronograma
-
-- **18/03**: Kick-off e Definição da Equipe
-- **24/03**: Início Sprint 1
-- **15/04**: Review Sprint 1
-- **16/04**: Início Sprint 2
-- **15/05**: Review Sprint 2
-- **16/05**: Início Sprint 3
-- **10/06**: Review Sprint 3
-- **11/06**: Apresentação Final
 
 ---
 

@@ -1,3 +1,6 @@
+const diaQuery = require('../migrations/diaQuery');
+
+
 class dia {
     constructor(id, nome) {
         this.id = id;
@@ -20,58 +23,88 @@ class dia {
         this.nome = nome;
       }
 
-      static createDia(createDiaDto) {
-        try {
-          const Entity = new dia(null, createDiaDto.nome);
-    
-          return { status: "sucesso", mensagem: "Dia cadastrado!" };
+      async createDia(newDia) {
+      
+          try {
+            const nome = newDia.nome;
+        
+            // Verificar se o nome é nulo ou vazio
+            if (!nome || nome.trim() === "") {
+                throw new Error("Nome do dia é obrigatório para criação.");
+            }
+        
+            // Caso o nome seja válido, continuar com a lógica
+            return await diaQuery.createNewDia(nome);
+        
         } catch (erro) {
-          return { status: "erro", mensagem: erro.message };
+            return { status: 400, mensagem: erro.message };
         }
-      }
-    
-      getAllDia() {
-        try {
-          //Buscar todos os dados no banco (ainda a ser implementado)
-    
-          const allEntitys = []; // Aqui será preenchido com os dados do banco
-    
-          return allEntitys;
-        } catch (erro) {
-          return { status: "erro", mensagem: erro.message };
+      
         }
-      }
     
-      updateDia(id) {
-        try {
-          //Buscar dia no banco pelo ID (ainda a ser implementado)
+     static async getAllDia() {
+     
+         return await diaQuery.searchAllDias();
+     
+       }
     
-          const dia = new dia(); // Aqui será preenchido com os dados do banco
-    
-          if (dia.name != null) {
-            //Atualizar o dia no banco (ainda a ser implementado)
+      async updateDia(alterDia) {
+          try {
+      
+            const id = alterDia.id;
+      
+            const nome = alterDia.nome;
+      
+            const diaExists = await diaQuery.diaExistsOrNotById(id);
+      
+            if (diaExists) {
+      
+              if (!nome || nome.trim() === "") {
+                throw new Error("Nome do dia é obrigatório para atualização.");
+      
+            }
+            return await diaQuery.updateExistingDia(id, nome)
           }
-          return { status: "sucesso", mensagem: "Dia atualizado!" };
-        } catch (erro) {
-          return { status: "erro", mensagem: erro.message };
-        }
-      }
-    
-      deleteDia(id) {
-    
-        try{
-          //Buscar dia no banco pelo ID (ainda a ser implementado)
-    
-          const diaExists = []; // Aqui será feito um boolean verificando se o dia existe no banco ou não
-    
-          if (diaExists) {
-              //Atualizar o dia no banco (ainda a ser implementado)
+      
+            if (!diaExists) {
+      
+              throw new Error("Dia não encontrado.");
+      
+            }
+      
+          } catch (erro) {
+      
+            return { status: 400, mensagem: erro.message };
+      
           }
-          return { status: "sucesso", mensagem: "dia deletado!" };
-    
-        }catch (erro){
-    
-           return { status: "erro", mensagem: erro.message };
         }
-      }
+    
+      static async deleteDia(id) {
+      
+          try {
+      
+            const diaExists = await diaQuery.diaExistsOrNotById(id);
+      
+            if (diaExists) {
+      
+              await diaQuery.deleteExistingDia(id)
+      
+              return { status: 200, mensagem: "Dia deletado!" };
+      
+            }
+      
+            if (!diaExists) {
+      
+              throw new Error("Dia não encontrado.");
+      
+            }
+      
+          } catch (erro) {
+      
+            return { status: 400, mensagem: erro.message };
+      
+          }
+        }
 }
+
+module.exports = dia;
