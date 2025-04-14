@@ -179,6 +179,101 @@ npm start
 
 ---
 
+## 📁 Estrutura do Projeto
+
+```
+ErrorSquad-Server/
+├── LICENSE
+├── package.json
+├── README.md
+├── src/
+│   ├── server.js              # Ponto de entrada da aplicação
+│   ├── config/                # Configurações do sistema
+│   │   └── configExample.js   # Exemplo de configuração
+│   ├── controllers/           # Controladores da API
+│   │   ├── cursoController.js
+│   │   └── healthController.js
+│   ├── database/              # Camada de acesso a dados
+│   │   ├── entity/            # Entidades do banco
+│   │   │   ├── ambiente.js
+│   │   │   ├── curso.js
+│   │   │   ├── dia.js
+│   │   │   ├── disciplina.js
+│   │   │   ├── docente.js
+│   │   │   ├── horario.js
+│   │   │   ├── periodo.js
+│   │   │   ├── semestre.js
+│   │   │   ├── turno.js
+│   │   │   └── dto/           # Data Transfer Objects
+│   │   │       └── createAmbienteDto.js
+│   │   │       └── createCursoDto.js
+│   │   │       └── createDiaDto.js
+│   │   │       └── ...
+│   │   └── migrations/        # Scripts de migração
+│   │       ├── cursoQuery.js
+│   │       └── migrationsExample.js
+│   ├── lib/                   # Bibliotecas e utilitários
+│   │   └── bigquery.js        # Integração com Google BigQuery
+│   ├── routes/                # Rotas da API
+│   │   ├── cursoRoutes.js
+│   │   ├── healthRoutes.js
+│   │   ├── index.js
+│   │   └── userRoutes.js
+│   ├── services/              # Serviços de negócio
+│   │   └── servicesExample.js
+│   └── utils/                 # Funções auxiliares
+│       ├── firstLetterUppercase.js
+│       └── utilsExample.js
+```
+
+## 📦 Dependências
+
+O projeto utiliza as seguintes dependências principais:
+
+```json
+{
+  "dependencies": {
+    "express": "^4.18.3",
+    "dotenv": "^16.3.1",
+    "pg": "^8.11.3",
+    "@google-cloud/bigquery": "^7.3.0",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
+```
+
+## 🔒 Configuração do Ambiente (.env)
+
+Para executar o projeto, é necessário criar um arquivo `.env` na raiz do projeto com as seguintes variáveis (não inclua valores sensíveis em repositórios públicos):
+
+```
+# Caminho do arquivo: /ErrorSquad-Server/.env
+
+# Configurações do servidor
+PORT=3000
+NODE_ENV=development
+
+# Configurações do banco de dados PostgreSQL
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=seu_usuario
+DB_PASSWORD=sua_senha
+DB_DATABASE=nome_do_banco
+
+# Configurações do Google BigQuery (se aplicável)
+GOOGLE_APPLICATION_CREDENTIALS=caminho/para/suas/credenciais.json
+BIGQUERY_PROJECT_ID=seu_projeto_id
+BIGQUERY_DATASET=seu_dataset
+```
+
+> ⚠️ **Importante**: Nunca compartilhe seu arquivo `.env` com valores reais ou o adicione ao controle de versão. Este é apenas um modelo de exemplo.
+
+---
+
 ## 🚀 Funcionalidades do Backend
 
 1. **Ingestão de Dados**:
