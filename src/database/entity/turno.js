@@ -1,3 +1,5 @@
+const turnoQuery = require('../migrations/turnoQuery');
+
 class turno {
 
     constructor(id, nome) {
@@ -21,75 +23,88 @@ class turno {
         this.nome = nome;
     }
 
-    static createTurno(createTurnoDto) {
-        try {
-
-            const Entity = new turno(null, createTurnoDto.nome);
-            //Lógica de inserção de dados no banco...
-
-            return { "status": "sucesso", "mensagem": "Turno cadastrado!" };
-
-        } catch (erro) {
-
-            return { status: "erro", mensagem: erro.message };
-
-        }
-    }
-
-    getAllTurno() {
+    async createTurno(newTurno) {
 
         try {
-
-            //Buscar todos os turnos no banco (ainda a ser implementado)
-
-            const allEntitys = []; // Aqui será preenchido com os dados do banco
-
-            return allEntitys
-
-        } catch (erro) {
-
-            return { status: "erro", mensagem: erro.message };
-
-        }
-
-    }
-
-    updateTurno(id) {
-
-        try {
-            //Buscar turno no banco pelo ID (ainda a ser implementado)
-
-            const turno = new turno(); // Aqui será preenchido com os dados do banco
-
-            if (turno.name != null) {
-                //Atualizar o turno no banco (ainda a ser implementado)
-            }
-            return { status: "sucesso", mensagem: "turno atualizado!" };
-
-        } catch (erro) {
-
-            return { status: "erro", mensagem: erro.message };
-
-        }
-
-    }
-
-    deleteTurno(id) {
-
-        try{
-          //Buscar turno no banco pelo ID (ainda a ser implementado)
+          const nome = newTurno.nome;
+      
+          // Verificar se o nome é nulo ou vazio
+          if (!nome || nome.trim() === "") {
+              throw new Error("Nome do turno é obrigatório para criação.");
+          }
+      
+          // Caso o nome seja válido, continuar com a lógica
+          return await turnoQuery.createNewTurno(nome);
+      
+      } catch (erro) {
+          return { status: 400, mensagem: erro.message };
+      }
     
-          const turnoExists = []; // Aqui será feito um boolean verificando se o turno existe no banco ou não
+      }
+
+    static async getAllTurno() {
+
+        return await turnoQuery.searchAllTurnos();
+    
+      }
+
+    async updateTurno(alterTurno) {
+        try {
+    
+          const id = alterTurno.id;
+    
+          const nome = alterTurno.nome;
+    
+          const turnoExists = await turnoQuery.turnoExistsOrNotById(id);
     
           if (turnoExists) {
-              //Atualizar o turno no banco (ainda a ser implementado)
+    
+            if (!nome || nome.trim() === "") {
+              throw new Error("Nome do turno é obrigatório para atualização.");
+    
           }
-          return { status: "sucesso", mensagem: "turno deletado!" };
+          return await turnoQuery.updateExistingTurno(id, nome)
+        }
     
-        }catch (erro){
+          if (!turnoExists) {
     
-           return { status: "erro", mensagem: erro.message };
+            throw new Error("Turno não encontrado.");
+    
+          }
+    
+        } catch (erro) {
+    
+          return { status: 400, mensagem: erro.message };
+    
         }
       }
 
-}
+    static async deleteTurno(id) {
+
+        try {
+    
+          const turnoExists = await turnoQuery.turnoExistsOrNotById(id);
+    
+          if (turnoExists) {
+    
+            await turnoQuery.deleteExistingTurno(id)
+    
+            return { status: 200, mensagem: "Turno deletado!" };
+    
+          }
+    
+          if (!turnoExists) {
+    
+            throw new Error("Turno não encontrado.");
+    
+          }
+    
+        } catch (erro) {
+    
+          return { status: 400, mensagem: erro.message };
+    
+        }
+      }
+    }
+    
+module.exports = turno;

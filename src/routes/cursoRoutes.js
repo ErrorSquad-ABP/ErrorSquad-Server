@@ -1,18 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const userController = require("../controllers/cursoController");
+const cursoController = require("../controllers/cursoController");
 
 // Rota para criar um curso
-router.post("/", userController.requestNewCurso);
+router.post("/", cursoController.requestNewCurso);
 
 // Rota para listar curso
-router.get("/", userController.listCursos);
+router.get("/", cursoController.listCursos);
 
 // Rota para alterar curso
-router.put("/", userController.requestAlterCurso);
+router.put("/", cursoController.requestAlterCurso);
 
 // Rota para alterar curso
-router.delete("/", userController.requestDeleteCurso)
+router.delete("/", cursoController.requestDeleteCurso)
 
 
 module.exports = router;
