@@ -54,7 +54,7 @@ async function searchAllHorarios() {
 
 async function horarioExistsOrNotById( id ) {
   const query = `
-    SELECT * FROM \`sitefatecdsm-01-2025.SiteFatecDSM.curso\`
+    SELECT * FROM \`sitefatecdsm-01-2025.SiteFatecDSM.horario\`
     WHERE id = @id;
   `;
 
