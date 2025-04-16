@@ -3,6 +3,7 @@ const createDiaDto = require('../database/entity/dto/createDiaDto');
 const defaultStrings = require('../utils/firstLetterUppercase')
 
 async function requestNewDia(req, res) {
+
   const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
   const newDiaDto = new createDiaDto(defaultNomeString);
 
@@ -17,9 +18,10 @@ async function requestNewDia(req, res) {
 }
 
 async function listDias(req, res) {
+
   try {
     const dias = await dia.getAllDia();
-    res.status(200).json(dias);
+    res.status(dias.status).json(dias.data);
   } catch (error) {
     console.error('Erro ao listar dias:', error);
     res.status(500).json({ erro: 'Erro interno ao buscar dias' });
@@ -27,9 +29,10 @@ async function listDias(req, res) {
 }
 
 async function requestAlterDia(req, res) {
+
   const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
   const alterDia = new dia(req.body.id, defaultNomeString);
-  
+
   try {
     const updateDia = await alterDia.updateDia(alterDia);
     res.status(updateDia.status).json(updateDia);
@@ -40,8 +43,9 @@ async function requestAlterDia(req, res) {
 }
 
 async function requestDeleteDia(req, res) {
-  const id = req.body.id;
   
+  const id = req.body.id;
+
   try {
     const deleteDia = await dia.deleteDia(id);
     res.status(deleteDia.status).json(deleteDia);

@@ -37,7 +37,7 @@ async function searchAllTurnos() {
 
   if ( rows.length > 0 ){
 
-  return rows;
+    return { status: 200, data: rows, };
 
   }
 

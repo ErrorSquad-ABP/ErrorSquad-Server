@@ -5,12 +5,10 @@ const defaultStrings = require('../utils/firstLetterUppercase');
 async function requestNewDisciplina(req, res) {
 
     const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
-
     const newDisciplinaDto = new createDisciplinaDto(defaultNomeString, req.body.docente_id);
 
     try {
         const newDisciplina = new disciplina(null, newDisciplinaDto.nome, newDisciplinaDto.docente_id)
-
         const createDisciplina = await newDisciplina.createDisciplina(newDisciplina);
         res.status(createDisciplina.status).json(createDisciplina);
     } catch (error) {
@@ -22,7 +20,7 @@ async function requestNewDisciplina(req, res) {
 async function listDisciplinas(req, res) {
     try {
         const disciplinas = await disciplina.getAllDisciplina();
-        res.status(200).json(disciplinas);
+        res.status(disciplinas.status).json(disciplinas.data);
     } catch (error) {
         console.error('Erro ao listar disciplinas:', error);
         res.status(500).json({ erro: 'Erro interno ao buscar disciplinas' });
@@ -32,7 +30,6 @@ async function listDisciplinas(req, res) {
 async function requestAlterDisciplina(req, res) {
 
     const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
-
     const alterDisciplina = new disciplina(req.body.id, defaultNomeString, req.body.docente_id);
 
     try {

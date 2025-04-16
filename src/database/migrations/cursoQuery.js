@@ -1,13 +1,13 @@
 const bigquery = require('../../lib/bigquery');
 
-async function createNewCurso( nome ) {
+async function createNewCurso(nome) {
 
-  const query = 
-   `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.curso (id, nome)
+  const query =
+    `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.curso (id, nome)
     SELECT 
     COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.curso), 0) + 1,
    @nome;`;
-''
+  ''
   const options = {
     query,
     params: {
@@ -27,23 +27,23 @@ async function createNewCurso( nome ) {
 
 
 async function searchAllCursos() {
-  
-  const query = 
-   `SELECT * 
+
+  const query =
+    `SELECT * 
     FROM \`sitefatecdsm-01-2025.SiteFatecDSM.curso\`
     order by id asc`;
 
   const [rows] = await bigquery.query({ query });
 
-  if ( rows.length > 0 ){
+  if (rows.length > 0) {
 
-  return rows;
+    return { status: 200, data: rows, };
 
   }
 
-  if ( rows.length <= 0 ){
+  if (rows.length <= 0) {
 
-    return { status:200, mensagem: "Sem cursos cadastrados." };
+    return { status: 200, mensagem: "Sem cursos cadastrados." };
 
   }
 
@@ -80,24 +80,24 @@ async function updateExistingCurso(id, nome) {
   const options = {
     query,
     params: {
-      id: parseInt(id),      
-      nome: String(nome)     
+      id: parseInt(id),
+      nome: String(nome)
     },
-    useLegacySql: false      
+    useLegacySql: false
   };
 
 
   try {
     const [rows] = await bigquery.query(options);
-    return { status:200, mensagem: 'Curso atualizado com sucesso!' };
-    
+    return { status: 200, mensagem: 'Curso atualizado com sucesso!' };
+
   } catch (erro) {
     console.error('Erro ao alterar curso:', erro);
     return { status: 400, mensagem: 'Problemas com o banco de dados.' };
   }
 }
 
-async function deleteExistingCurso( id ) {
+async function deleteExistingCurso(id) {
   const query = `
     DELETE FROM \`sitefatecdsm-01-2025.SiteFatecDSM.curso\`
     WHERE id = @id;
@@ -106,16 +106,16 @@ async function deleteExistingCurso( id ) {
   const options = {
     query,
     params: {
-      id: parseInt(id),          
+      id: parseInt(id),
     },
-    useLegacySql: false      
+    useLegacySql: false
   };
 
 
   try {
     const [rows] = await bigquery.query(options);
     return { sucesso: true, mensagem: 'Curso atualizado com sucesso!' };
-    
+
   } catch (erro) {
     console.error('Erro ao alterar curso:', erro);
     return { status: 400, mensagem: 'Problemas com o banco de dados.' };
