@@ -1,4 +1,4 @@
-# Repositório de arquivos Back-End
+# Repositório de Backend - Interface Web de Horários Acadêmicos
 <div align="center">
   <h1>
     <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=30&duration=3000&pause=1000&color=4A90E2&center=true&vCenter=true&repeat=true&width=1000&lines=Interface+Web+de+Hor%C3%A1rios+Acad%C3%AAmicos+%7C+Backend+%F0%9F%92%BB" alt="Typing SVG" />
@@ -32,11 +32,11 @@
       <img src="https://img.shields.io/badge/📝_Descrição-4a90e2?style=for-the-badge"/>
     </a>
     &nbsp;
-    <a href="#-status-do-projeto">
-      <img src="https://img.shields.io/badge/📊_Status-4a90e2?style=for-the-badge"/>
+    <a href="#-arquitetura">
+      <img src="https://img.shields.io/badge/🏗️_Arquitetura-4a90e2?style=for-the-badge"/>
     </a>
     &nbsp;
-    <a href="#%EF%B8%8F-tecnologias-previstas">
+    <a href="#-tecnologias">
       <img src="https://img.shields.io/badge/🛠️_Tecnologias-4a90e2?style=for-the-badge"/>
     </a>
     &nbsp;
@@ -44,7 +44,7 @@
       <img src="https://img.shields.io/badge/⚙️_Execução-4a90e2?style=for-the-badge"/>
     </a>
     &nbsp;
-    <a href="#-nossa-equipe">
+    <a href="#-equipe">
       <img src="https://img.shields.io/badge/👥_Equipe-4a90e2?style=for-the-badge"/>
     </a>
   </p>
@@ -54,143 +54,38 @@
 
 ## 📝 Descrição
 
-Backend do sistema de gestão de horários acadêmicos da FATEC Jacareí, desenvolvido pela equipe Error Squad. O projeto visa automatizar o processo de divulgação e consulta de horários de aulas, substituindo o sistema manual atual por uma solução digital integrada.
+**ErrorSquad-Server** é o componente backend do sistema de gestão de horários acadêmicos da FATEC Jacareí, desenvolvido pela equipe Error Squad como parte do projeto de Aprendizagem Baseada em Projetos (ABP) do 1º semestre de 2025.
 
-### Problema
-A secretaria acadêmica necessita refazer manualmente os informes de horários a cada alteração, tornando o processo ineficiente e propenso a erros.
+### Problema Identificado
+A secretaria acadêmica da FATEC Jacareí enfrenta desafios significativos na gestão e divulgação dos horários de aulas:
+- Processo manual de criação e atualização de informes de horários
+- Retrabalho constante a cada alteração de cronograma
+- Dificuldade de consulta por parte de alunos e professores
+- Potencial para conflitos de alocação de ambientes e docentes
+- Ausência de um sistema centralizado para gerenciamento de dados
 
-### Solução
-Sistema web que permite:
-- Consulta de horários por curso, ambiente, turno e turma
-- Importação e gerenciamento de dados via CSV
-- Validação automática de conflitos
-- Geração de relatórios em PDF
-- Consultas dinâmicas e filtradas
+### Solução Implementada
+O backend fornece uma API REST completa que viabiliza:
+- **Consulta avançada**: Filtros por curso, ambiente, turno, turma, professor e período
+- **Importação automatizada**: Ingestão e processamento de dados via CSV
+- **Validação inteligente**: Detecção automática de conflitos de horários e ambientes
+- **Persistência robusta**: Armazenamento seguro em banco de dados PostgreSQL
+- **Análise de dados**: Integração com Google BigQuery para relatórios avançados
+- **Geração de documentos**: Exportação de relatórios em PDF com formatação profissional
+- **Gestão completa**: CRUD para todas as entidades do sistema (cursos, disciplinas, professores, etc.)
 
-## 📅 Cronograma
+## 🏗️ Arquitetura
 
-- **18/03**: Kick-off e Definição da Equipe
-- **24/03**: Início Sprint 1
-- **15/04**: Review Sprint 1
-- **16/04**: Início Sprint 2
-- **15/05**: Review Sprint 2
-- **16/05**: Início Sprint 3
-- **10/06**: Review Sprint 3
-- **11/06**: Apresentação Final
+O backend foi desenvolvido seguindo princípios de arquitetura limpa e modular, com clara separação de responsabilidades:
 
----
-
-## 🎯 Requisitos
-
-### Funcionais
-- **RF01**: Ingestão de dados via arquivo CSV
-- **RF02**: Gerenciamento CRUD dos dados (opcional)
-- **RF03**: Validação de regras de alocação
-  - Evitar conflitos de horários
-  - Evitar conflitos de salas
-- **RF04**: Exportação de relatórios em PDF
-- **RF05**: Sistema de consultas dinâmicas
-
-### Não Funcionais
-- **RNF01**: Mapa interativo de salas
-- **RNF02**: Interface responsiva
-
-### Restrições
-- Prototipação no Figma
-- Backend em JavaScript
-- Banco de dados PostgreSQL
-- Documentação no GitHub
-- Gerenciamento via Trello
-
----
-
-## 📊 Status do Projeto
-
-| Status | Fase                                  |
-| ------ | ------------------------------------- |
-| ✅     | Fase 1: Definição do Projeto e Equipe |
-| ✅     | Fase 2: Planejamento e Design         |
-| ✅     | Fase 3: Desenvolvimento               |
-| ✅     | Fase 4: Testes e Validação            |
-| ⏳     | Fase 5: Entrega e Apresentação        |
-
----
-
-## 🛠️ Tecnologias
-
-- **Backend**: JavaScript (Node.js)
-- **Banco de Dados**: PostgreSQL
-- **Controle de Versão**: Git/GitHub
-- **Gestão**: GitHub Projects
-
-### Ferramentas de Desenvolvimento
-- **Git**: Controle de versão.
-- **GitHub**: Repositório para colaboração e versionamento.
-- **Figma**: Prototipação e validação do design.
-- **Trello**: Gerenciamento de tarefas e sprints.
-
-### Estrutura do Backend (Express.js)
-- Roteamento com Express Router
-- Middlewares personalizados para validação
-- Gerenciamento de sessões com express-session
-- Sistema de arquivos para manipulação de CSV
-- Queries SQL nativas com node-postgres
-
----
-
-## 📥 Instalação e Execução
-
-### Pré-requisitos
-- **Node.js**: [Download](https://nodejs.org/)
-- **PostgreSQL**: [Download](https://www.postgresql.org/)
-
-### Dependências principais
-- **Express.js**: Framework web minimalista para Node.js
-```json
-{
-  "dependencies": {
-    "express": "^4.18.3"
-  }
-}
-```
-
-### Passos para execução
-```bash
-# Clone o repositório
-git clone https://github.com/ErrorSquad-ABP/ErrorSquad-Server.git
-
-# Entre na pasta do projeto
-cd ErrorSquad-Server
-
-# Instale as dependências
-npm install express
-
-# Configure o banco de dados no arquivo .env
-# Exemplo do arquivo .env:
-# DB_HOST=localhost
-# DB_PORT=5432
-# DB_USER=seu_usuario
-# DB_PASSWORD=sua_senha
-# DB_NAME=nome_do_banco
-
-# Inicie o servidor
-npm start
-```
-
----
-
-## 📁 Estrutura do Projeto
+### 📁 Estrutura de Diretórios
 
 ```
 ErrorSquad-Server/
-├── LICENSE
-├── package.json
-├── README.md
-├── src/
-│   ├── server.js              # Ponto de entrada da aplicação
-│   ├── config/                # Configurações do sistema
-│   │   └── configExample.js
-│   ├── controllers/           # Controladores da API (CRUDs finalizados)
+├── src/                      # Código-fonte principal
+│   ├── server.js             # Ponto de entrada da aplicação
+│   ├── config/               # Configurações do sistema
+│   ├── controllers/          # Controladores da API (lógica de negócio)
 │   │   ├── ambienteController.js
 │   │   ├── cursoController.js
 │   │   ├── diaController.js
@@ -201,12 +96,12 @@ ErrorSquad-Server/
 │   │   ├── periodoController.js
 │   │   ├── semestreController.js
 │   │   └── turnoController.js
-│   ├── database/              # Conexão e queries do PostgreSQL
-│   │   ├── entity/            # Modelos de dados
-│   │   └── migrations/        # Scripts de migração
-│   ├── lib/                   # Bibliotecas e integrações externas
-│   │   └── bigquery.js        # Integração com Google BigQuery
-│   ├── routes/                # Rotas da API
+│   ├── database/             # Camada de acesso a dados
+│   │   ├── entity/           # Modelos de dados e DTOs
+│   │   └── migrations/       # Scripts de migração e queries SQL
+│   ├── lib/                  # Bibliotecas e integrações externas
+│   │   └── bigquery.js       # Integração com Google BigQuery
+│   ├── routes/               # Definição de rotas da API
 │   │   ├── ambienteRoutes.js
 │   │   ├── cursoRoutes.js
 │   │   ├── diaRoutes.js
@@ -214,91 +109,218 @@ ErrorSquad-Server/
 │   │   ├── docenteRoutes.js
 │   │   ├── healthRoutes.js
 │   │   ├── horarioRoutes.js
-│   │   ├── index.js
+│   │   ├── index.js          # Agregador de rotas
 │   │   ├── periodoRoutes.js
 │   │   ├── semestreRoutes.js
 │   │   ├── turnoRoutes.js
 │   │   └── userRoutes.js
-│   ├── services/              # Lógica de negócios e integrações
-│   │   └── servicesExample.js
-│   └── utils/                 # Funções utilitárias
+│   ├── services/             # Serviços e lógica de negócios complexa
+│   └── utils/                # Funções utilitárias
 │       ├── firstLetterUppercase.js
 │       ├── isValidTime.js
 │       └── utilsExample.js
+├── package.json              # Dependências e scripts
+└── README.md                 # Esta documentação
 ```
 
-> Organização baseada em arquitetura modular, separando responsabilidades por domínio (controllers, routes, services, database, utils, etc.), facilitando manutenção, testes e escalabilidade.
+### 📊 Diagrama de Componentes
 
-## 📦 Dependências
+A arquitetura segue um padrão em camadas com fluxo de dados bem definido:
 
-O projeto utiliza as seguintes dependências principais:
+1. **Camada de Rotas** (`routes/`) - Define endpoints RESTful e parâmetros aceitos
+2. **Camada de Controladores** (`controllers/`) - Implementa lógica de negócios e validações
+3. **Camada de Serviços** (`services/`) - Encapsula operações complexas e integrações
+4. **Camada de Acesso a Dados** (`database/`) - Gerencia conexões e operações no banco de dados
+5. **Camada de Utilidades** (`utils/` e `lib/`) - Provê funções auxiliares e integrações externas
 
-```json
-{
-  "dependencies": {
-    "express": "^4.18.3",
-    "dotenv": "^16.3.1",
-    "pg": "^8.11.3",
-    "@google-cloud/bigquery": "^7.3.0",
-    "cors": "^2.8.5",
-    "body-parser": "^1.20.2"
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.1"
-  }
-}
-```
-
-## 🔒 Configuração do Ambiente (.env)
-
-Para executar o projeto, é necessário criar um arquivo `.env` na raiz do projeto com as seguintes variáveis (não inclua valores sensíveis em repositórios públicos):
+### 🔄 Fluxo de Requisições
 
 ```
-# Caminho do arquivo: /ErrorSquad-Server/.env
+Cliente → Requisição HTTP → Rota → Controller → Serviço → Banco de Dados → Resposta
+```
 
-# Configurações do servidor
+### 📝 Padrões Arquiteturais
+
+- **RESTful API**: Endpoints seguem convenções REST para recursos e operações CRUD
+- **Middleware Pattern**: Processamento em cadeia para autenticação, validação e logging
+- **Repository Pattern**: Abstração das operações de banco de dados
+- **DTO Pattern**: Transferência segura de dados entre camadas
+- **Factory Pattern**: Criação padronizada de objetos complexos
+
+## 🛠️ Tecnologias
+
+### Stack Principal
+
+- **Node.js**: Ambiente de execução JavaScript server-side
+- **Express.js**: Framework web para construção de APIs
+- **PostgreSQL**: Sistema de gerenciamento de banco de dados relacional
+- **Google BigQuery**: Datawarehouse para análises e relatórios avançados
+
+### Bibliotecas e Ferramentas
+
+| Dependência | Versão | Finalidade |
+|-------------|--------|------------|
+| **express** | ^4.21.2 | Framework web rápido e minimalista |
+| **dotenv** | ^16.4.7 | Carregamento de variáveis de ambiente |
+| **pg** | ^8.14.1 | Cliente PostgreSQL para Node.js |
+| **@google-cloud/bigquery** | ^7.9.3 | SDK para integração com Google BigQuery |
+| **cors** | ^2.8.5 | Middleware para habilitar CORS |
+| **nodemon** | ^3.0.1 | Reinicialização automática do servidor durante desenvolvimento |
+
+### Paradigmas e Práticas
+
+- **Programação Assíncrona**: Uso extensivo de Promises e async/await
+- **Modularização**: Componentes com responsabilidade única e coesos
+- **Validação Robusta**: Checagem rigorosa de inputs e parâmetros
+- **Tratamento de Erros**: Sistema padronizado de captura e resposta de exceções
+- **Logs Estruturados**: Registro de eventos e erros para monitoramento e debug
+
+## 📦 Dependências e Ambiente
+
+Para executar este projeto, você precisará das seguintes tecnologias instaladas:
+
+### Pré-requisitos
+
+- **Node.js**: v16.x ou superior [Download](https://nodejs.org/)
+- **PostgreSQL**: v14.x ou superior [Download](https://www.postgresql.org/)
+- **Git**: Para clonar o repositório [Download](https://git-scm.com/)
+
+### Variáveis de Ambiente
+
+O projeto utiliza o arquivo `.env` para configurações sensíveis. Crie este arquivo na raiz do projeto com as seguintes variáveis:
+
+```
+# Servidor
 PORT=3000
 NODE_ENV=development
 
-# Configurações do banco de dados PostgreSQL
+# PostgreSQL
 DB_HOST=localhost
 DB_PORT=5432
 DB_USER=seu_usuario
 DB_PASSWORD=sua_senha
 DB_DATABASE=nome_do_banco
 
-# Configurações do Google BigQuery (se aplicável)
-GOOGLE_APPLICATION_CREDENTIALS=caminho/para/suas/credenciais.json
+# Google BigQuery (opcional)
+GOOGLE_APPLICATION_CREDENTIALS=./src/config/bigquery-key.json
 BIGQUERY_PROJECT_ID=seu_projeto_id
 BIGQUERY_DATASET=seu_dataset
 ```
 
-> ⚠️ **Importante**: Nunca compartilhe seu arquivo `.env` com valores reais ou o adicione ao controle de versão. Este é apenas um modelo de exemplo.
+> ⚠️ **IMPORTANTE**: Nunca compartilhe seu arquivo `.env` ou credenciais em repositórios públicos.
 
----
+## ⚙️ Instalação e Execução
 
-## 🚀 Funcionalidades do Backend
+Siga estas etapas para configurar e executar o backend em seu ambiente local:
 
-1. **Ingestão de Dados**:
-   - Importação de horários e alocações a partir de arquivos CSV.
-   - Validação automática para evitar conflitos de horários e ambientes.
+```bash
+# Clone o repositório
+git clone https://github.com/ErrorSquad-ABP/ErrorSquad-Server.git
 
-2. **Gerenciamento de Dados (CRUD)**:
-   - Operações de criação, leitura, atualização e exclusão de horários, professores, turmas e ambientes.
+# Navegue até o diretório do projeto
+cd ErrorSquad-Server
 
-3. **Consultas Dinâmicas**:
-   - Filtros por turma, turno, professor, ambiente e data.
+# Instale todas as dependências
+npm install
 
-4. **Geração de Relatórios**:
-   - Exportação de relatórios em formato PDF com os horários e alocações.
+# Configure o arquivo .env conforme instruções acima
 
-5. **Validação de Regras**:
-   - Garantia de que duas turmas não sejam alocadas no mesmo ambiente ao mesmo tempo.
-   - Verificação de conflitos de horários para professores.
+# Execute o servidor em modo desenvolvimento
+npm run dev
 
----
+# Ou em modo produção
+npm start
+```
 
-## 👥 Nossa Equipe
+### Verificação de Funcionamento
+
+Após iniciar o servidor, acesse:
+- `http://localhost:3000/health` - Deve retornar status 200 e mensagem "OK"
+- `http://localhost:3000/api/cursos` - Deve listar os cursos cadastrados (se houver)
+
+## 🚀 Funcionalidades Implementadas
+
+### 1. Endpoints da API (CRUD Completo)
+
+| Recurso | Método | Endpoint | Descrição |
+|---------|--------|----------|-----------|
+| **Ambientes** | GET | `/api/ambientes` | Listar todos os ambientes |
+|  | GET | `/api/ambientes/:id` | Obter um ambiente específico |
+|  | POST | `/api/ambientes` | Criar novo ambiente |
+|  | PUT | `/api/ambientes/:id` | Atualizar ambiente existente |
+|  | DELETE | `/api/ambientes/:id` | Remover um ambiente |
+| **Cursos** | GET | `/api/cursos` | Listar todos os cursos |
+|  | GET | `/api/cursos/:id` | Obter um curso específico |
+|  | POST | `/api/cursos` | Criar novo curso |
+|  | PUT | `/api/cursos/:id` | Atualizar curso existente |
+|  | DELETE | `/api/cursos/:id` | Remover um curso |
+| **Docentes** | GET | `/api/docentes` | Listar todos os docentes |
+|  | GET | `/api/docentes/:id` | Obter um docente específico |
+|  | POST | `/api/docentes` | Criar novo docente |
+|  | PUT | `/api/docentes/:id` | Atualizar docente existente |
+|  | DELETE | `/api/docentes/:id` | Remover um docente |
+| **Horários** | GET | `/api/horarios` | Listar todos os horários |
+|  | GET | `/api/horarios/filtro` | Buscar horários com filtros |
+|  | POST | `/api/horarios` | Criar novo horário |
+|  | PUT | `/api/horarios/:id` | Atualizar horário existente |
+|  | DELETE | `/api/horarios/:id` | Remover um horário |
+| **Sistema** | GET | `/health` | Verificar status do servidor |
+
+> Para documentação completa de todos os endpoints, consulte a [Documentação do Projeto](https://github.com/ErrorSquad-ABP/Documentacao-ABP)
+
+### 2. Sistemas de Validação
+
+O backend implementa diversas validações para garantir a integridade dos dados:
+
+- **Validação de campos obrigatórios**: Verificação de presença e formato
+- **Regras de negócio**: Implementações específicas do domínio acadêmico
+- **Prevenção de conflitos**: Algoritmos para detectar sobreposições de horários
+- **Consistência referencial**: Verificação de entidades relacionadas
+
+### 3. Integração com Banco de Dados
+
+- **PostgreSQL**: Persistência principal com transações ACID
+- **BigQuery**: Consultas analíticas e relatórios complexos
+- **Migrations**: Scripts para evolução controlada do schema
+
+### 4. Segurança
+
+- **Validação de input**: Proteção contra injeção SQL e outros ataques
+- **CORS configurável**: Controle de acesso por origem
+- **Sanitização de dados**: Limpeza de entradas potencialmente perigosas
+- **Mensagens de erro seguras**: Sem vazamento de informações sensíveis
+
+## 📏 Padrões de Código
+
+O projeto segue convenções rigorosas para manter a qualidade e consistência do código:
+
+- **Nomenclatura**: camelCase para variáveis, funções e arquivos
+- **Formatação**: Indentação de 2 espaços, sem tabs
+- **Comentários**: Documentação de funções complexas e decisões arquiteturais
+- **Tratamento de Erros**: Try/catch em operações críticas e assíncronas
+- **Async/Await**: Preferência sobre callbacks e Promises encadeadas
+
+## 📊 Status do Projeto
+
+| Status | Fase | Detalhes |
+|--------|------|----------|
+| ✅ | Definição do Projeto | Requisitos e escopo definidos |
+| ✅ | Planejamento | Arquitetura e tecnologias escolhidas |
+| ✅ | Desenvolvimento Básico | CRUD completo implementado |
+| ✅ | Testes Unitários | Principais controladores testados |
+| ⏳ | Integração | Conexão com frontend em andamento |
+| ⏳ | Validação Final | Testes de aceitação pendentes |
+| ⏳ | Entrega | Documentação em finalização |
+
+## 🔄 Integração com Outros Sistemas
+
+O backend foi projetado para integrar-se perfeitamente com:
+
+- **Frontend**: Consumo da API pelo [ErrorSquad-Front](https://github.com/ErrorSquad-ABP/ErrorSquad-Front)
+- **Documentação**: Mapeamento de requisitos da [Documentacao-ABP](https://github.com/ErrorSquad-ABP/Documentacao-ABP)
+- **Recursos Visuais**: Acesso a imagens de [ErrorSquad-Assets1](https://github.com/ErrorSquad-ABP/ErrorSquad-Assets1)
+
+## 👥 Equipe
 
 <div align="center">
     <table>
@@ -374,6 +396,7 @@ BIGQUERY_DATASET=seu_dataset
                             </a>
                             <a href="https://www.linkedin.com/in/felipe-ferreira-pacheco-621443347/">
                                 <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
+                            </a>
                         </td>
                     </tr>
                     <tr>
@@ -402,8 +425,6 @@ BIGQUERY_DATASET=seu_dataset
     </table>
 </div>
 
----
-
 ## 👨‍🏫 Coordenação e Orientação
 
 <div align="center">
@@ -431,8 +452,6 @@ BIGQUERY_DATASET=seu_dataset
         </tr>
     </table>
 </div>
-
----
 
 ## 📜 Licença
 
