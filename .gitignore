@@ -3,3 +3,6 @@
 
 # Chave de autenticação do BigQuery
 bigquery-key.json
+
+# Pastas Bibliotecas node
+node_modules/
