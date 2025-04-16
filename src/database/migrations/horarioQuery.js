@@ -1,9 +1,9 @@
 const bigquery = require('../../lib/bigquery');
 
-async function createNewHorario( hr_inicio, hr_fim ) {
+async function createNewHorario(hr_inicio, hr_fim) {
 
-  const query = 
-   `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.horario ( id ,hr_inicio, hr_fim )
+  const query =
+    `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.horario ( id ,hr_inicio, hr_fim )
     SELECT 
     COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.horario), 0) + 1,
    CAST(@hr_inicio AS TIME), 
@@ -29,30 +29,30 @@ async function createNewHorario( hr_inicio, hr_fim ) {
 
 
 async function searchAllHorarios() {
-  
-  const query = 
-   `SELECT * 
+
+  const query =
+    `SELECT * 
     FROM \`sitefatecdsm-01-2025.SiteFatecDSM.horario\`
     order by id asc`;
 
   const [rows] = await bigquery.query({ query });
 
-  if ( rows.length > 0 ){
+  if (rows.length > 0) {
 
-  return rows;
+    return { status: 200, data: rows, };
 
   }
 
-  if ( rows.length <= 0 ){
+  if (rows.length <= 0) {
 
-    return { status:200, mensagem: "Sem horários cadastrados." };
+    return { status: 200, mensagem: "Sem horários cadastrados." };
 
   }
 
 
 }
 
-async function horarioExistsOrNotById( id ) {
+async function horarioExistsOrNotById(id) {
   const query = `
     SELECT * FROM \`sitefatecdsm-01-2025.SiteFatecDSM.horario\`
     WHERE id = @id;
@@ -72,7 +72,7 @@ async function horarioExistsOrNotById( id ) {
 }
 
 
-async function updateExistingHorario( id, hr_inicio, hr_fim ) {
+async function updateExistingHorario(id, hr_inicio, hr_fim) {
   const query = `
     UPDATE \`sitefatecdsm-01-2025.SiteFatecDSM.horario\`
     SET hr_inicio = @hr_inicio,
@@ -83,25 +83,25 @@ async function updateExistingHorario( id, hr_inicio, hr_fim ) {
   const options = {
     query,
     params: {
-      id: parseInt(id),      
+      id: parseInt(id),
       hr_inicio: (hr_inicio),
-      hr_fim: (hr_fim)    
+      hr_fim: (hr_fim)
     },
-    useLegacySql: false      
+    useLegacySql: false
   };
 
 
   try {
     const [rows] = await bigquery.query(options);
-    return { status:200, mensagem: 'Horário atualizado com sucesso!' };
-    
+    return { status: 200, mensagem: 'Horário atualizado com sucesso!' };
+
   } catch (erro) {
     console.error('Erro ao alterar horário:', erro);
     return { status: 400, mensagem: 'Problemas com o banco de dados.' };
   }
 }
 
-async function deleteExistingHorario( id ) {
+async function deleteExistingHorario(id) {
   const query = `
     DELETE FROM \`sitefatecdsm-01-2025.SiteFatecDSM.horario\`
     WHERE id = @id;
@@ -110,16 +110,16 @@ async function deleteExistingHorario( id ) {
   const options = {
     query,
     params: {
-      id: parseInt(id),          
+      id: parseInt(id),
     },
-    useLegacySql: false      
+    useLegacySql: false
   };
 
 
   try {
     const [rows] = await bigquery.query(options);
     return { sucesso: true, mensagem: 'Horário atualizado com sucesso!' };
-    
+
   } catch (erro) {
     console.error('Erro ao alterar horário:', erro);
     return { status: 400, mensagem: 'Problemas com o banco de dados.' };

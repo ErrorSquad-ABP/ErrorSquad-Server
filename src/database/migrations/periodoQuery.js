@@ -1,23 +1,23 @@
 const bigquery = require('../../lib/bigquery');
 
 async function searchAllPeriodos() {
-  
-  const query = 
-   `SELECT * 
+
+  const query =
+    `SELECT * 
     FROM \`sitefatecdsm-01-2025.SiteFatecDSM.periodo\`
     order by id asc`;
 
   const [rows] = await bigquery.query({ query });
 
-  if ( rows.length > 0 ){
+  if (rows.length > 0) {
 
-  return rows;
+    return { status: 200, data: rows, };
 
   }
 
-  if ( rows.length <= 0 ){
+  if (rows.length <= 0) {
 
-    return { status:200, mensagem: "Sem periodos cadastrados." };
+    return { status: 200, mensagem: "Sem periodos cadastrados." };
 
   }
 
@@ -54,26 +54,26 @@ async function updateExistingPeriodo(id, disciplina, docente, ambiente) {
   const options = {
     query,
     params: {
-      id: parseInt(id),      
-      disciplina: parseInt(disciplina), 
-      docente: parseInt(docente), 
-      ambiente: parseInt(ambiente),     
+      id: parseInt(id),
+      disciplina: parseInt(disciplina),
+      docente: parseInt(docente),
+      ambiente: parseInt(ambiente),
     },
-    useLegacySql: false      
+    useLegacySql: false
   };
 
 
   try {
     const [rows] = await bigquery.query(options);
-    return { status:200, mensagem: 'periodo atualizado com sucesso!' };
-    
+    return { status: 200, mensagem: 'periodo atualizado com sucesso!' };
+
   } catch (erro) {
     console.error('Erro ao alterar periodo:', erro);
     return { status: 400, mensagem: 'Problemas com o banco de dados.' };
   }
 }
 
-async function deleteExistingPeriodo( id ) {
+async function deleteExistingPeriodo(id) {
   const query = `
     DELETE FROM \`sitefatecdsm-01-2025.SiteFatecDSM.periodo\`
     WHERE id = @id;
@@ -82,16 +82,16 @@ async function deleteExistingPeriodo( id ) {
   const options = {
     query,
     params: {
-      id: parseInt(id),          
+      id: parseInt(id),
     },
-    useLegacySql: false      
+    useLegacySql: false
   };
 
 
   try {
     const [rows] = await bigquery.query(options);
     return { sucesso: true, mensagem: 'periodo atualizado com sucesso!' };
-    
+
   } catch (erro) {
     console.error('Erro ao alterar periodo:', erro);
     return { status: 400, mensagem: 'Problemas com o banco de dados.' };
