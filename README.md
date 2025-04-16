@@ -333,24 +333,24 @@ O backend foi projetado para integrar-se perfeitamente com:
                 <table>
                     <tr>
                         <td align="center">
-                            <b>Tiago Jardel Costa</b><br>
+                            <b>Arthur Facchinetti Peixoto</b><br>
                             <i>Product Owner</i><br>
-                            <a href="https://github.com/Tiago199516">
+                            <a href="https://github.com/ArthurFacchinetti">
                                 <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
                             </a>
-                            <a href="https://www.linkedin.com/in/tiago-jardel-da-costa-0b595bba/">
+                            <a href="https://www.linkedin.com/in/arthur-facchinetti-peixoto/">
                                 <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
                             </a>
                         </td>
                     </tr>
                     <tr>
                         <td align="center">
-                            <b>Arthur Facchinetti Peixoto</b><br>
+                            <b>João Victor Lopes Rosa</b><br>
                             <i>Scrum Master</i><br>
-                            <a href="https://github.com/ArthurFacchinetti">
+                            <a href="https://github.com/JV-L0pes">
                                 <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
                             </a>
-                            <a href="https://www.linkedin.com/in/arthur-facchinetti-peixoto/">
+                            <a href="https://www.linkedin.com/in/joao-victor-lopes/">
                                 <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
                             </a>
                         </td>
@@ -361,11 +361,11 @@ O backend foi projetado para integrar-se perfeitamente com:
                 <table>
                     <tr>
                         <td align="center">
-                            <b>João Victor Lopes Rosa</b><br>
-                            <a href="https://github.com/JV-L0pes">
+                            <b>Tiago Jardel Costa</b><br>
+                            <a href="https://github.com/Tiago199516">
                                 <img src="https://img.shields.io/badge/GitHub-333?style=flat-square&logo=github"/>
                             </a>
-                            <a href="https://www.linkedin.com/in/arthur-facchinetti-peixoto/">
+                            <a href="https://www.linkedin.com/in/tiago-jardel-da-costa-0b595bba/">
                                 <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
                             </a>
                         </td>
