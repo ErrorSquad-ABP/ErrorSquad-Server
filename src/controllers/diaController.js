@@ -21,7 +21,10 @@ async function listDias(req, res) {
 
   try {
     const dias = await dia.getAllDia();
-    res.status(dias.status).json(dias.data);
+    res.status(dias.status).json({
+      message: dias.mensagem,
+      data: dias.data
+    });
   } catch (error) {
     console.error('Erro ao listar dias:', error);
     res.status(500).json({ erro: 'Erro interno ao buscar dias' });

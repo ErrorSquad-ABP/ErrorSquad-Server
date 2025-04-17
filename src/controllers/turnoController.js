@@ -22,7 +22,10 @@ async function listTurnos(req, res) {
 
   try {
     const turnos = await turno.getAllTurno();
-    res.status(turnos.status).json(turnos.data);
+    res.status(turnos.status).json({
+      message: turnos.mensagem,
+      data: turnos.data
+    });
   } catch (error) {
     console.error('Erro ao listar turnos:', error);
     res.status(500).json({ erro: 'Erro interno ao buscar turnos' });

@@ -20,7 +20,10 @@ async function requestNewDisciplina(req, res) {
 async function listDisciplinas(req, res) {
     try {
         const disciplinas = await disciplina.getAllDisciplina();
-        res.status(disciplinas.status).json(disciplinas.data);
+        res.status(disciplinas.status).json({
+            message: disciplinas.mensagem,
+            data: disciplinas.data
+          });
     } catch (error) {
         console.error('Erro ao listar disciplinas:', error);
         res.status(500).json({ erro: 'Erro interno ao buscar disciplinas' });

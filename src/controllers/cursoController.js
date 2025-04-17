@@ -22,7 +22,10 @@ async function requestNewCurso(req, res) {
 async function listCursos(req, res) {
   try {
     const cursos = await curso.getAllCurso();
-    res.status(cursos.status).json(cursos.data);
+    res.status(cursos.status).json({
+      message: cursos.mensagem,
+      data: cursos.data
+    });
   } catch (error) {
     console.error('Erro ao listar cursos:', error);
     res.status(500).json({ erro: 'Erro interno ao buscar cursos' });
