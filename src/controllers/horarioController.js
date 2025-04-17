@@ -21,7 +21,10 @@ async function listHorarios(req, res) {
   
   try {
     const horarios = await horario.getAllHorario();
-    res.status(horarios.status).json(horarios.data);
+    res.status(horarios.status).json({
+      message: horarios.mensagem,
+      data: horarios.data
+    });
   } catch (error) {
     console.error('Erro ao listar horários:', error);
     res.status(500).json({ erro: 'Erro interno ao buscar horários' });

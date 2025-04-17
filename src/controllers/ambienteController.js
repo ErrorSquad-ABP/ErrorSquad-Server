@@ -21,7 +21,10 @@ async function listAmbientes(req, res) {
 
   try {
     const ambientes = await ambiente.getAllAmbiente();
-    res.status(ambientes.status).json(ambientes.data);
+    res.status(ambientes.status).json({
+      message: ambientes.mensagem,
+      data: ambientes.data
+    });
   } catch (error) {
     console.error('Erro ao listar ambientes:', error);
     res.status(500).json({ erro: 'Erro interno ao buscar ambientes' });
