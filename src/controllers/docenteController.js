@@ -22,7 +22,10 @@ async function listDocente(req, res) {
   try {
     const docentes = await docente.getAllDocente();
     console.log(docentes)
-    res.status(docentes.status).json(docentes.data);
+    res.status(docentes.status).json({
+      message: docentes.mensagem,
+      data: docentes.data
+    });
   } catch (error) {
     console.error('Erro ao listar docente:', error);
     res.status(500).json({ erro: 'Erro interno ao buscar docente' });

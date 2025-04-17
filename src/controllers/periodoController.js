@@ -4,7 +4,10 @@ const createPeriodoDto = require('../database/entity/dto/createPeriodoDto');
 async function listPeriodos(req, res) {
   try {
     const periodos = await periodo.getAllPeriodo();
-    res.status(periodos.status).json(periodos.data);
+    res.status(periodos.status).json({
+      message: periodos.mensagem,
+      data: periodos.data
+    });
   } catch (error) {
     console.error('Erro ao listar periodos:', error);
     res.status(500).json({ erro: 'Erro interno ao buscar periodos' });

@@ -20,7 +20,10 @@ async function listSemestres(req, res) {
 
   try {
     const semestres = await semestre.getAllSemestre();
-    res.status(semestres.status).json(semestres.data);
+    res.status(semestres.status).json({
+      message: semestres.mensagem,
+      data: semestres.data
+    });
   } catch (error) {
     console.error('Erro ao listar semestres:', error);
     res.status(500).json({ erro: 'Erro interno ao buscar semestres' });
