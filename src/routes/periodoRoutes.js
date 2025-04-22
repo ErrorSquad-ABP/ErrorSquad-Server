@@ -2,16 +2,15 @@ const express = require("express");
 const router = express.Router();
 const periodoController = require("../controllers/periodoController");
 const authenticate = require("../middlewares/authMiddleware");
-const checkAdmin = require("../middlewares/checkAdminMiddleware");
 
 // Rota para listar periodo
-router.get("/", authenticate, checkAdmin, periodoController.listPeriodos);
+router.get("/", authenticate, periodoController.listPeriodos);
 
-// Rota para alterar periodo
-router.put("/", authenticate, checkAdmin, periodoController.requestAlterPeriodo);
+// Rota para alterar periodos
+router.put("/", authenticate, periodoController.requestAlterPeriodo);
 
-// Rota para alterar periodo
-router.delete("/", authenticate, checkAdmin, periodoController.requestDeletePeriodo)
+// Rota para deletar periodo
+router.delete("/", authenticate, periodoController.requestDeletePeriodo)
 
 
 module.exports = router;

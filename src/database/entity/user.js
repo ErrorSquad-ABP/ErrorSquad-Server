@@ -1,5 +1,7 @@
 const userQuery = require('../migrations/userQuery');
 const bcrypt = require("bcrypt");
+const generateToken = require('../../utils/generateToken');
+
 
 class user {
   constructor(id, nome, email, senha) {
@@ -12,6 +14,7 @@ class user {
   static async validateLogin(email, senha) {
     try {
       const userInfos = await userQuery.login(email);
+      const tokenInfos = ({id:userInfos.id, nome:userInfos.nome})
 
       if (!userInfos) {
         return { status: 404, message: 'Email incorreto.' };
@@ -21,12 +24,16 @@ class user {
       const isPasswordValid = await bcrypt.compare(senha, userInfos.hashed_password);
 
       if (isPasswordValid) {
+        //Geração de token jwt
+        const token = generateToken(tokenInfos);
+
         return {
           status: 200,
           message: 'Login realizado com sucesso!',
           data: {
             id: userInfos.id,
             nome: userInfos.nome,
+            token,
           },
         };
       } else {

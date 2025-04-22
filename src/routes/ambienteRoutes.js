@@ -2,14 +2,18 @@ const express = require("express");
 const router = express.Router();
 const ambienteController = require("../controllers/ambienteController");
 const authenticate = require("../middlewares/authMiddleware");
-const checkAdmin = require("../middlewares/checkAdminMiddleware"); 
 
-router.post("/", authenticate, checkAdmin, ambienteController.requestNewAmbiente);
 
-router.get("/", authenticate, checkAdmin, ambienteController.listAmbientes);
+// Rota para criar um ambiente
+router.post("/", authenticate, ambienteController.requestNewAmbiente);
 
-router.put("/", authenticate, checkAdmin, ambienteController.requestAlterAmbiente);
+// Rota para listar ambientes
+router.get("/", authenticate, ambienteController.listAmbientes);
 
-router.delete("/", authenticate, checkAdmin, ambienteController.requestDeleteAmbiente);
+// Rota para alterar um ambiente
+router.put("/", authenticate, ambienteController.requestAlterAmbiente);
+
+// Rota para deletar um ambiente
+router.delete("/", authenticate, ambienteController.requestDeleteAmbiente);
 
 module.exports = router;
