@@ -1,17 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const horarioController = require("../controllers/horarioController");
+const authenticate = require("../middlewares/authMiddleware");
 
-router.post("/", horarioController.requestNewHorario);
+router.post("/", authenticate, horarioController.requestNewHorario);
 
 // Rota para listar horario
-router.get("/", horarioController.listHorarios);
+router.get("/", authenticate, horarioController.listHorarios);
 
-// Rota para alterar horario
-router.put("/", horarioController.requestAlterHorario);
+// Rota para alterar horarios
+router.put("/", authenticate, horarioController.requestAlterHorario);
 
-// Rota para alterar horario
-router.delete("/", horarioController.requestDeleteHorario)
+// Rota para deletar horario
+router.delete("/", authenticate, horarioController.requestDeleteHorario)
 
 
 module.exports = router;

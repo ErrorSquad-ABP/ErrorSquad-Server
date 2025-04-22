@@ -21,7 +21,6 @@ async function listDocente(req, res) {
 
   try {
     const docentes = await docente.getAllDocente();
-    console.log(docentes)
     res.status(docentes.status).json({
       message: docentes.mensagem,
       data: docentes.data

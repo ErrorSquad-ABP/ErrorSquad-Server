@@ -1,17 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const diaController = require("../controllers/diaController");
+const authenticate = require("../middlewares/authMiddleware");
 
 // Rota para criar um dia
-router.post("/", diaController.requestNewDia);
+router.post("/", authenticate, diaController.requestNewDia);
 
 // Rota para listar dias
-router.get("/", diaController.listDias);
+router.get("/", authenticate, diaController.listDias);
 
 // Rota para alterar dia
-router.put("/", diaController.requestAlterDia);
+router.put("/", authenticate, diaController.requestAlterDia);
 
 // Rota para deletar dia
-router.delete("/", diaController.requestDeleteDia);
+router.delete("/", authenticate, diaController.requestDeleteDia);
 
 module.exports = router; 
