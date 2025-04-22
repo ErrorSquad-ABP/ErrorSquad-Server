@@ -1,18 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const turnoController = require("../controllers/turnoController");
+const authenticate = require("../middlewares/authMiddleware");
+const checkAdmin = require("../middlewares/checkAdminMiddleware");
 
 // Rota para criar um turno
-router.post("/", turnoController.requestNewTurno);
+router.post("/", authenticate, checkAdmin, turnoController.requestNewTurno);
 
 // Rota para listar turno
-router.get("/", turnoController.listTurnos);
+router.get("/", authenticate, checkAdmin, turnoController.listTurnos);
 
 // Rota para alterar turno
-router.put("/", turnoController.requestAlterTurno);
+router.put("/", authenticate, checkAdmin, turnoController.requestAlterTurno);
 
 // Rota para alterar turno
-router.delete("/", turnoController.requestDeleteTurno);
+router.delete("/", authenticate, checkAdmin, turnoController.requestDeleteTurno);
 
 
 module.exports = router;
