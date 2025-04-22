@@ -2,19 +2,18 @@ const express = require("express");
 const router = express.Router();
 const semestreController = require("../controllers/semestreController");
 const authenticate = require("../middlewares/authMiddleware");
-const checkAdmin = require("../middlewares/checkAdminMiddleware");
 
-// Rota para criar um semesrte
-router.post("/", authenticate, checkAdmin, semestreController.requestNewSemestre);
+// Rota para criar um semestre
+router.post("/", authenticate, semestreController.requestNewSemestre);
 
-// Rota para listar semesrte
-router.get("/", authenticate, checkAdmin, semestreController.listSemestres);
+// Rota para listar semestres
+router.get("/", authenticate, semestreController.listSemestres);
 
-// Rota para alterar semesrte
-router.put("/", authenticate, checkAdmin, semestreController.requestAlterSemestre);
+// Rota para alterar semestre
+router.put("/", authenticate, semestreController.requestAlterSemestre);
 
-// Rota para alterar semesrte
-router.delete("/", authenticate, checkAdmin, semestreController.requestDeleteSemestre);
+// Rota para deletar semestre
+router.delete("/", authenticate, semestreController.requestDeleteSemestre);
 
 
 module.exports = router;
