@@ -4,6 +4,7 @@ const authenticate = require("../middlewares/authMiddleware");
 const checkAdminId = require("../middlewares/checkAdminId");
 
 // Importando as rotas
+const gradeRoutes = require("./gradeRoutes")
 const diasRoutes = require("./diaRoutes");
 const cursosRoutes = require("./cursoRoutes");
 const turnosRoutes = require("./turnoRoutes");
@@ -24,6 +25,7 @@ router.use("/login", loginRoutes); //Retornar um id e um token jwt
 router.use("/admin/:id", authenticate); // Aplica a autenticação a todas as rotas /admin/id
 
 // Aqui, o id será extraído da URL e passado para as rotas
+router.use("/admin/:id/grade", authenticate, checkAdminId, gradeRoutes);
 router.use("/admin/:id/dia", authenticate, checkAdminId, diasRoutes);
 router.use("/admin/:id/cursos", authenticate, checkAdminId, cursosRoutes);
 router.use("/admin/:id/turno", authenticate, checkAdminId, turnosRoutes);
