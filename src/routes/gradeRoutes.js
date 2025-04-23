@@ -7,7 +7,7 @@ const path = require('path');
 const fs = require('fs');
 
 // Caminho da pasta 'uploads'
-const uploadDir = path.join(__dirname, './uploads');
+const uploadDir = path.join(__dirname, '../uploads');
 
 // Verifica se a pasta 'uploads' existe e a cria caso não exista
 if (!fs.existsSync(uploadDir)) {
