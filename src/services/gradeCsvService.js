@@ -1,22 +1,14 @@
 const fs = require('fs');
-const csvParser = require('csv-parser');
-const saveDataToDatabase = require('../utils/saveDataToDatabase')
+const { processCsv } = require('../utils/processCsv')
+const { processCSVData } = require('../utils/processCsvData');
 
-async function processCsv(filePath) {
+
+async function processAndSaveCsv(filePath) {
   try {
-    const results = [];
-
-    await new Promise((resolve, reject) => {
-      fs.createReadStream(filePath)
-        .pipe(csvParser())
-        .on('data', (data) => results.push(data))
-        .on('end', resolve)
-        .on('error', reject);
-    });
-
+    // Chama a lógica de processar o csv em object javascript
+    const tables = await processCsv(filePath);
     // Chama a lógica de salvar no banco
-    await saveDataToDatabase.saveDataToDatabase(results);
-
+    await processCSVData(tables);
     // Retorna sucesso
     return { status: 200, message: 'CSV processado e salvo no banco com sucesso!' };
   } catch (error) {
@@ -30,4 +22,4 @@ async function processCsv(filePath) {
   }
 }
 
-module.exports = { processCsv };
+module.exports = { processAndSaveCsv };
