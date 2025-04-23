@@ -6,9 +6,9 @@ const { processCSVData } = require('../utils/processCsvData');
 async function processAndSaveCsv(filePath) {
   try {
     // Chama a lógica de processar o csv em object javascript
-    const tables = await processCsv(filePath);
+    const data = await processCsv(filePath);
     // Chama a lógica de salvar no banco
-    await processCSVData(tables);
+    await processCSVData(data);
     // Retorna sucesso
     return { status: 200, message: 'CSV processado e salvo no banco com sucesso!' };
   } catch (error) {

@@ -3,6 +3,7 @@ const readline = require('readline');
 
 async function processCsv(filePath) {
   try {
+    const namesOfTables = [];
     const tables = {};
     let currentTable = null;
     let headers = null;
@@ -16,10 +17,12 @@ async function processCsv(filePath) {
     for await (const line of rl) {
       // Linha vazia - ignorar
       if (!line.trim()) continue;
-      
+
+     
       // Nova tabela começando
       if (line.startsWith('#')) {
         const tableName = line.substring(1).trim().replace('.csv', '');
+        namesOfTables.push(tableName);
         currentTable = tableName;
         tables[currentTable] = [];
         headers = null;
@@ -44,8 +47,8 @@ async function processCsv(filePath) {
         tables[currentTable].push(row);
       }
     }
-    console.log(tables)
-    return tables;
+
+    return { tables, namesOfTables };
    
 
   } catch (error) {
