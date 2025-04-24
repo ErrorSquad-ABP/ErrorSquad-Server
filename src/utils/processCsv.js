@@ -21,7 +21,7 @@ async function processCsv(filePath) {
      
       // Nova tabela começando
       if (line.startsWith('#')) {
-        const tableName = line.substring(1).trim().replace('.csv', '');
+        const tableName = line.substring(1).trim().replace(',', '');
         namesOfTables.push(tableName);
         currentTable = tableName;
         tables[currentTable] = [];
