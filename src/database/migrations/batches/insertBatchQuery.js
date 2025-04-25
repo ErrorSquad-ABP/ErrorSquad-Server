@@ -1,6 +1,7 @@
 const bigquery = require('../../../lib/bigquery');
 
 async function insertBatch(tableName, columns, records) {
+ 
   if (!records || records.length === 0) return;
   
   // Preparação dos valores para inserção em lote
