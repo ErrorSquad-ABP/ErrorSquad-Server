@@ -1,8 +1,8 @@
 class createDisciplinaDto {
 
-    constructor(nome, docente_id){
+    constructor(nome, id_docente){
       this.nome = nome;
-      this.docente_id = docente_id;
+      this.id_docente = id_docente;
     }
   }
   

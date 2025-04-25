@@ -1,10 +1,10 @@
 const disciplinaQuery = require('../migrations/disciplinaQuery');
 
 class disciplina {
-    constructor(id, nome, docente_id) {
+    constructor(id, nome, id_docente) {
        this.id = id;
        this.nome = nome;
-       this.docente_id = docente_id;
+       this.id_docente = id_docente;
     }
 
     getId() {
@@ -23,30 +23,30 @@ class disciplina {
         this.nome = nome;
       }
 
-      getDocente_id() {
-        return this.docente_id;
+      getid_docente() {
+        return this.id_docente;
       }
 
-      setDocente_id(docente_id) {
-        this.docente_id = docente_id;
+      setId_docente(id_docente) {
+        this.id_docente = id_docente;
       }
 
       async createDisciplina(newDisciplina) {
         try {
           const nome = newDisciplina.nome;
-          const docente_id = newDisciplina.docente_id;
+          const id_docente = newDisciplina.id_docente;
       
           // Verificar se o nome é nulo ou vazio
           if (!nome || nome.trim() === "") {
               throw new Error("Nome da disciplina é obrigatório para criação.");
           }
 
-          if (!docente_id) {
+          if (!id_docente) {
             throw new Error("ID do docente é obrigatório para criação.");
         }
       
           // Caso o nome seja válido, continuar com a lógica
-          return await disciplinaQuery.createNewDisciplina(nome, docente_id);
+          return await disciplinaQuery.createNewDisciplina(nome, id_docente);
       
       } catch (erro) {
           return { status: 400, mensagem: erro.message };
@@ -65,7 +65,7 @@ class disciplina {
     
           const nome = alterDisciplina.nome;
 
-          const docente_id = alterDisciplina.docente_id;
+          const id_docente = alterDisciplina.id_docente;
     
           const disciplinaExists = await disciplinaQuery.disciplinaExistsOrNotById(id);
     
@@ -76,11 +76,11 @@ class disciplina {
     
           }
 
-          if (!docente_id) {
+          if (!id_docente) {
             throw new Error("ID do docente é obrigatório para atualização.");
   
         }
-          return await disciplinaQuery.updateExistingDisciplina(id, nome, docente_id)
+          return await disciplinaQuery.updateExistingDisciplina(id, nome, id_docente)
         }
     
           if (!disciplinaExists) {
