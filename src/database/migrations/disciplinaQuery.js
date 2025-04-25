@@ -1,18 +1,18 @@
 const bigquery = require('../../lib/bigquery');
 
-async function createNewDisciplina(nome, docente_id) {
+async function createNewDisciplina(nome, id_docente) {
 
   const query =
     `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.disciplina (id, nome, id_docente)
       SELECT 
       COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.disciplina), 0) + 1,
-     @nome, @docente_id;`;
+     @nome, @id_docente;`;
 
   const options = {
     query,
     params: {
       nome: String(nome),
-      docente_id: parseInt(docente_id)
+      id_docente: parseInt(id_docente)
     },
     useLegacySql: false
   };
@@ -69,11 +69,11 @@ async function disciplinaExistsOrNotById(id) {
   return rows.length > 0;
 }
 
-async function updateExistingDisciplina(id, nome, docente_id) {
+async function updateExistingDisciplina(id, nome, id_docente) {
   const query = `
       UPDATE \`sitefatecdsm-01-2025.SiteFatecDSM.disciplina\`
       SET nome = @nome,
-      id_docente = @docente_id
+      id_docente = @id_docente
       WHERE id = @id;
     `;
 
@@ -82,7 +82,7 @@ async function updateExistingDisciplina(id, nome, docente_id) {
     params: {
       id: parseInt(id),
       nome: String(nome),
-      docente_id: parseInt(docente_id)
+      id_docente: parseInt(id_docente)
     },
     useLegacySql: false
   };

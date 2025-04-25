@@ -2,15 +2,15 @@ const periodoQuery = require('../migrations/periodoQuery');
 
 class periodo {
 
-  constructor(id, dia_id, horario_id, disciplina_id, docente_id, semestre_id, ambiente_id) {
+  constructor(id, dia_id, horario_id, id_disciplina, id_docente_disciplina, semestre_id, id_ambiente) {
 
     this.id = id;
     this.dia_id = dia_id;
     this.horario_id = horario_id;
-    this.disciplina_id = disciplina_id;
-    this.docente_id = docente_id;
+    this.id_disciplina = id_disciplina;
+    this.id_docente_disciplina = id_docente_disciplina;
     this.semestre_id = semestre_id;
-    this.ambiente_id = ambiente_id;
+    this.id_ambiente = id_ambiente;
 
   }
 
@@ -38,20 +38,20 @@ class periodo {
     this.horario_id = horario_id;
   }
 
-  getDisciplina_id() {
-    return this.disciplina_id;
+  getid_disciplina() {
+    return this.id_disciplina;
   }
 
-  setDisciplina(disciplina_id) {
-    this.disciplina_id = disciplina_id;
+  setDisciplina(id_disciplina) {
+    this.id_disciplina = id_disciplina;
   }
 
-  getDocente_id() {
-    return this.docente_id;
+  getid_docente_disciplina() {
+    return this.id_docente_disciplina;
   }
 
-  setDocente(docente_id) {
-    this.docente_id = docente_id;
+  setDocente(id_docente_disciplina) {
+    this.id_docente_disciplina = id_docente_disciplina;
   }
 
   getSemestre_id() {
@@ -62,12 +62,12 @@ class periodo {
     this.semestre_id = semestre_id;
   }
 
-  getAmbiente_id() {
-    return this.ambiente_id;
+  getid_ambiente() {
+    return this.id_ambiente;
   }
 
-  setAmbiente(ambiente_id) {
-    this.ambiente_id = ambiente_id;
+  setAmbiente(id_ambiente) {
+    this.id_ambiente = id_ambiente;
   }
 
   static async getAllPeriodo() {
@@ -79,9 +79,9 @@ class periodo {
   async updatePeriodo( alterPeriodo ) {
     try {
       const id = alterPeriodo.id
-      const disciplina = alterPeriodo.disciplina_id
-      const docente = alterPeriodo.docente_id
-      const ambiente = alterPeriodo.ambiente_id
+      const disciplina = alterPeriodo.id_disciplina
+      const docente = alterPeriodo.id_docente_disciplina
+      const ambiente = alterPeriodo.id_ambiente
       const periodoExists = await periodoQuery.periodoExistsOrNotById(id);
 
       if (periodoExists) {
