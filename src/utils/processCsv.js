@@ -5,9 +5,8 @@ async function processCsv(filePath) {
   try {
     const namesOfTables = [];
     const tables = {};
-    let currentTable = null;
     let headers = null;
-    
+
     const fileStream = fs.createReadStream(filePath);
     const rl = readline.createInterface({
       input: fileStream,
@@ -18,39 +17,50 @@ async function processCsv(filePath) {
       // Linha vazia - ignorar
       if (!line.trim()) continue;
 
-     
-      // Nova tabela começando
+      // Processar tabelas combinadas na mesma linha (ex.: #turno,#curso,#dia,)
       if (line.startsWith('#')) {
-        const tableName = line.substring(1).trim().replace(',', '');
-        namesOfTables.push(tableName);
-        currentTable = tableName;
-        tables[currentTable] = [];
-        headers = null;
+        const tableNames = line
+          .split(',')
+          .map(name => name.trim().replace('#', '').replace(',', ''))
+          .filter(name => name);
+
+        for (const tableName of tableNames) {
+          if (!namesOfTables.includes(tableName)) {
+            namesOfTables.push(tableName);
+            tables[tableName] = [];
+          }
+        }
+
+        headers = null; // Resetar headers para nova tabela
         continue;
       }
-      
-      // Se não temos uma tabela atual, ignorar a linha
-      if (!currentTable) continue;
-      
+
       // Processa headers ou linha de dados
       const values = line.split(',').map(val => val.trim());
-      
+
       if (!headers) {
         // Esta é a linha de cabeçalho
         headers = values;
       } else {
-        // Esta é uma linha de dados
-        const row = {};
-        for (let i = 0; i < headers.length; i++) {
-          row[headers[i]] = values[i];
+        // Distribuir os valores entre as tabelas
+        let startIndex = 0;
+
+        for (const tableName of namesOfTables) {
+          const tableHeaders = headers.slice(startIndex, startIndex + values.length / namesOfTables.length);
+          const rowValues = values.slice(startIndex, startIndex + values.length / namesOfTables.length);
+
+          const row = {};
+          for (let i = 0; i < tableHeaders.length; i++) {
+            row[tableHeaders[i]] = rowValues[i];
+          }
+
+          tables[tableName].push(row);
+          startIndex += values.length / namesOfTables.length;
         }
-        tables[currentTable].push(row);
       }
     }
 
     return { tables, namesOfTables };
-   
-
   } catch (error) {
     console.error('Erro ao processar o CSV no service:', error);
     return { status: 500, message: 'Erro ao processar o CSV.' };
