@@ -10,7 +10,7 @@ const { insertSemestresEmLote } = require('../database/migrations/batches/insert
 // Processador principal dos dados CSV
 async function processCSVData(data) {
   try {
-    console.log(data);
+
     console.log(`Iniciando processamento em ${Object.keys(data.tables).length} tabelas.`);
 
     // Validação de dados
