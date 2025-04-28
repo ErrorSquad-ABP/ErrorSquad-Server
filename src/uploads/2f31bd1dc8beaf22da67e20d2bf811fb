@@ -1,0 +1,9 @@
+id_turno,nome_turno,id_semestre,nivel,ano,id_curso,nome_curso
+1,Matutino,1,1,2025,1,Engenharia de Software
+1,Matutino,2,2,2025,1,Engenharia de Software
+2,Vespertino,3,1,2025,2,Ciência da Computação
+2,Vespertino,4,2,2025,2,Ciência da Computação
+3,Noturno,5,1,2025,3,Sistemas de Informação
+3,Noturno,6,2,2025,3,Sistemas de Informação
+4,Integral,7,1,2025,4,Análise e Desenvolvimento de Sistemas
+4,Integral,8,2,2025,4,Análise e Desenvolvimento de Sistemas
