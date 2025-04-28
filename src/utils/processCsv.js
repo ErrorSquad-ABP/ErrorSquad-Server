@@ -18,7 +18,7 @@ async function processCsv(filePath) {
       // Linha vazia - ignorar
       if (!line.trim()) continue;
 
-      // Processar linhas com atributos e nomes de tabelas (ex.: nome_turno,nivel_semestre,ano_semestre)
+      // Processar linhas com atributos e nomes de tabelas (ex.: nome-turno,nivel-semestre,ano-semestre)
       if (line.includes('-')) {
         const columnDefs = line.split(',').map(item => item.trim()).filter(item => item);
         
@@ -48,7 +48,6 @@ async function processCsv(filePath) {
       // Processar linha de dados
       if (headers && headers.length > 0) {
         const values = line.split(',').map(val => val.trim());
-        
         // Criar objetos para cada tabela a partir dos valores
         const tableValues = {};
         
@@ -56,11 +55,15 @@ async function processCsv(filePath) {
           if (i < headers.length) {
             const [attribute, tableName] = headers[i].split('-');
             
-            if (!tableValues[tableName]) {
-              tableValues[tableName] = {};
+            const value = values[i];
+            // Verifica se o atributo e o valor não são vazios ou inválidos
+            if (attribute.trim() && value && value !== 'NaN') {
+              if (!tableValues[tableName]) {
+                tableValues[tableName] = {};
+              }
+              
+              tableValues[tableName][attribute] = value;
             }
-            
-            tableValues[tableName][attribute] = values[i];
           }
         }
         
@@ -70,10 +73,7 @@ async function processCsv(filePath) {
         }
       }
     }
-    
-    console.log(tables);
-    console.log("-------------------------------");
-    console.log(namesOfTables);
+
     return { tables, namesOfTables };
   } catch (error) {
     console.error('Erro ao processar o CSV no service:', error);
