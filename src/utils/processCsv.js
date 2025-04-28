@@ -6,8 +6,9 @@ async function processCsv(filePath) {
     const namesOfTables = [];
     const tables = {};
     let headers = null;
+    let currentTableColumn = {};
 
-    const fileStream = fs.createReadStream(filePath);
+    const fileStream = fs.createReadStream(filePath, 'utf-8');
     const rl = readline.createInterface({
       input: fileStream,
       crlfDelay: Infinity
@@ -17,49 +18,62 @@ async function processCsv(filePath) {
       // Linha vazia - ignorar
       if (!line.trim()) continue;
 
-      // Processar tabelas combinadas na mesma linha (ex.: #turno,#curso,#dia,)
-      if (line.startsWith('#')) {
-        const tableNames = line
-          .split(',')
-          .map(name => name.trim().replace('#', '').replace(',', ''))
-          .filter(name => name);
-
-        for (const tableName of tableNames) {
+      // Processar linhas com atributos e nomes de tabelas (ex.: nome_turno,nivel_semestre,ano_semestre)
+      if (line.includes('-')) {
+        const columnDefs = line.split(',').map(item => item.trim()).filter(item => item);
+        
+        currentTableColumn = {};
+        headers = [];
+        
+        // Extrair os nomes das tabelas e seus atributos
+        for (const def of columnDefs) {
+          const [attribute, tableName] = def.split('-');
+          
           if (!namesOfTables.includes(tableName)) {
             namesOfTables.push(tableName);
             tables[tableName] = [];
           }
+          
+          if (!currentTableColumn[tableName]) {
+            currentTableColumn[tableName] = [];
+          }
+          
+          currentTableColumn[tableName].push(attribute);
+          headers.push(def);
         }
-
-        headers = null; // Resetar headers para nova tabela
+        
         continue;
       }
 
-      // Processa headers ou linha de dados
-      const values = line.split(',').map(val => val.trim());
-
-      if (!headers) {
-        // Esta é a linha de cabeçalho
-        headers = values;
-      } else {
-        // Distribuir os valores entre as tabelas
-        let startIndex = 0;
-
-        for (const tableName of namesOfTables) {
-          const tableHeaders = headers.slice(startIndex, startIndex + values.length / namesOfTables.length);
-          const rowValues = values.slice(startIndex, startIndex + values.length / namesOfTables.length);
-
-          const row = {};
-          for (let i = 0; i < tableHeaders.length; i++) {
-            row[tableHeaders[i]] = rowValues[i];
+      // Processar linha de dados
+      if (headers && headers.length > 0) {
+        const values = line.split(',').map(val => val.trim());
+        
+        // Criar objetos para cada tabela a partir dos valores
+        const tableValues = {};
+        
+        for (let i = 0; i < values.length; i++) {
+          if (i < headers.length) {
+            const [attribute, tableName] = headers[i].split('-');
+            
+            if (!tableValues[tableName]) {
+              tableValues[tableName] = {};
+            }
+            
+            tableValues[tableName][attribute] = values[i];
           }
-
-          tables[tableName].push(row);
-          startIndex += values.length / namesOfTables.length;
+        }
+        
+        // Adicionar os valores às tabelas
+        for (const tableName in tableValues) {
+          tables[tableName].push(tableValues[tableName]);
         }
       }
     }
-
+    
+    console.log(tables);
+    console.log("-------------------------------");
+    console.log(namesOfTables);
     return { tables, namesOfTables };
   } catch (error) {
     console.error('Erro ao processar o CSV no service:', error);
