@@ -65,6 +65,9 @@ async function processCSVData(data) {
       id_turno: parseInt(item.id_turno)
     })) : [];
 
+    console.log(turnos)
+    console.log(cursos)
+    console.log(dias)
     // Executar todas as inserções em paralelo para máxima performance
     await Promise.resolve()
       .then(() => Promise.all([
