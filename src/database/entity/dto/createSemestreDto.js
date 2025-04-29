@@ -1,10 +1,10 @@
 class createSemestreDto{
 
-    constructor(nivel, ano, id_curso, id_turno){
+    constructor(nivel, ano, nome_curso, nome_turno){
         this.nivel = nivel;
         this.ano = ano,
-        this.id_curso = id_curso;
-        this.id_turno = id_turno;
+        this.nome_curso = nome_curso;
+        this.nome_turno = nome_turno;
     }
 }
 
