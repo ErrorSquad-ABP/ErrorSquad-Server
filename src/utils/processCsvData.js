@@ -54,20 +54,15 @@ async function processCSVData(data) {
     const disciplinas = data.tables.disciplina ? data.tables.disciplina.map(item => ({
       id: parseInt(item.id),
       nome: item.nome,
-      id_docente: parseInt(item.id_docente)
     })) : [];
 
     const semestres = data.tables.semestre_cronograma ? data.tables.semestre_cronograma.map(item => ({
       id: parseInt(item.id),
       nivel: parseInt(item.nivel),
       ano: parseInt(item.ano),
-      id_curso: parseInt(item.id_curso),
-      id_turno: parseInt(item.id_turno)
     })) : [];
 
-    console.log(turnos)
-    console.log(cursos)
-    console.log(dias)
+    console.log("csv data",docentes)
     // Executar todas as inserções em paralelo para máxima performance
     await Promise.resolve()
       .then(() => Promise.all([
@@ -79,6 +74,7 @@ async function processCSVData(data) {
         insertDocentesEmLote(docentes),
       ]))
       .then(() => Promise.all([ 
+        //insertDocentesEmLote(docentes),
         insertSemestresEmLote(semestres),
         insertDisciplinasEmLote(disciplinas)
       ]));
