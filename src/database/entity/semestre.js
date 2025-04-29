@@ -2,12 +2,12 @@ const semestreQuery = require('../migrations/semestreQuery');
 
 class semestre {
 
-    constructor(id, nivel, ano, id_curso, id_turno) {
+    constructor(id, nivel, ano, nome_curso, nome_turno) {
         this.id = id;
         this.nivel = nivel;
         this.ano = ano,
-        this.id_curso = id_curso;
-        this.id_turno = id_turno;
+        this.nome_curso = nome_curso;
+        this.nome_turno = nome_turno;
     }
     getId() {
         return this.id;
@@ -33,20 +33,20 @@ class semestre {
         this.ano = ano;
     }
 
-    getid_curso() {
-        return this.id_curso;
+    getNome_curso() {
+        return this.nome_curso;
     }
 
-    setid_curso(id_curso) {
-        this.id_curso = id_curso;
+    setNome_curso(nome_curso) {
+        this.nome_curso = nome_curso;
     }
 
-    getid_turno() {
-        return this.id_turno;
+    getNome_turno() {
+        return this.nome_turno;
     }
 
-    setid_turno(id_turno) {
-        this.id_turno = id_turno;
+    setNome_turno(nome_turno) {
+        this.nome_turno = nome_turno;
     }
 
     async createSemestre(newSemestre) {
@@ -54,8 +54,8 @@ class semestre {
         try {
           const nivel = newSemestre.nivel;
           const ano = newSemestre.ano;
-          const id_curso = newSemestre.id_curso;
-          const id_turno = newSemestre.id_turno;
+          const nome_curso = newSemestre.nome_curso;
+          const nome_turno = newSemestre.nome_turno;
       
           // Verificar se o nivel é nulo ou vazio
           if (!nivel) {
@@ -66,16 +66,16 @@ class semestre {
             throw new Error("ano do semestre é obrigatório para criação.");
         }
 
-        if (!id_curso) {
+        if (!nome_curso) {
             throw new Error("ID do curso do semestre é obrigatório para criação.");
         }
 
-        if (!id_turno) {
+        if (!nome_turno) {
             throw new Error("ID do turno do semestre é obrigatório para criação.");
         }
       
           // Caso o nivel seja válido, continuar com a lógica
-          return await semestreQuery.createNewSemestre(nivel, ano, id_curso, id_turno);
+          return await semestreQuery.createNewSemestre(nivel, ano, nome_curso, nome_turno);
       
       } catch (erro) {
           return { status: 400, mensagem: erro.message };
@@ -98,9 +98,9 @@ class semestre {
 
           const ano = alterSemestre.ano;
 
-          const id_curso = alterSemestre.id_curso;
+          const nome_curso = alterSemestre.nome_curso;
 
-          const id_turno = alterSemestre.id_turno;
+          const nome_turno = alterSemestre.nome_turno;
     
           const semestreExists = await semestreQuery.semestreExistsOrNotById(id);
     
@@ -114,15 +114,15 @@ class semestre {
             throw new Error("ano do semestre é obrigatório para atualização.");
   
         }
-        if (!id_curso) {
+        if (!nome_curso) {
             throw new Error("ID do curso do semestre é obrigatório para atualização.");
   
         }
-        if (!id_turno) {
+        if (!nome_turno) {
             throw new Error("ID do turno do semestre é obrigatório para atualização.");
   
         }
-          return await semestreQuery.updateExistingSemestre(id, nivel, ano, id_curso, id_turno)
+          return await semestreQuery.updateExistingSemestre(id, nivel, ano, nome_curso, nome_turno)
         }
     
           if (!semestreExists) {

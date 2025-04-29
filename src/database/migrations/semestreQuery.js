@@ -1,20 +1,20 @@
 const bigquery = require('../../lib/bigquery');
 
-async function createNewSemestre(nivel, ano, curso_id, turno_id) {
+async function createNewSemestre(nivel, ano, nome_curso, nome_turno) {
 
   const query =
-    `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma (id, nivel, ano, id_curso, id_turno)
+    `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma (id, nivel, ano, nome_curso, nome_turno)
     SELECT 
     COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma), 0) + 1,
-   @nivel, @ano, @curso_id, @turno_id;`;
+   @nivel, @ano, @nome_curso, @nome_turno;`;
 
   const options = {
     query,
     params: {
       nivel: parseInt(nivel),
       ano: parseInt(ano),
-      curso_id: parseInt(curso_id),
-      turno_id: parseInt(turno_id)
+      nome_curso: parseInt(nome_curso),
+      nome_turno: parseInt(nome_turno)
     },
     useLegacySql: false
   };
@@ -73,13 +73,13 @@ async function semestreExistsOrNotById(id) {
 }
 
 
-async function updateExistingSemestre(id, nivel, ano, curso_id, turno_id) {
+async function updateExistingSemestre(id, nivel, ano, nome_curso, nome_turno) {
   const query = `
     UPDATE \`sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma\`
     SET nivel = @nivel,
     ano = @ano,
-    id_curso = @curso_id,
-    id_turno = @turno_id
+    nome_curso = @nome_curso,
+    nome_turno = @nome_turno
     WHERE id = @id;
   `;
 
@@ -89,15 +89,15 @@ async function updateExistingSemestre(id, nivel, ano, curso_id, turno_id) {
       id: parseInt(id),
       nivel: parseInt(nivel),
       ano: parseInt(ano),
-      curso_id: parseInt(curso_id),
-      turno_id: parseInt(turno_id)
+      nome_curso: parseInt(nome_curso),
+      nome_turno: parseInt(nome_turno)
     },
     useLegacySql: false
   };
 
 
   try {
-    const [rows] = await bigquery.query(options);
+    await bigquery.query(options);
     return { status: 200, mensagem: 'Semestre atualizado com sucesso!' };
 
   } catch (erro) {
