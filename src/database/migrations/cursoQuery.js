@@ -1,17 +1,19 @@
 const bigquery = require('../../lib/bigquery');
 
-async function createNewCurso(nome) {
+async function createNewCurso(nome, coordenador, sigla) {
 
   const query =
-    `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.curso (id, nome)
+    `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.curso (id, nome, coordenador, sigla)
     SELECT 
     COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.curso), 0) + 1,
-   @nome;`;
+   @nome, @coordenador, @sigla;`;
   ''
   const options = {
     query,
     params: {
-      nome: String(nome)
+      nome: String(nome),
+      coordenador: String(coordenador),
+      sigla: String(sigla)
     },
     useLegacySql: false
   };
@@ -70,10 +72,12 @@ async function cursoExistsOrNotById(id) {
 }
 
 
-async function updateExistingCurso(id, nome) {
+async function updateExistingCurso(id, nome, coordenador, sigla) {
   const query = `
     UPDATE \`sitefatecdsm-01-2025.SiteFatecDSM.curso\`
-    SET nome = @nome
+    SET nome = @nome,
+    coordenador = @coordenador,
+    sigla = @sigla
     WHERE id = @id;
   `;
 
@@ -81,7 +85,9 @@ async function updateExistingCurso(id, nome) {
     query,
     params: {
       id: parseInt(id),
-      nome: String(nome)
+      nome: String(nome),
+      coordenador: String(coordenador),
+      sigla: String(sigla)
     },
     useLegacySql: false
   };

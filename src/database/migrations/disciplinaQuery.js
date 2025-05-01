@@ -12,8 +12,8 @@ async function createNewDisciplina(nome, nome_docente, nome_curso) {
     query,
     params: {
       nome: String(nome),
-      nome_docente: parseInt(nome_docente),
-      nome_curso:parseInt(nome_curso)
+      nome_docente: String(nome_docente),
+      nome_curso:String(nome_curso)
     },
     useLegacySql: false
   };
@@ -84,8 +84,8 @@ async function updateExistingDisciplina(id, nome, nome_docente, nome_curso) {
     params: {
       id: parseInt(id),
       nome: String(nome),
-      nome_docente: parseInt(nome_docente),
-      nome_curso:parseInt(nome_curso)
+      nome_docente: String(nome_docente),
+      nome_curso:String(nome_curso)
     },
     useLegacySql: false
   };

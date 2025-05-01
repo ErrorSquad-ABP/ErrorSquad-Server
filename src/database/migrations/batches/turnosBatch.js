@@ -1,7 +1,7 @@
-const { insertBatch } = require('../insertBatchQuery')
-const createTurnoDto = require('../../../entity/dto/createTurnoDto');
-const turno = require('../../../entity/turno');
-const defaultStrings = require('../../../../utils/firstLetterUppercase')
+const { insertBatch } = require('../batches/inserts/insertBatchQuery')
+const createTurnoDto = require('../../entity/dto/createTurnoDto');
+const turno = require('../../entity/turno');
+const defaultStrings = require('../../../utils/firstLetterUppercase')
 
 
 async function insertTurnosEmLote(turnos) {

@@ -1,7 +1,7 @@
-const { insertBatch } = require('../insertBatchQuery')
-const createDiaDto = require('../../../entity/dto/createDiaDto');
-const dia = require('../../../entity/dia');
-const defaultStrings = require('../../../../utils/firstLetterUppercase')
+const { insertBatch } = require('../batches/inserts/insertBatchQuery')
+const createDiaDto = require('../../entity/dto/createDiaDto');
+const dia = require('../../entity/dia');
+const defaultStrings = require('../../../utils/firstLetterUppercase')
 
 
 async function insertDiasEmLote(dias) {

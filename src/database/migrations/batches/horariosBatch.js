@@ -1,7 +1,7 @@
-const { insertBatch } = require('../insertBatchQuery')
-const createHorarioDto = require('../../../entity/dto/createHorarioDto');
-const horario = require('../../../entity/horario');
-const formatTime = require('../../../../utils/formatTime')
+const { insertBatch } = require('../batches/inserts/insertBatchQuery')
+const createHorarioDto = require('../../entity/dto/createHorarioDto');
+const horario = require('../../entity/horario');
+const formatTime = require('../../../utils/formatTime')
 
 
 async function insertHorariosEmLote(horarios) {

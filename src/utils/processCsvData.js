@@ -1,11 +1,11 @@
-const { insertTurnosEmLote } = require('../database/migrations/batches/inserts/turnosBatch')
-const { insertCursosEmLote } = require('../database/migrations/batches/inserts/cursosBatch')
-const { insertAmbientesEmLote } = require('../database/migrations/batches/inserts/ambientesBatch')
-const { insertDiasEmLote } = require('../database/migrations/batches/inserts/diasBatch')
-const { insertHorariosEmLote } = require('../database/migrations/batches/inserts/horariosBatch')
-const { insertDocentesEmLote } = require('../database/migrations/batches/inserts/docentesBatch')
-const { insertDisciplinasEmLote } = require('../database/migrations/batches/inserts/disciplinasBatch')
-const { insertSemestresEmLote } = require('../database/migrations/batches/inserts/semestresBatch')
+const { insertTurnosEmLote } = require('../database/migrations/batches/turnosBatch')
+const { insertCursosEmLote } = require('../database/migrations/batches/cursosBatch')
+const { insertAmbientesEmLote } = require('../database/migrations/batches/ambientesBatch')
+const { insertDiasEmLote } = require('../database/migrations/batches/diasBatch')
+const { insertHorariosEmLote } = require('../database/migrations/batches/horariosBatch')
+const { insertDocentesEmLote } = require('../database/migrations/batches/docentesBatch')
+const { insertDisciplinasEmLote } = require('../database/migrations/batches/disciplinasBatch')
+const { insertSemestresEmLote } = require('../database/migrations/batches/semestresBatch')
 
 // Processador principal dos dados CSV
 async function processCSVData(data) {
@@ -21,22 +21,24 @@ async function processCSVData(data) {
     // Extração de dados das tabelas
     const turnos = data.tables.turno ? data.tables.turno.map(item => ({
       id: parseInt(item.id),
-      nome: item.nome
+      nome: String(item.nome)
     })) : [];
 
     const cursos = data.tables.curso ? data.tables.curso.map(item => ({
       id: parseInt(item.id),
-      nome: item.nome
+      nome: String(item.nome),
+      coordenador: String(item.coordenador),
+      sigla: String(item.sigla)
     })) : [];
 
     const ambientes = data.tables.ambiente ? data.tables.ambiente.map(item => ({
       id: parseInt(item.id),
-      nome: item.nome
+      nome: String(item.nome)
     })) : [];
 
     const dias = data.tables.dia ? data.tables.dia.map(item => ({
       id: parseInt(item.id),
-      nome: item.nome
+      nome: String(item.nome)
     })) : [];
 
     const horarios = data.tables.horario ? data.tables.horario.map(item => ({
@@ -47,35 +49,36 @@ async function processCSVData(data) {
 
     const docentes = data.tables.docente ? data.tables.docente.map(item => ({
       id: parseInt(item.id),
-      nome: item.nome,
-      cor: item.cor
+      nome: String(item.nome),
+      cor: String(item.cor)
     })) : [];
 
     const disciplinas = data.tables.disciplina ? data.tables.disciplina.map(item => ({
       id: parseInt(item.id),
-      nome: item.nome,
+      nome: String(item.nome),
+      nome_docente:String(item.nome_docente),
+      nome_curso:String(item.nome_curso)
     })) : [];
 
     const semestres = data.tables.semestre_cronograma ? data.tables.semestre_cronograma.map(item => ({
       id: parseInt(item.id),
       nivel: parseInt(item.nivel),
       ano: parseInt(item.ano),
+      nome_curso: String(item.nome_curso),
+      nome_turno: String(item.nome_turno)
     })) : [];
-
-    console.log("csv data",docentes)
     // Executar todas as inserções em paralelo para máxima performance
     await Promise.resolve()
       .then(() => Promise.all([
+        insertDocentesEmLote(docentes),
         insertTurnosEmLote(turnos),
         insertCursosEmLote(cursos),
         insertAmbientesEmLote(ambientes),
         insertDiasEmLote(dias),
         insertHorariosEmLote(horarios),
-        insertDocentesEmLote(docentes),
       ]))
       .then(() => Promise.all([ 
-        //insertDocentesEmLote(docentes),
-        insertSemestresEmLote(semestres),
+        //insertSemestresEmLote(semestres),
         insertDisciplinasEmLote(disciplinas)
       ]));
     console.log('Dados processados e salvos com sucesso no banco.');
