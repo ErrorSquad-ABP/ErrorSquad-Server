@@ -6,10 +6,10 @@ async function requestNewSemestre(req, res) {
 
   const defaultNomeCursoString = defaultStrings.firstLetterUppercase(req.body.nome_curso);
   const defaultNomeTurnoString = defaultStrings.firstLetterUppercase(req.body.nome_turno);
-  const newSemestreDto = new createSemestreDto(req.body.nivel, req.body.ano, defaultNomeCursoString, defaultNomeTurnoString);
+  const newSemestreDto = new createSemestreDto(req.body.nivel, req.body.ano, defaultNomeCursoString, defaultNomeTurnoString, req.body.inicio,req.body.fim);
 
   try {
-    const newSemestre = new semestre(null, newSemestreDto.nivel, newSemestreDto.ano, newSemestreDto.nome_curso, newSemestreDto.nome_turno)
+    const newSemestre = new semestre(null, newSemestreDto.nivel, newSemestreDto.ano, newSemestreDto.nome_curso, newSemestreDto.nome_turno, newSemestreDto.inicio,newSemestreDto.fim)
     const createSemestre = await newSemestre.createSemestre(newSemestre);
     res.status(createSemestre.status).json(createSemestre);
   } catch (error) {

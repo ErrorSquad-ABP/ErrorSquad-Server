@@ -1,7 +1,7 @@
-const { insertBatch } = require('../insertBatchQuery')
-const createDocenteDto = require('../../../entity/dto/createDocenteDto');
-const docente = require('../../../entity/docente');
-const defaultStrings = require('../../../../utils/firstLetterUppercase')
+const { insertBatch } = require('../batches/inserts/insertBatchQuery')
+const createDocenteDto = require('../../entity/dto/createDocenteDto');
+const docente = require('../../entity/docente');
+const defaultStrings = require('../../../utils/firstLetterUppercase')
 
 
 async function insertDocentesEmLote(docentes) {
@@ -19,7 +19,7 @@ async function insertDocentesEmLote(docentes) {
       nome: defaultStrings.firstLetterUppercase(docente.nome),
       cor: defaultStrings.firstLetterUppercase(docente.cor)
     }));
-  console.log("docentebatch", records)
+
   // Chamando a função insertBatch
   return await insertBatch('docente', [ 'nome', 'cor' ], records);
 }

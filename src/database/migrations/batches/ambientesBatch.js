@@ -1,7 +1,7 @@
-const { insertBatch } = require('../insertBatchQuery')
-const createAmbienteDto = require('../../../entity/dto/createAmbienteDto');
-const ambiente = require('../../../entity/ambiente');
-const defaultStrings = require('../../../../utils/firstLetterUppercase')
+const { insertBatch } = require('../batches/inserts/insertBatchQuery')
+const createAmbienteDto = require('../../entity/dto/createAmbienteDto');
+const ambiente = require('../../entity/ambiente');
+const defaultStrings = require('../../../utils/firstLetterUppercase')
 
 
 async function insertAmbientesEmLote(ambientes) {

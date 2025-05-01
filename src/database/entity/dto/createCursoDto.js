@@ -1,7 +1,9 @@
 class createCursoDto {
 
-  constructor(nome){
+  constructor(nome, coordenador, sigla){
     this.nome = nome;
+    this.coordenador = coordenador;
+    this.sigla = sigla;
   }
 }
 
