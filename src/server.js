@@ -5,7 +5,7 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT;
 const corsOptions = {
-    origin: 'https://errorsquad-server.onrender.com', // Substitua pela origem permitida
+    origin: 'http://127.0.0.1:5500', // Substitua pela origem permitida
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 };
