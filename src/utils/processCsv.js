@@ -5,10 +5,10 @@ async function processCsv(filePath) {
   try {
     const namesOfTables = [];
     const tables = {};
-    let currentTable = null;
     let headers = null;
-    
-    const fileStream = fs.createReadStream(filePath);
+    let currentTableColumn = {};
+
+    const fileStream = fs.createReadStream(filePath, 'utf-8');
     const rl = readline.createInterface({
       input: fileStream,
       crlfDelay: Infinity
@@ -18,39 +18,63 @@ async function processCsv(filePath) {
       // Linha vazia - ignorar
       if (!line.trim()) continue;
 
-     
-      // Nova tabela começando
-      if (line.startsWith('#')) {
-        const tableName = line.substring(1).trim().replace(',', '');
-        namesOfTables.push(tableName);
-        currentTable = tableName;
-        tables[currentTable] = [];
-        headers = null;
+      // Processar linhas com atributos e nomes de tabelas (ex.: nome-turno,nivel-semestre,ano-semestre)
+      if (line.includes('-')) {
+        const columnDefs = line.split(',').map(item => item.trim()).filter(item => item);
+        
+        currentTableColumn = {};
+        headers = [];
+        
+        // Extrair os nomes das tabelas e seus atributos
+        for (const def of columnDefs) {
+          const [attribute, tableName] = def.split('-');
+          
+          if (!namesOfTables.includes(tableName)) {
+            namesOfTables.push(tableName);
+            tables[tableName] = [];
+          }
+          
+          if (!currentTableColumn[tableName]) {
+            currentTableColumn[tableName] = [];
+          }
+          
+          currentTableColumn[tableName].push(attribute);
+          headers.push(def);
+        }
+        
         continue;
       }
-      
-      // Se não temos uma tabela atual, ignorar a linha
-      if (!currentTable) continue;
-      
-      // Processa headers ou linha de dados
-      const values = line.split(',').map(val => val.trim());
-      
-      if (!headers) {
-        // Esta é a linha de cabeçalho
-        headers = values;
-      } else {
-        // Esta é uma linha de dados
-        const row = {};
-        for (let i = 0; i < headers.length; i++) {
-          row[headers[i]] = values[i];
+
+      // Processar linha de dados
+      if (headers && headers.length > 0) {
+        const values = line.split(',').map(val => val.trim());
+        // Criar objetos para cada tabela a partir dos valores
+        const tableValues = {};
+        
+        for (let i = 0; i < values.length; i++) {
+          if (i < headers.length) {
+            const [attribute, tableName] = headers[i].split('-');
+            
+            const value = values[i];
+            // Verifica se o atributo e o valor não são vazios ou inválidos
+            if (attribute.trim() && value && value !== 'NaN') {
+              if (!tableValues[tableName]) {
+                tableValues[tableName] = {};
+              }
+              
+              tableValues[tableName][attribute] = value;
+            }
+          }
         }
-        tables[currentTable].push(row);
+        
+        // Adicionar os valores às tabelas
+        for (const tableName in tableValues) {
+          tables[tableName].push(tableValues[tableName]);
+        }
       }
     }
-
+    
     return { tables, namesOfTables };
-   
-
   } catch (error) {
     console.error('Erro ao processar o CSV no service:', error);
     return { status: 500, message: 'Erro ao processar o CSV.' };

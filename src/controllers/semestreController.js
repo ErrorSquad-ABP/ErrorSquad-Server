@@ -4,10 +4,12 @@ const defaultStrings = require('../utils/firstLetterUppercase');
 
 async function requestNewSemestre(req, res) {
 
-  const newSemestreDto = new createSemestreDto(req.body.nivel, req.body.ano, req.body.curso_id, req.body.turno_id);
+  const defaultNomeCursoString = defaultStrings.firstLetterUppercase(req.body.nome_curso);
+  const defaultNomeTurnoString = defaultStrings.firstLetterUppercase(req.body.nome_turno);
+  const newSemestreDto = new createSemestreDto(req.body.nivel, req.body.ano, defaultNomeCursoString, defaultNomeTurnoString);
 
   try {
-    const newSemestre = new semestre(null, newSemestreDto.nivel, newSemestreDto.ano, newSemestreDto.curso_id, newSemestreDto.turno_id)
+    const newSemestre = new semestre(null, newSemestreDto.nivel, newSemestreDto.ano, newSemestreDto.nome_curso, newSemestreDto.nome_turno)
     const createSemestre = await newSemestre.createSemestre(newSemestre);
     res.status(createSemestre.status).json(createSemestre);
   } catch (error) {
@@ -32,7 +34,9 @@ async function listSemestres(req, res) {
 
 async function requestAlterSemestre(req, res) {
 
-  const alterSemestre = new semestre(req.body.id, req.body.nivel, req.body.ano, req.body.curso_id, req.body.turno_id);
+  const defaultNomeCursoString = defaultStrings.firstLetterUppercase(req.body.nome_curso);
+  const defaultNomeTurnoString = defaultStrings.firstLetterUppercase(req.body.nome_turno);
+  const alterSemestre = new semestre(req.body.id, req.body.nivel, req.body.ano, defaultNomeCursoString, defaultNomeTurnoString);
 
   try {
     const updateSemestre = await alterSemestre.updateSemestre(alterSemestre);

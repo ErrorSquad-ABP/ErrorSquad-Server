@@ -1,104 +1,125 @@
 const disciplinaQuery = require('../migrations/disciplinaQuery');
 
 class disciplina {
-    constructor(id, nome, docente_id) {
-       this.id = id;
-       this.nome = nome;
-       this.docente_id = docente_id;
+  constructor(id, nome, nome_docente, nome_curso) {
+    this.id = id;
+    this.nome = nome;
+    this.nome_docente = nome_docente;
+    this.nome_curso = nome_curso;
+  }
+
+  getId() {
+    return this.id;
+  }
+
+  setId(id) {
+    this.id = id;
+  }
+
+  getNome() {
+    return this.nome;
+  }
+
+  setNome(nome) {
+    this.nome = nome;
+  }
+
+  getDocente() {
+    return this.nome_docente;
+  }
+
+  setDocente(nome_docente) {
+    this.nome_docente = nome_docente;
+  }
+
+  getCurso() {
+    return this.curso;
+  }
+
+  setCurso(curso) {
+    this.curso = curso;
+  }
+
+  async createDisciplina(newDisciplina) {
+    try {
+      const nome = newDisciplina.nome;
+      const nome_docente = newDisciplina.nome_docente;
+      const nome_curso = newDisciplina.nome_curso;
+
+      // Verificar se o nome é nulo ou vazio
+      if (!nome || nome.trim() === "") {
+        throw new Error("Nome da disciplina é obrigatório para criação.");
+      }
+
+      if (!nome_docente) {
+        throw new Error("ID do docente é obrigatório para criação.");
+      }
+
+      if (!nome_curso) {
+        throw new Error("ID do curso é obrigatório para criação.");
+      }
+
+      // Caso o nome seja válido, continuar com a lógica
+      return await disciplinaQuery.createNewDisciplina(nome, nome_docente, nome_curso);
+
+    } catch (erro) {
+      return { status: 400, mensagem: erro.message };
     }
 
-    getId() {
-        return this.id;
-      }
-    
-      setId(id) {
-        this.id = id;
-      }
-    
-      getNome() {
-        return this.nome;
-      }
-    
-      setNome(nome) {
-        this.nome = nome;
-      }
+  }
 
-      getDocente_id() {
-        return this.docente_id;
-      }
+  static async getAllDisciplina() {
+    return await disciplinaQuery.searchAllDisciplinas();
+  }
 
-      setDocente_id(docente_id) {
-        this.docente_id = docente_id;
-      }
+  async updateDisciplina(alterDisciplina) {
+    try {
 
-      async createDisciplina(newDisciplina) {
-        try {
-          const nome = newDisciplina.nome;
-          const docente_id = newDisciplina.docente_id;
-      
-          // Verificar se o nome é nulo ou vazio
-          if (!nome || nome.trim() === "") {
-              throw new Error("Nome da disciplina é obrigatório para criação.");
-          }
+      const id = alterDisciplina.id;
 
-          if (!docente_id) {
-            throw new Error("ID do docente é obrigatório para criação.");
+      const nome = alterDisciplina.nome;
+
+      const nome_docente = alterDisciplina.nome_docente;
+
+      const nome_curso = alterDisciplina.nome_curso; 
+
+      const disciplinaExists = await disciplinaQuery.disciplinaExistsOrNotById(id);
+
+      if (disciplinaExists) {
+
+        if (!nome || nome.trim() === "") {
+          throw new Error("Nome da disciplina é obrigatório para atualização.");
+
         }
-      
-          // Caso o nome seja válido, continuar com a lógica
-          return await disciplinaQuery.createNewDisciplina(nome, docente_id);
-      
-      } catch (erro) {
-          return { status: 400, mensagem: erro.message };
-      }
-    
-      }
-    
-      static async getAllDisciplina() {
-       return await disciplinaQuery.searchAllDisciplinas();
-      }
-    
-      async updateDisciplina(alterDisciplina) {
-        try {
-       
-          const id = alterDisciplina.id;
-    
-          const nome = alterDisciplina.nome;
 
-          const docente_id = alterDisciplina.docente_id;
-    
-          const disciplinaExists = await disciplinaQuery.disciplinaExistsOrNotById(id);
-    
-          if (disciplinaExists) {
-    
-            if (!nome || nome.trim() === "") {
-              throw new Error("Nome da disciplina é obrigatório para atualização.");
-    
-          }
+        if (!nome_docente) {
+          throw new Error("ID do docente é obrigatório para atualização.");
 
-          if (!docente_id) {
-            throw new Error("ID do docente é obrigatório para atualização.");
-  
         }
-          return await disciplinaQuery.updateExistingDisciplina(id, nome, docente_id)
+
+        if (!nome_curso) {
+          throw new Error("ID do curso é obrigatório para criação.");
+
         }
-    
-          if (!disciplinaExists) {
-    
-            throw new Error("Disciplina não encontrada.");
-    
-          }
-    
-        } catch (erro) {
-    
-          return { status: 400, mensagem: erro.message };
-    
-        }
+        return await disciplinaQuery.updateExistingDisciplina(id, nome, nome_docente, nome_curso)
       }
-       
-      
-    
-static async deleteDisciplina(id) {
+
+      if (!disciplinaExists) {
+
+        throw new Error("Disciplina não encontrada.");
+
+      }
+
+    } catch (erro) {
+
+      return { status: 400, mensagem: erro.message };
+
+    }
+  }
+
+
+
+  static async deleteDisciplina(id) {
 
     try {
 
@@ -125,5 +146,5 @@ static async deleteDisciplina(id) {
     }
   }
 }
-  
+
 module.exports = disciplina;

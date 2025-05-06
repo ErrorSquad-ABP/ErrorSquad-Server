@@ -5,10 +5,12 @@ const defaultStrings = require('../utils/firstLetterUppercase');
 async function requestNewDisciplina(req, res) {
 
     const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
-    const newDisciplinaDto = new createDisciplinaDto(defaultNomeString, req.body.docente_id);
+    const defaultDocenteString = defaultStrings.firstLetterUppercase(req.body.docente);
+    const defaultCursoString = defaultStrings.firstLetterUppercase(req.body.curso);
+    const newDisciplinaDto = new createDisciplinaDto(defaultNomeString, defaultDocenteString, defaultCursoString);
 
     try {
-        const newDisciplina = new disciplina(null, newDisciplinaDto.nome, newDisciplinaDto.docente_id)
+        const newDisciplina = new disciplina(null, newDisciplinaDto.nome, newDisciplinaDto.nome_docente, newDisciplinaDto.nome_curso)
         const createDisciplina = await newDisciplina.createDisciplina(newDisciplina);
         res.status(createDisciplina.status).json(createDisciplina);
     } catch (error) {
@@ -33,7 +35,7 @@ async function listDisciplinas(req, res) {
 async function requestAlterDisciplina(req, res) {
 
     const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
-    const alterDisciplina = new disciplina(req.body.id, defaultNomeString, req.body.docente_id);
+    const alterDisciplina = new disciplina(req.body.id, defaultNomeString, req.body.nome_docente, req.body.nome_curso);
 
     try {
         const updateDisciplina = await alterDisciplina.updateDisciplina(alterDisciplina);

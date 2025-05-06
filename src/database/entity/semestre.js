@@ -2,168 +2,172 @@ const semestreQuery = require('../migrations/semestreQuery');
 
 class semestre {
 
-    constructor(id, nivel, ano, curso_id, turno_id) {
-        this.id = id;
-        this.nivel = nivel;
-        this.ano = ano,
-        this.curso_id = curso_id;
-        this.turno_id = turno_id;
-    }
-    getId() {
-        return this.id;
-    }
+  constructor(id, nivel, ano, nome_curso, nome_turno) {
+    this.id = id;
+    this.nivel = nivel;
+    this.ano = ano,
+    this.nome_curso = nome_curso;
+    this.nome_turno = nome_turno;
+  }
+  getId() {
+    return this.id;
+  }
 
-    setId(id) {
-        this.id = id;
-    }
+  setId(id) {
+    this.id = id;
+  }
 
-    getNivel() {
-        return this.nivel;
-    }
+  getNivel() {
+    return this.nivel;
+  }
 
-    setNivel(nivel) {
-        this.nivel = nivel;
-    }
+  setNivel(nivel) {
+    this.nivel = nivel;
+  }
 
-    getAno() {
-        return this.ano;
-    }
+  getAno() {
+    return this.ano;
+  }
 
-    setAno(ano) {
-        this.ano = ano;
-    }
+  setAno(ano) {
+    this.ano = ano;
+  }
 
-    getCurso_id() {
-        return this.curso_id;
-    }
+  getNome_curso() {
+    return this.nome_curso;
+  }
 
-    setCurso_id(curso_id) {
-        this.curso_id = curso_id;
-    }
+  setNome_curso(nome_curso) {
+    this.nome_curso = nome_curso;
+  }
 
-    getTurno_id() {
-        return this.turno_id;
-    }
+  getNome_turno() {
+    return this.nome_turno;
+  }
 
-    setTurno_id(turno_id) {
-        this.turno_id = turno_id;
-    }
+  setNome_turno(nome_turno) {
+    this.nome_turno = nome_turno;
+  }
 
-    async createSemestre(newSemestre) {
+  async createSemestre(newSemestre) {
 
-        try {
-          const nivel = newSemestre.nivel;
-          const ano = newSemestre.ano;
-          const curso_id = newSemestre.curso_id;
-          const turno_id = newSemestre.turno_id;
+    try {
+      const nivel = newSemestre.nivel;
       
-          // Verificar se o nivel é nulo ou vazio
-          if (!nivel) {
-              throw new Error("nivel do semestre é obrigatório para criação.");
-          }
+      const ano = newSemestre.ano;
 
-          if (!ano) {
-            throw new Error("ano do semestre é obrigatório para criação.");
-        }
+      const nome_curso = newSemestre.nome_curso;
 
-        if (!curso_id) {
-            throw new Error("ID do curso do semestre é obrigatório para criação.");
-        }
+      const nome_turno = newSemestre.nome_turno;
 
-        if (!turno_id) {
-            throw new Error("ID do turno do semestre é obrigatório para criação.");
-        }
-      
-          // Caso o nivel seja válido, continuar com a lógica
-          return await semestreQuery.createNewSemestre(nivel, ano, curso_id, turno_id);
-      
-      } catch (erro) {
-          return { status: 400, mensagem: erro.message };
-      }
-    
+      // Verificar se o nivel é nulo ou vazio
+      if (!nivel) {
+        throw new Error("nivel do semestre é obrigatório para criação.");
       }
 
-      static async getAllSemestre() {
-
-        return await semestreQuery.searchAllSemestres();
-    
+      if (!ano) {
+        throw new Error("ano do semestre é obrigatório para criação.");
       }
 
-      async updateSemestre(alterSemestre) {
-        try {
-    
-          const id = alterSemestre.id;
-    
-          const nivel = alterSemestre.nivel;
-
-          const ano = alterSemestre.ano;
-
-          const curso_id = alterSemestre.curso_id;
-
-          const turno_id = alterSemestre.turno_id;
-    
-          const semestreExists = await semestreQuery.semestreExistsOrNotById(id);
-    
-          if (semestreExists) {
-    
-            if (!nivel) {
-              throw new Error("nivel do semestre é obrigatório para atualização.");
-    
-          }
-          if (!ano) {
-            throw new Error("ano do semestre é obrigatório para atualização.");
-  
-        }
-        if (!curso_id) {
-            throw new Error("ID do curso do semestre é obrigatório para atualização.");
-  
-        }
-        if (!turno_id) {
-            throw new Error("ID do turno do semestre é obrigatório para atualização.");
-  
-        }
-          return await semestreQuery.updateExistingSemestre(id, nivel, ano, curso_id, turno_id)
-        }
-    
-          if (!semestreExists) {
-    
-            throw new Error("semestre não encontrado.");
-    
-          }
-    
-        } catch (erro) {
-    
-          return { status: 400, mensagem: erro.message };
-    
-        }
+      if (!nome_curso) {
+        throw new Error("ID do curso do semestre é obrigatório para criação.");
       }
 
-      static async deleteSemestre(id) {
-
-        try {
-    
-          const semestreExists = await semestreQuery.semestreExistsOrNotById(id);
-    
-          if (semestreExists) {
-    
-            await semestreQuery.deleteExistingSemestre(id)
-    
-            return { status: 200, mensagem: "Semestre deletado!" };
-    
-          }
-    
-          if (!semestreExists) {
-    
-            throw new Error("Semestre não encontrado.");
-    
-          }
-    
-        } catch (erro) {
-    
-          return { status: 400, mensagem: erro.message };
-    
-        }
+      if (!nome_turno) {
+        throw new Error("ID do turno do semestre é obrigatório para criação.");
       }
+
+
+      // Caso o nivel seja válido, continuar com a lógica
+      return await semestreQuery.createNewSemestre(nivel, ano, nome_curso, nome_turno);
+
+    } catch (erro) {
+      return { status: 400, mensagem: erro.message };
     }
-    
-    module.exports = semestre;
+
+  }
+
+  static async getAllSemestre() {
+
+    return await semestreQuery.searchAllSemestres();
+
+  }
+
+  async updateSemestre(alterSemestre) {
+    try {
+
+      const id = alterSemestre.id;
+
+      const nivel = alterSemestre.nivel;
+
+      const ano = alterSemestre.ano;
+
+      const nome_curso = alterSemestre.nome_curso;
+
+      const nome_turno = alterSemestre.nome_turno;
+
+      const semestreExists = await semestreQuery.semestreExistsOrNotById(id);
+
+      if (semestreExists) {
+
+        if (!nivel) {
+          throw new Error("nivel do semestre é obrigatório para atualização.");
+
+        }
+        if (!ano) {
+          throw new Error("ano do semestre é obrigatório para atualização.");
+
+        }
+        if (!nome_curso) {
+          throw new Error("ID do curso do semestre é obrigatório para atualização.");
+
+        }
+        if (!nome_turno) {
+          throw new Error("ID do turno do semestre é obrigatório para atualização.");
+
+        }
+        return await semestreQuery.updateExistingSemestre(id, nivel, ano, nome_curso, nome_turno)
+      }
+
+      if (!semestreExists) {
+
+        throw new Error("semestre não encontrado.");
+
+      }
+
+    } catch (erro) {
+
+      return { status: 400, mensagem: erro.message };
+
+    }
+  }
+
+  static async deleteSemestre(id) {
+
+    try {
+
+      const semestreExists = await semestreQuery.semestreExistsOrNotById(id);
+
+      if (semestreExists) {
+
+        await semestreQuery.deleteExistingSemestre(id)
+
+        return { status: 200, mensagem: "Semestre deletado!" };
+
+      }
+
+      if (!semestreExists) {
+
+        throw new Error("Semestre não encontrado.");
+
+      }
+
+    } catch (erro) {
+
+      return { status: 400, mensagem: erro.message };
+
+    }
+  }
+}
+
+module.exports = semestre;

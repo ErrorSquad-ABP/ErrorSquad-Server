@@ -5,11 +5,13 @@ const defaultStrings = require('../utils/firstLetterUppercase')
 async function requestNewCurso(req, res) {
 
   const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
-  const newCursoDto = new createCursoDto(defaultNomeString);
 
-  try {
-    const newCurso = new curso(null, newCursoDto.nome)
+  const defaultCoordenadorString = defaultStrings.firstLetterUppercase(req.body.coordenador);
 
+  const newCursoDto = new createCursoDto(defaultNomeString, defaultCoordenadorString, req.body.sigla, req.body.inicio, req.body.fim);
+
+  try { 
+    const newCurso = new curso(null, newCursoDto.nome, newCursoDto.coordenador, newCursoDto.sigla, newCursoDto.inicio, newCursoDto.fim)
     const createCurso = await newCurso.createCurso(newCurso);
     res.status(createCurso.status).json(createCurso);
   } catch (error) {
@@ -35,7 +37,10 @@ async function listCursos(req, res) {
 async function requestAlterCurso(req, res) {
 
   const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
-  const alterCurso = new curso(req.body.id, defaultNomeString);
+
+  const defaultCoordenadorString = defaultStrings.firstLetterUppercase(req.body.coordenador);
+
+  const alterCurso = new curso(req.body.id, defaultNomeString, defaultCoordenadorString, req.body.sigla);
 
   try {
     const updateCurso = await alterCurso.updateCurso(alterCurso);
