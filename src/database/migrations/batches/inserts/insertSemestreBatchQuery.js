@@ -1,47 +1,67 @@
 const bigquery = require('../../../../lib/bigquery');
 
 async function insertSemestreBatch(tableName, columns, records) {
+
   if (!records || records.length === 0) return;
   
-  // Process each record to extract just the values
-  const values = records.map(record => {
-    const recordValues = [];
-    
-    columns.forEach(col => {
-      if (record[col] !== undefined && record[col] !== null) {
-        if (typeof record[col] === 'string') {
-          // Properly format string values with quotes
-          recordValues.push(`'${record[col].replace(/'/g, "''")}'`);
-        } else {
-          // Format numeric or boolean values without quotes
-          recordValues.push(`${record[col]}`);
-        }
-      }
-    });
-    
-    return recordValues.join(', ');
-  }).join(', ');
+  // Criar arrays para cada tipo de parâmetro sem formatação SQL
+  const niveis_semestre = [];
+  const anos_semestre = [];
+  const siglas_curso = [];
+  const nomes_turno = [];
   
-  console.log(records, 'semestre');
+  // Preencher os arrays com os valores dos registros (sem aspas ou formatação SQL)
+  records.forEach(record => {
+ 
+    const nivel_semestre = record[columns[0]];
+    const ano_semestre = record[columns[1]];
+    const sigla_curso = record[columns[2]];
+    const nome_turno = record[columns[3]];
+    
+    if (nivel_semestre !== undefined && nivel_semestre !== null) {
+      niveis_semestre.push(nivel_semestre);
+    }
+    
+    if (ano_semestre !== undefined && ano_semestre !== null) {
+      anos_semestre.push(ano_semestre);
+    }
+    
+    if (sigla_curso !== undefined && sigla_curso !== null) {
+      siglas_curso.push(sigla_curso);
+    }
+
+    if (nome_turno !== undefined && nome_turno !== null) {
+      nomes_turno.push(nome_turno);
+    }
+    
+  });
   
   const query = `
   CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`inserir_semestre\`(
-      p_nivel = ${values[0]},
-      p_ano = ${values[1]}, 
-      p_sigla_curso = ${values[2]}, 
-      p_nome_turno = ${values[3]}, 
-      p_inicio = ${values[4]}, 
-      p_fim = ${values[5]});
+    @niveis_semestre,
+    @anos_semestre,
+    @siglas_curso,
+    @nomes_turno
   );`;
-
-  const options = { query, useLegacySql: false };
-
+  
+  const options = { 
+    query, 
+    params: {
+      niveis_semestre: niveis_semestre,
+      anos_semestre: anos_semestre,
+      siglas_curso: siglas_curso,
+      nomes_turno: nomes_turno,
+    },
+    
+    useLegacySql: false 
+  };
+  
   try {
     await bigquery.query(options);
     console.log(`Inseridos ${records.length} registros em ${tableName}`);
     return { status: 201, mensagem: `Registros inseridos com sucesso em ${tableName}!` };
   } catch (erro) {
-    console.error(`Erro ao inserir em ${tableName}:`, erro);
+    console.error(`Erro ao inserir em batch em ${tableName}:`, erro);
     throw erro;
   }
 }
