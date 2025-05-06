@@ -28,7 +28,9 @@ async function processCSVData(data) {
       id: parseInt(item.id),
       nome: String(item.nome),
       coordenador: String(item.coordenador),
-      sigla: String(item.sigla)
+      sigla: String(item.sigla),
+      inicio: String(item.inicio),
+      fim: String(item.fim)
     })) : [];
 
     const ambientes = data.tables.ambiente ? data.tables.ambiente.map(item => ({
@@ -67,6 +69,7 @@ async function processCSVData(data) {
       nome_curso: String(item.nome_curso),
       nome_turno: String(item.nome_turno)
     })) : [];
+
     // Executar todas as inserções em paralelo para máxima performance
     await Promise.resolve()
       .then(() => Promise.all([
@@ -78,7 +81,7 @@ async function processCSVData(data) {
         insertHorariosEmLote(horarios),
       ]))
       .then(() => Promise.all([ 
-        //insertSemestresEmLote(semestres),
+        insertSemestresEmLote(semestres),
         insertDisciplinasEmLote(disciplinas)
       ]));
     console.log('Dados processados e salvos com sucesso no banco.');

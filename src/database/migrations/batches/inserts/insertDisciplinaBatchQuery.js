@@ -27,7 +27,7 @@ async function insertDisciplinaBatch(tableName, columns, records) {
       siglas_cursos.push(sigla_curso);
     }
   });
-  
+
   const query = `
   CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`inserir_disciplina_por_nome\`(
     @nomes_disciplinas,
