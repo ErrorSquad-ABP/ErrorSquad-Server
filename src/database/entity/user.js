@@ -17,7 +17,7 @@ class user {
 
 
       if (!userInfos) {
-        return { status: 404, message: 'Credenciais incorretas.' };
+        return { status: 401, message: 'Credenciais incorretas.' };
       }
 
       // Comparar a senha fornecida com o hash armazenado
@@ -39,7 +39,7 @@ class user {
             },
           };
         } else {
-          return { status: 404, message: 'Credenciais incorretas.' };
+          return { status: 401, message: 'Credenciais incorretas.' };
         }
       }
     } catch (error) {
