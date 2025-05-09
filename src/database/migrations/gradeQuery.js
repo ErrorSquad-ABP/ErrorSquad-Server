@@ -3,9 +3,11 @@ const bigquery = require('../../lib/bigquery');
 async function searchAllInfos() {
 
   const query =
-    `SELECT * 
-      FROM \`sitefatecdsm-01-2025.SiteFatecDSM.dia\`
-      order by id asc`;
+    `SELECT 
+  (SELECT ARRAY_AGG(STRUCT(id, nome)) FROM \`sitefatecdsm-01-2025.SiteFatecDSM.dia\`) AS dias,
+  (SELECT ARRAY_AGG(STRUCT(id, hr_inicio, hr_fim)) FROM \`sitefatecdsm-01-2025.SiteFatecDSM.horario\`) AS horarios,
+  (SELECT ARRAY_AGG(STRUCT(id, id_dia, id_horario, id_disciplina, id_docente_disciplina, id_cronograma_semestre, id_ambiente)) FROM \`sitefatecdsm-01-2025.SiteFatecDSM.periodo\`) AS periodos;
+`;
 
   const [rows] = await bigquery.query({ query });
 
