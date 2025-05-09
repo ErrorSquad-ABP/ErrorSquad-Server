@@ -1,4 +1,5 @@
 const csvService = require('../services/gradeCsvService');
+const gradeService = require('../services/gradeService')
 
 async function requestNewGrade(req, res) {
   try {
@@ -16,10 +17,10 @@ async function requestNewGrade(req, res) {
 
 async function listGrades(req, res) {
   try {
-    const cursos = await curso.getAllCurso();
-    res.status(cursos.status).json({
-      message: cursos.mensagem,
-      data: cursos.data
+    const gradeInfos = await gradeService.getAllInfosToGrade();
+    res.status(gradeInfos.status).json({
+      message: gradeInfos.mensagem,
+      data: gradeInfos.data
     });
   } catch (error) {
     console.error('Erro ao listar cursos:', error);
