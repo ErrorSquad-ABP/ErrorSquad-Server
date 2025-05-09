@@ -73,35 +73,8 @@ async function updateExistingPeriodo(id, disciplina, docente, ambiente) {
   }
 }
 
-async function deleteExistingPeriodo(id) {
-  const query = `
-    DELETE FROM \`sitefatecdsm-01-2025.SiteFatecDSM.periodo\`
-    WHERE id = @id;
-  `;
-
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-    },
-    useLegacySql: false
-  };
-
-
-  try {
-    const [rows] = await bigquery.query(options);
-    return { sucesso: true, mensagem: 'periodo atualizado com sucesso!' };
-
-  } catch (erro) {
-    console.error('Erro ao alterar periodo:', erro);
-    return { status: 400, mensagem: 'Problemas com o banco de dados.' };
-  }
-}
-
-
 module.exports = {
   searchAllPeriodos,
   periodoExistsOrNotById,
   updateExistingPeriodo,
-  deleteExistingPeriodo
 };

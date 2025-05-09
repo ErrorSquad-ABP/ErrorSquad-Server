@@ -76,7 +76,7 @@ class periodo {
 
   }
 
-  async updatePeriodo( alterPeriodo ) {
+  async updatePeriodo(alterPeriodo) {
     try {
       const id = alterPeriodo.id
       const disciplina = alterPeriodo.id_disciplina
@@ -98,9 +98,9 @@ class periodo {
         if (!ambiente) {
           throw new Error("Necessário inserir uma sala ou laboratório.");
         }
-        
+
         return await periodoQuery.updateExistingPeriodo(id, disciplina, docente, ambiente);
-        
+
       }
 
       if (!periodoExists) {
@@ -112,35 +112,7 @@ class periodo {
     } catch (erro) {
       return { status: 400, mensagem: erro.message };
     }
-
   }
-
-  static async deletePeriodo(id) {
-  
-      try {
-  
-        const periodoExists = await periodoQuery.periodoExistsOrNotById(id);
-  
-        if (periodoExists) {
-  
-          await periodoQuery.deleteExistingPeriodo(id)
-  
-          return { status: 200, mensagem: "periodo deletado!" };
-  
-        }
-  
-        if (!periodoExists) {
-  
-          throw new Error("periodo não encontrado.");
-  
-        }
-  
-      } catch (erro) {
-  
-        return { status: 400, mensagem: erro.message };
-  
-      }
-    }
 }
 
 module.exports = periodo;
