@@ -37,21 +37,7 @@ async function requestAlterPeriodo(req, res) {
   }
 }
 
-async function requestDeletePeriodo(req, res) {
-
-  const id = req.body.id;
-
-  try {
-    const deletePeriodo = await periodo.deletePeriodo(id);
-    res.status(deletePeriodo.status).json(deletePeriodo);
-  } catch (error) {
-    console.error('Erro ao atualizar periodo:', error);
-    res.status(500).json({ erro: 'Erro interno ao atualizar periodo' });
-  }
-}
-
 module.exports = {
   listPeriodos,
   requestAlterPeriodo,
-  requestDeletePeriodo
 };

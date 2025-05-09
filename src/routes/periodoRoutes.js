@@ -9,8 +9,4 @@ router.get("/", authenticate, periodoController.listPeriodos);
 // Rota para alterar periodos
 router.put("/", authenticate, periodoController.requestAlterPeriodo);
 
-// Rota para deletar periodo
-router.delete("/", authenticate, periodoController.requestDeletePeriodo)
-
-
 module.exports = router;
