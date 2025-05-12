@@ -3,7 +3,7 @@ const bigquery = require('../../lib/bigquery');
 async function createNewSemestre(nivel, ano, nome_curso, nome_turno) {
 
   const query =
-    `CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`inserir_semestre\`(
+    `CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`inserir_semestre_unico\`(
     @nivel,
     @ano,
     @nome_curso,
