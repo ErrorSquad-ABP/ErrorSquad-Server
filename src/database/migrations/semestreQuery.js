@@ -32,9 +32,22 @@ async function createNewSemestre(nivel, ano, nome_curso, nome_turno) {
 async function searchAllSemestres() {
 
   const query =
-    `SELECT * 
-    FROM \`sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma\`
-    order by id asc`;
+   `SELECT 
+    semestre_cronograma.id AS id_semestre_cronograma,
+    semestre_cronograma.nivel AS nivel_semestre_cronograma,
+    semestre_cronograma.ano AS ano_semestre_cronograma,
+    curso.sigla AS sigla_curso,
+    turno.nome AS nome_turno
+FROM 
+    \`sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma\` AS semestre_cronograma
+LEFT JOIN 
+    \`sitefatecdsm-01-2025.SiteFatecDSM.curso\` AS curso 
+    ON semestre_cronograma.id_curso = curso.id
+LEFT JOIN 
+    \`sitefatecdsm-01-2025.SiteFatecDSM.turno\` AS turno 
+    ON semestre_cronograma.id_turno = turno.id
+ORDER BY 
+    semestre_cronograma.id ASC;`;
 
   const [rows] = await bigquery.query({ query });
 
