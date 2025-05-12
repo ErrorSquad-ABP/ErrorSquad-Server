@@ -1,17 +1,18 @@
 const bigquery = require('../../lib/bigquery');
 
-async function createNewAmbiente(nome) {
+async function createNewAmbiente(nome, localizacao) {
 
   const query =
-    `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.ambiente (id, nome)
+    `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.ambiente (id, nome, localizacao)
     SELECT 
     COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.ambiente), 0) + 1,
-   @nome;`;
+   @nome, @localizacao;`;
 
   const options = {
     query,
     params: {
-      nome: String(nome)
+      nome: String(nome),
+      localizacao: parseInt(localizacao)
     },
     useLegacySql: false
   };
