@@ -1,7 +1,8 @@
 class createAmbienteDto {
 
-    constructor(nome){
+    constructor(nome, localizacao){
       this.nome = nome;
+      this.localizacao =  localizacao;
     }
   }
   

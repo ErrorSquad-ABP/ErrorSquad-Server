@@ -8,7 +8,7 @@ async function requestNewAmbiente(req, res) {
   const newAmbienteDto = new createAmbienteDto(defaultNomeString);
 
   try {
-    const newAmbiente = new ambiente(null, newAmbienteDto.nome);
+    const newAmbiente = new ambiente(null, newAmbienteDto.nome, req.body.localizacao);
     const createAmbiente = await newAmbiente.createAmbiente(newAmbiente);
     res.status(createAmbiente.status).json(createAmbiente);
   } catch (error) {

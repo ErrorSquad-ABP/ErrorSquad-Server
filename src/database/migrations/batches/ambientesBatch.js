@@ -8,17 +8,17 @@ async function insertAmbientesEmLote(ambientes) {
   let allEntities = []; // Inicializando como um array
 
   for (let i = 0; i < ambientes.length; i++) {
-    const dtoEntity = new createAmbienteDto(ambientes[i].nome); // Criando o DTO
-    const entity = new ambiente(null, dtoEntity.nome); // Criando a entidade
+    const dtoEntity = new createAmbienteDto(ambientes[i].nome, ambientes[i].localizacao); // Criando o DTO
+    const entity = new ambiente(null, dtoEntity.nome, dtoEntity.localizacao); // Criando a entidade
     allEntities.push(entity); // Adicionando ao array
 
   }
   // Mapeando as entidades para o formato esperado pelo insertBatch
     const records = allEntities.map(ambiente => ({
       id: null,
-      nome: defaultStrings.firstLetterUppercase(ambiente.nome)
+      nome: defaultStrings.firstLetterUppercase(ambiente.nome),
+      localizacao: parseInt(ambiente.localizacao)
     }));
-  
   // Chamando a função insertBatch
   return await insertBatch('ambiente', [ 'nome' ], records);
 }

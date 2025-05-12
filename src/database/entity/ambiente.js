@@ -1,9 +1,10 @@
 const ambienteQuery = require('../migrations/ambienteQuery');
 
 class ambiente {
-  constructor(id, nome) {
+  constructor(id, nome, localizacao) {
     this.id = id;
     this.nome = nome;
+    this.localizacao = localizacao;
   }
 
   getId() {
@@ -22,18 +23,31 @@ class ambiente {
     this.nome = nome;
   }
 
+  getLocalizacao() {
+    return this.localizacao;
+  }
+
+  setLocalizacao(localizacao) {
+    this.localizacao = localizacao;
+  }
+
   async createAmbiente(newAmbiente) {
 
     try {
       const nome = newAmbiente.nome;
+      const localizacao = newAmbiente.localizacao
 
       // Verificar se o nome é nulo ou vazio
       if (!nome || nome.trim() === "") {
         throw new Error("Nome do ambiente é obrigatório para criação.");
       }
 
+      if (!localizacao) {
+        throw new Error("Localizacao do ambiente é obrigatório para criação.");
+      }
+
       // Caso o nome seja válido, continuar com a lógica
-      return await ambienteQuery.createNewAmbiente(nome);
+      return await ambienteQuery.createNewAmbiente(nome, localizacao);
 
     } catch (erro) {
       return { status: 400, mensagem: erro.message };
@@ -51,6 +65,7 @@ class ambiente {
 
       const id = alterAmbiente.id;
       const nome = alterAmbiente.nome;
+      const localizacao = alterAmbiente.localizacao
       const ambienteExists = await ambienteQuery.ambienteExistsOrNotById(id);
 
       if (ambienteExists) {
@@ -58,6 +73,11 @@ class ambiente {
         if (!nome || nome.trim() === "") {
 
           throw new Error("Nome do ambiente é obrigatório para atualização.");
+
+        }
+
+        if (!localizacao || localizacao.trim() === "") {
+        throw new Error("Localizacao do ambiente é obrigatório para criação.");
 
         }
         return await ambienteQuery.updateExistingAmbiente(id, nome)
