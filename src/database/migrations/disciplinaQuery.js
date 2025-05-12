@@ -30,9 +30,21 @@ async function createNewDisciplina(nome, nome_docente, nome_curso) {
 async function searchAllDisciplinas() {
 
   const query =
-    `SELECT * 
-      FROM \`sitefatecdsm-01-2025.SiteFatecDSM.disciplina\`
-      order by id asc`;
+    `SELECT 
+    disciplina.id AS id_disciplina,
+    disciplina.nome AS nome_disciplina,
+    curso.sigla AS sigla_curso,
+    docente.nome AS nome_docente
+FROM 
+    \`sitefatecdsm-01-2025.SiteFatecDSM.disciplina\` AS disciplina
+LEFT JOIN 
+    \`sitefatecdsm-01-2025.SiteFatecDSM.curso\` AS curso 
+    ON disciplina.id_curso = curso.id
+LEFT JOIN 
+    \`sitefatecdsm-01-2025.SiteFatecDSM.docente\` AS docente 
+    ON disciplina.id_docente = docente.id
+ORDER BY 
+    disciplina.id ASC;`;
 
   const [rows] = await bigquery.query({ query });
 
