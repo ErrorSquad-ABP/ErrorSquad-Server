@@ -3,10 +3,11 @@ const bigquery = require('../../lib/bigquery');
 async function createNewSemestre(nivel, ano, nome_curso, nome_turno) {
 
   const query =
-    `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma (id, nivel, ano, nome_curso, nome_turno)
-    SELECT 
-    COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma), 0) + 1,
-   @nivel, @ano, @nome_curso, @nome_turno;`;
+    `CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`inserir_semestre\`(
+    @nivel,
+    @ano,
+    @nome_curso,
+    @nome_turno`;
 
   const options = {
     query,
