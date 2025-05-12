@@ -52,13 +52,13 @@ class semestre {
   async createSemestre(newSemestre) {
 
     try {
-      const nivel = newSemestre.nivel;
+      const nivel = [newSemestre.nivel];
       
-      const ano = newSemestre.ano;
+      const ano = [newSemestre.ano];
 
-      const nome_curso = newSemestre.nome_curso;
+      const nome_curso = [newSemestre.nome_curso];
 
-      const nome_turno = newSemestre.nome_turno;
+      const nome_turno = [newSemestre.nome_turno];
 
       // Verificar se o nivel é nulo ou vazio
       if (!nivel) {
