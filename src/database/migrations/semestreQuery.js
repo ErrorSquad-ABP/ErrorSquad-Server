@@ -7,7 +7,7 @@ async function createNewSemestre(nivel, ano, nome_curso, nome_turno) {
     @nivel,
     @ano,
     @nome_curso,
-    @nome_turno;`;
+    @nome_turno);`;
 
   const options = {
     query,
