@@ -35,7 +35,8 @@ async function processCSVData(data) {
 
     const ambientes = data.tables.ambiente ? data.tables.ambiente.map(item => ({
       id: parseInt(item.id),
-      nome: String(item.nome)
+      nome: String(item.nome),
+      localizacao: parseInt(item.localizacao)
     })) : [];
 
     const dias = data.tables.dia ? data.tables.dia.map(item => ({
@@ -69,14 +70,18 @@ async function processCSVData(data) {
       nome_curso: String(item.nome_curso),
       nome_turno: String(item.nome_turno)
     })) : [];
-
+    
     // Executar todas as inserções em paralelo para máxima performance
     await Promise.resolve()
       .then(() => Promise.all([
         insertDocentesEmLote(docentes),
         insertTurnosEmLote(turnos),
+        ]))
+      .then(() => Promise.all([
         insertCursosEmLote(cursos),
         insertAmbientesEmLote(ambientes),
+        ]))
+      .then(() => Promise.all([
         insertDiasEmLote(dias),
         insertHorariosEmLote(horarios),
       ]))
