@@ -90,7 +90,7 @@ async function semestreExistsOrNotById(id) {
 async function updateExistingSemestre(id, nivel, ano, nome_curso, nome_turno) {
   const query = `
     CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`alterar_semestre_unico\`(
-    @id
+    @id,
     @nivel,
     @ano,
     @nome_curso,
