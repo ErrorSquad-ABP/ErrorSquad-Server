@@ -45,19 +45,21 @@ async function periodoExistsOrNotById(id) {
 
 
 async function updateExistingPeriodo(id, disciplina, docente, ambiente) {
-  const query = `
-    UPDATE \`sitefatecdsm-01-2025.SiteFatecDSM.periodo\`
-    SET id_disciplina = @disciplina, id_docente_disciplina = @docente, id_ambiente = @ambiente 
-    WHERE id = @id;
-  `;
+  const query =  `
+  CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`alterar_periodo\`(
+    @id,
+    @disciplina,
+    @docente,
+    @ambiente);
+    `;
 
   const options = {
     query,
     params: {
       id: parseInt(id),
-      disciplina: parseInt(disciplina),
-      docente: parseInt(docente),
-      ambiente: parseInt(ambiente),
+      disciplina: String(disciplina),
+      docente: String(docente),
+      ambiente: String(ambiente),
     },
     useLegacySql: false
   };

@@ -17,18 +17,18 @@ async function listPeriodos(req, res) {
 async function requestAlterPeriodo(req, res) {
 
   const alterPeriodoDto = new createPeriodoDto(req.body.id,
-    req.body.id_disciplina,
-    req.body.id_docente_disciplina,
-    req.body.id_ambiente);
+    req.body.nome_disciplina,
+    req.body.nome_docente,
+    req.body.nome_ambiente);
 
   try {
     const alterPeriodo = new periodo(alterPeriodoDto.id,
       null,
       null,
-      alterPeriodoDto.id_disciplina,
-      alterPeriodoDto.id_docente_disciplina,
+      alterPeriodoDto.nome_disciplina,
+      alterPeriodoDto.nome_docente_disciplina,
       null,
-      alterPeriodoDto.id_ambiente);
+      alterPeriodoDto.nome_ambiente);
     const updatePeriodo = await alterPeriodo.updatePeriodo(alterPeriodo);
     res.status(updatePeriodo.status).json(updatePeriodo);
   } catch (error) {
