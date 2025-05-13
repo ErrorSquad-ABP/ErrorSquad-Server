@@ -6,7 +6,7 @@ async function createNewDisciplina(nome, nome_docente, nome_curso) {
     `CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`inserir_disciplina_unico\`(
     @nome,
     @nome_docente,
-    @nome_curso;`;
+    @nome_curso);`;
 
   const options = {
     query,
@@ -88,7 +88,7 @@ async function updateExistingDisciplina(id, nome, nome_docente, nome_curso) {
     @id,
     @nome,
     @nome_docente,
-    @nome_curso;`;
+    @nome_curso);`;
 
   const options = {
     query,
