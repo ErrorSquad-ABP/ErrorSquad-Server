@@ -84,7 +84,7 @@ async function disciplinaExistsOrNotById(id) {
 
 async function updateExistingDisciplina(id, nome, nome_docente, nome_curso) {
   const query = `
-       `CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`alterar_disciplina_unico\`(
+    CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`alterar_disciplina_unico\`(
     @id,
     @nome,
     @nome_docente,
