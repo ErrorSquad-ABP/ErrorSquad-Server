@@ -1,11 +1,11 @@
 class createPeriodoDto {
 
-  constructor( id, id_disciplina, id_docente_disciplina, id_ambiente) {
+  constructor( id, nome_disciplina, nome_docente_disciplina, nome_ambiente) {
 
     this.id = id;
-    this.id_disciplina = id_disciplina;
-    this.id_docente_disciplina = id_docente_disciplina;
-    this.id_ambiente = id_ambiente;
+    this.nome_disciplina = nome_disciplina;
+    this.nome_docente_disciplina = nome_docente_disciplina;
+    this.nome_ambiente = nome_ambiente;
     
   }
 }
