@@ -3,10 +3,10 @@ const bigquery = require('../../lib/bigquery');
 async function createNewDisciplina(nome, nome_docente, nome_curso) {
 
   const query =
-    `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.disciplina (id, nome, nome_docente, nome_curso)
-      SELECT 
-      COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.disciplina), 0) + 1,
-     @nome, @nome_docente, @nome_curso;`;
+    `CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`inserir_disciplina_unico\`(
+    @nome,
+    @nome_docente,
+    @nome_curso;`;
 
   const options = {
     query,
@@ -84,12 +84,11 @@ async function disciplinaExistsOrNotById(id) {
 
 async function updateExistingDisciplina(id, nome, nome_docente, nome_curso) {
   const query = `
-      UPDATE \`sitefatecdsm-01-2025.SiteFatecDSM.disciplina\`
-      SET nome = @nome,
-      nome_docente = @nome_docente,
-      nome_curso = @nome_curso
-      WHERE id = @id;
-    `;
+       `CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`alterar_disciplina_unico\`(
+    @id,
+    @nome,
+    @nome_docente,
+    @nome_curso;`;
 
   const options = {
     query,
