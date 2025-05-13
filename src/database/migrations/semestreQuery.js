@@ -89,13 +89,12 @@ async function semestreExistsOrNotById(id) {
 
 async function updateExistingSemestre(id, nivel, ano, nome_curso, nome_turno) {
   const query = `
-    UPDATE \`sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma\`
-    SET nivel = @nivel,
-    ano = @ano,
-    nome_curso = @nome_curso,
-    nome_turno = @nome_turno
-    WHERE id = @id;
-  `;
+     `CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`alterar_semestre_unico\`(
+    @id
+    @nivel,
+    @ano,
+    @nome_curso,
+    @nome_turno);`;
 
   const options = {
     query,
