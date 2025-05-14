@@ -35,10 +35,6 @@ nome,
 sigla
 )) FROM sitefatecdsm-01-2025.SiteFatecDSM.curso) AS cursos,
 (SELECT ARRAY_AGG(STRUCT(
-id,
-nome
-)) FROM sitefatecdsm-01-2025.SiteFatecDSM.turno) AS turnos,
-(SELECT ARRAY_AGG(STRUCT(
 periodo.id,
 dia.nome AS nome_dia,
 horario.hr_inicio,
