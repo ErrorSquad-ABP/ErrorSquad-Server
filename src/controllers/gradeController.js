@@ -14,6 +14,30 @@ async function requestNewGrade(req, res) {
   }
 }
 
+async function requestSwapPeriodos(req, res) {
+
+  const card_1 = {
+    id: req.body.id_card1,
+    id_dia: req.body.id_dia_card1,
+    id_horario: req.body.id_horario_card1,
+  };
+
+  const card_2 = {
+    id: req.body.id_card2,
+    id_dia: req.body.id_dia_card2,
+    id_horario: req.body.id_horario_card2,
+  };
+
+
+  try {
+    const swapPeriodos = await gradeService.swapPeriodosInGrade(card_1, card_2);
+    res.status(swapPeriodos.status).json(swapPeriodos);
+  } catch (error) {
+    console.error('Erro ao atualizar periodo:', error);
+    res.status(500).json({ erro: 'Erro interno ao atualizar periodo' });
+  }
+}
+
 
 async function listGrades(req, res) {
   try {
@@ -31,4 +55,5 @@ async function listGrades(req, res) {
 module.exports = {
   listGrades,
   requestNewGrade,
+  requestSwapPeriodos
 };
