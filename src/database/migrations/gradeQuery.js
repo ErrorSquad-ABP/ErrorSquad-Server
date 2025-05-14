@@ -8,6 +8,11 @@ async function searchAllInfos() {
     id, 
     nome
   )) FROM sitefatecdsm-01-2025.SiteFatecDSM.dia) AS dias,
+   (SELECT ARRAY_AGG(STRUCT(
+    id, 
+    nome,
+    cor
+  )) FROM sitefatecdsm-01-2025.SiteFatecDSM.docente) AS docente,
 (SELECT ARRAY_AGG(STRUCT(
 id,
 hr_inicio,
@@ -29,6 +34,7 @@ horario.hr_inicio,
 horario.hr_fim,
 disciplina.nome AS nome_disciplina,
 docente.nome AS nome_docente,
+docente.cor AS cor_docente,
 semestre_cronograma.nivel AS nivel_semestre,
 curso.sigla AS sigla_curso,
 turno.nome AS nome_turno,
