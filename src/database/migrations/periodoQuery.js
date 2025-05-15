@@ -67,6 +67,10 @@ async function updateExistingPeriodo(id, disciplina, docente, ambiente) {
 
   try {
     const [rows] = await bigquery.query(options);
+     // Verificar se a coluna 'erro' existe no resultado
+    if (rows.length > 0 && rows[0].erro) {
+      throw new Error(rows[0].erro); // Lança o erro retornado pelo BigQuery
+    }
     return { status: 200, mensagem: 'periodo atualizado com sucesso!' };
 
   } catch (erro) {
