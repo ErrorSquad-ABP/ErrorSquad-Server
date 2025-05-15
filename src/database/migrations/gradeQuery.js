@@ -98,7 +98,8 @@ async function swapPeriodos(id1, id1_dia, id1_horario, id2, id2_dia, id2_horario
     },
     useLegacySql: false
   };
-
+console.log(id1, id1_dia, id1_horario)
+console.log(id2, id2_dia, id2_horario)
   try {
     await bigquery.query(options);
     return { status: 201, mensagem: 'Periodo alterado com sucesso!' };
