@@ -24,6 +24,8 @@ async function swapPeriodosInGrade(card_1, card_2) {
   if (hasNullValues(card_2)) {
       console.log('card_2 possui campos nulos.');
   }
+  console.log('card 1111',card_1)
+   console.log('card 2222',card_2)
 
     return await gradeQuery.swapPeriodos(card_1.id, card_1.id_dia, card_1.id_horario, card_2.id, card_2.id_dia, card_2.id_horario);
    
