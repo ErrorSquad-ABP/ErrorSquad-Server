@@ -5,7 +5,7 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT;
 const corsOptions = {
-    origin: ['http://127.0.0.1:5500', 'https://site-abp.onrender.com'], // Substitua pela origem permitida
+    origin: ['http://127.0.0.1:5500', 'https://site-abp.onrender.com', 'http://localhost:3000'], // Substitua pela origem permitida
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 };
