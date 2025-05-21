@@ -1,4 +1,4 @@
-const { getIO } = require("../../lib/socket");
+const { getIO } = require("../../lib/io");
 
 async function swapPeriodos(card1, card2) {
   try {
