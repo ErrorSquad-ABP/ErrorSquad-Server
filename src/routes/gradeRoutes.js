@@ -26,6 +26,6 @@ router.post("/import", authenticate, upload.single('file'), gradeController.requ
 router.get("/", authenticate, gradeController.listGrades);
 
 // Rota para swapar os periodos
-router.put("/", authenticate, gradeController.requestSwapPeriodos)
+router.put("/", authenticate, gradeController.requestSwapPeriodos);
 
 module.exports = router;
