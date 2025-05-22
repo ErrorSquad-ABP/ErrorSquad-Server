@@ -92,12 +92,31 @@ async function swapPeriodos(id1, id1_dia, id1_horario, id2, id2_dia, id2_horario
     useLegacySql: false,
   };
 
-  console.log(id1, id1_dia, id1_horario);
-  console.log(id2, id2_dia, id2_horario);
-
   try {
-    await bigquery.query(options);
-    return { status: 201, mensagem: 'Periodo alterado com sucesso!' };
+
+    const [rows] = await bigquery.query(options)
+    console.log(rows)
+    const card1 = {
+      id: rows[0].id,
+      id_dia: rows[0].id_dia,
+      id_horario: rows[0].id_horario
+    }
+
+     const card2 = {
+      id: rows[1].id,
+      id_dia: rows[1].id_dia,
+      id_horario: rows[1].id_horario
+    }
+
+   
+    
+    return { 
+      status: 201, 
+      message: 'Períodos trocados com sucesso!',
+      card1,
+      card2
+    };
+
   } catch (erro) {
     console.error('Erro ao inserir nivel:', erro);
     return { status: 400, mensagem: 'Problemas com o banco de dados.' };

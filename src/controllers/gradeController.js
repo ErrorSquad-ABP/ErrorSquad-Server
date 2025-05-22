@@ -1,5 +1,6 @@
 const csvService = require('../services/gradeCsvService');
 const gradeService = require('../services/gradeService')
+const gradeWebSocket = require('../services/webSockets/gradeWebSocket')
 
 async function requestNewGrade(req, res) {
   try {
@@ -15,7 +16,6 @@ async function requestNewGrade(req, res) {
 }
 
 async function requestSwapPeriodos(req, res) {
-
   const card_1 = {
     id: req.body.id_card1,
     id_dia: req.body.id_dia_card1,
@@ -28,16 +28,28 @@ async function requestSwapPeriodos(req, res) {
     id_horario: req.body.id_horario_card2,
   };
 
-
   try {
-    const swapPeriodos = await gradeService.swapPeriodosInGrade(card_1, card_2);
-    res.status(swapPeriodos.status).json(swapPeriodos);
+    console.log("Dados enviados para service:")
+    const result = await gradeService.swapPeriodosInGrade(card_1, card_2);
+    
+    // Emite via WebSocket (não bloqueante)
+    console.log("Dados enviados para swapPeriodos:")
+    gradeWebSocket.swapPeriodos(result.card1, result.card2).catch(console.error);
+    
+    // Retorna resposta HTTP
+    return res.status(result.status).json({
+      success: true,
+      message: 'Troca realizada com sucesso'
+    });
+    
   } catch (error) {
     console.error('Erro ao atualizar periodo:', error);
-    res.status(500).json({ erro: 'Erro interno ao atualizar periodo' });
+    return res.status(500).json({ 
+      success: false,
+      error: 'Erro interno ao atualizar periodo' 
+    });
   }
 }
-
 
 async function listGrades(req, res) {
   try {
