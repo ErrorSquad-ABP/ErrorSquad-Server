@@ -1,6 +1,6 @@
 class alterPasswordUserDto {
-  constructor( senha ) {
-
+  constructor( id, senha ) {
+    this.id = id;
     this.senha = senha;
 
   };
