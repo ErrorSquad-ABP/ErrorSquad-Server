@@ -1,6 +1,8 @@
 const userQuery = require('../migrations/userQuery');
 const bcrypt = require("bcrypt");
 const generateToken = require('../../utils/generateToken');
+const hash = require('../../utils/generateHash');
+const hashVerify = require('../../utils/verifyPassword');
 
 
 class user {
@@ -45,6 +47,60 @@ class user {
     } catch (error) {
       console.error('Erro ao processar login:', error);
       return { status: 500, message: 'Erro interno. Tente novamente mais tarde.' };
+    }
+  }
+
+  async updateName(newNameUser) {
+
+    const id = newNameUser.id;
+
+    const nome = newNameUser.nome;
+
+    const userExists = await userQuery.userExistsOrNotById(id);
+
+    if (!userExists) {
+      return { status: 404, message: "Usuário não encontrado" };
+    }
+
+    if (userExists) {
+
+      if (!nome || nome.trim() === "") {
+        throw new Error("Novo nome de Usuário é obrigatório para atualização.");
+      }
+
+      return await userQuery.updateNameExistingUser(id, nome)
+    }
+  }
+
+  async updatePassword( newPasswordUser, senhaAtual) {
+
+    const id = newPasswordUser.id;
+
+    const novaSenha = newPasswordUser.senha;
+
+    const userExists = await userQuery.userExistsOrNotById(id);
+
+    if (!userExists) {
+      return { status: 404, message: "Usuário não encontrado" };
+    }
+
+    const userPasswordHashed = await userQuery.getPasswordHashed(id);
+
+    const isPasswordValid = await hashVerify.verifyPassword(String(senhaAtual), String(userPasswordHashed));
+
+     if (!isPasswordValid) {
+      return { status: 401, message: "Credenciais incorretas" };
+    }
+
+    if (userExists && isPasswordValid) {
+
+      if (!novaSenha || novaSenha.trim() === "") {
+        throw new Error("Nova senha de Usuário é obrigatório para atualização.");
+      }
+
+      const novaSenhaHashed = await hash.encryptPassword(novaSenha)
+
+      return await userQuery.updatePasswordExistingUser(id, novaSenhaHashed)
     }
   }
 }
