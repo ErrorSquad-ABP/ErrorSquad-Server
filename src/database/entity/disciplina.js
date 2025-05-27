@@ -1,11 +1,12 @@
 const disciplinaQuery = require('../migrations/disciplinaQuery');
 
 class disciplina {
-  constructor(id, nome, nome_docente, nome_curso) {
+  constructor(id, nome, nome_docente, nome_curso, codigo) {
     this.id = id;
     this.nome = nome;
     this.nome_docente = nome_docente;
     this.nome_curso = nome_curso;
+    this.codigo = codigo;
   }
 
   getId() {
@@ -40,11 +41,21 @@ class disciplina {
     this.curso = curso;
   }
 
+  getCodigo() {
+    return this.codigo;
+  }
+
+  setCodigo(codigo) {
+    this.codigo = codigo;
+  }
+
+
   async createDisciplina(newDisciplina) {
     try {
       const nome = newDisciplina.nome;
       const nome_docente = newDisciplina.nome_docente;
       const nome_curso = newDisciplina.nome_curso;
+      const codigo = newDisciplina.codigo;
 
       // Verificar se o nome é nulo ou vazio
       if (!nome || nome.trim() === "") {
@@ -59,8 +70,12 @@ class disciplina {
         throw new Error("ID do curso é obrigatório para criação.");
       }
 
+      if (!codigo) {
+        throw new Error("Código é obrigatório para criação.");
+      }
+
       // Caso o nome seja válido, continuar com a lógica
-      return await disciplinaQuery.createNewDisciplina(nome, nome_docente, nome_curso);
+      return await disciplinaQuery.createNewDisciplina(nome, nome_docente, nome_curso, codigo);
 
     } catch (erro) {
       return { status: 400, mensagem: erro.message };
@@ -83,6 +98,8 @@ class disciplina {
 
       const nome_curso = alterDisciplina.nome_curso; 
 
+      const codigo = alterDisciplina.codigo;
+
       const disciplinaExists = await disciplinaQuery.disciplinaExistsOrNotById(id);
 
       if (disciplinaExists) {
@@ -101,6 +118,12 @@ class disciplina {
           throw new Error("ID do curso é obrigatório para criação.");
 
         }
+
+        if (!codigo) {
+          throw new Error("Código é obrigatório para criação.");
+
+        }
+
         return await disciplinaQuery.updateExistingDisciplina(id, nome, nome_docente, nome_curso)
       }
 

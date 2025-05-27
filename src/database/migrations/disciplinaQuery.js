@@ -1,19 +1,21 @@
 const bigquery = require('../../lib/bigquery');
 
-async function createNewDisciplina(nome, nome_docente, nome_curso) {
+async function createNewDisciplina(nome, nome_docente, nome_curso, codigo) {
 
   const query =
     `CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`inserir_disciplina_unico\`(
     @nome,
     @nome_docente,
-    @nome_curso);`;
+    @nome_curso,
+    @codigo);`;
 
   const options = {
     query,
     params: {
       nome: String(nome),
       nome_docente: String(nome_docente),
-      nome_curso:String(nome_curso)
+      nome_curso:String(nome_curso),
+      codigo:String(codigo)
     },
     useLegacySql: false
   };
@@ -34,7 +36,8 @@ async function searchAllDisciplinas() {
     disciplina.id AS id_disciplina,
     disciplina.nome AS nome_disciplina,
     curso.sigla AS sigla_curso,
-    docente.nome AS nome_docente
+    docente.nome AS nome_docente,
+    disciplina.codigo AS codigo
 FROM 
     \`sitefatecdsm-01-2025.SiteFatecDSM.disciplina\` AS disciplina
 LEFT JOIN 
@@ -82,13 +85,14 @@ async function disciplinaExistsOrNotById(id) {
   return rows.length > 0;
 }
 
-async function updateExistingDisciplina(id, nome, nome_docente, nome_curso) {
+async function updateExistingDisciplina(id, nome, nome_docente, nome_curso, codigo) {
   const query = `
     CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`alterar_disciplina_unico\`(
     @id,
     @nome,
     @nome_docente,
-    @nome_curso);`;
+    @nome_curso,
+    @codigo);`;
 
   const options = {
     query,
@@ -96,7 +100,8 @@ async function updateExistingDisciplina(id, nome, nome_docente, nome_curso) {
       id: parseInt(id),
       nome: String(nome),
       nome_docente: String(nome_docente),
-      nome_curso:String(nome_curso)
+      nome_curso: String(nome_curso),
+      codigo: String(codigo)
     },
     useLegacySql: false
   };
