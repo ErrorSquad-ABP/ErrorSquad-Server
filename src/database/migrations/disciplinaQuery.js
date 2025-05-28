@@ -20,8 +20,6 @@ async function createNewDisciplina(nome, nome_docente, nome_curso, codigo) {
     useLegacySql: false
   };
 
-  console.log("oiiiiii", options)
-
   try {
     await bigquery.query(options);
     return { status: 201, mensagem: 'Disciplina inserida com sucesso!' };
