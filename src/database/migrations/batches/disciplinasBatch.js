@@ -19,7 +19,7 @@ async function insertDisciplinasEmLote(disciplinas) {
       nome: defaultStrings.firstLetterUppercase(disciplina.nome),
       nome_docente: defaultStrings.firstLetterUppercase(disciplina.nome_docente),
       sigla_curso: defaultStrings.firstLetterUppercase(disciplina.nome_curso),
-      codigo: toUpperCase(disciplina.codigo)
+      codigo: disciplina.codigo.toUpperCase()
     }));
   // Chamando a função insertBatch
   return await insertDisciplinaBatch('disciplina', [ 'nome', 'nome_docente', 'sigla_curso', 'codigo' ], records);

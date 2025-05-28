@@ -7,7 +7,7 @@ async function requestNewDisciplina(req, res) {
     const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
     const defaultDocenteString = defaultStrings.firstLetterUppercase(req.body.docente);
     const defaultCursoString = defaultStrings.firstLetterUppercase(req.body.curso);
-    const defaultCodigoString = toUpperCase(req.body.codigo);
+    const defaultCodigoString = req.body.codigo.toUpperCase();
     const newDisciplinaDto = new createDisciplinaDto(defaultNomeString, defaultDocenteString, defaultCursoString, defaultCodigoString);
 
     try {
