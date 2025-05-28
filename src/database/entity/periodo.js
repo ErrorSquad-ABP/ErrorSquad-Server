@@ -76,6 +76,12 @@ class periodo {
 
   }
 
+  static async getPeriodoById(id) {
+
+    return await periodoQuery.searchPeriodoById(id);
+
+  }
+
   async updatePeriodo(alterPeriodo) {
     try {
       const id = alterPeriodo.id
