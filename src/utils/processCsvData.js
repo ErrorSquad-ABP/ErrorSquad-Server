@@ -60,7 +60,8 @@ async function processCSVData(data) {
       id: parseInt(item.id),
       nome: String(item.nome),
       nome_docente:String(item.nome_docente),
-      nome_curso:String(item.nome_curso)
+      nome_curso:String(item.nome_curso),
+      codigo:String(item.codigo)
     })) : [];
 
     const semestres = data.tables.semestre_cronograma ? data.tables.semestre_cronograma.map(item => ({

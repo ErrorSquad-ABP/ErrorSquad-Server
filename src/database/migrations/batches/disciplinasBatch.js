@@ -8,8 +8,8 @@ async function insertDisciplinasEmLote(disciplinas) {
   let allEntities = []; // Inicializando como um array
 
   for (let i = 0; i < disciplinas.length; i++) {
-    const dtoEntity = new createDisciplinaDto(disciplinas[i].nome, disciplinas[i].nome_docente, disciplinas[i].nome_curso ); // Criando o DTO
-    const entity = new disciplina(null, dtoEntity.nome, dtoEntity.nome_docente, dtoEntity.nome_curso); // Criando a entidade
+    const dtoEntity = new createDisciplinaDto(disciplinas[i].nome, disciplinas[i].nome_docente, disciplinas[i].nome_curso, disciplinas[i].codigo ); // Criando o DTO
+    const entity = new disciplina(null, dtoEntity.nome, dtoEntity.nome_docente, dtoEntity.nome_curso, dtoEntity.codigo); // Criando a entidade
     allEntities.push(entity); // Adicionando ao array
 
   }
@@ -18,10 +18,11 @@ async function insertDisciplinasEmLote(disciplinas) {
       id: null,
       nome: defaultStrings.firstLetterUppercase(disciplina.nome),
       nome_docente: defaultStrings.firstLetterUppercase(disciplina.nome_docente),
-      sigla_curso: defaultStrings.firstLetterUppercase(disciplina.nome_curso)
+      sigla_curso: defaultStrings.firstLetterUppercase(disciplina.nome_curso),
+      codigo: disciplina.codigo.toUpperCase()
     }));
   // Chamando a função insertBatch
-  return await insertDisciplinaBatch('disciplina', [ 'nome', 'nome_docente', 'sigla_curso' ], records);
+  return await insertDisciplinaBatch('disciplina', [ 'nome', 'nome_docente', 'sigla_curso', 'codigo' ], records);
 }
 
 module.exports = { insertDisciplinasEmLote }

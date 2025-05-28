@@ -16,6 +16,7 @@ const horarioRoutes = require("./horarioRoutes");
 const periodosRoutes = require("./periodoRoutes");
 const loginRoutes = require("./loginRoutes");
 const healthRoutes = require("./healthRoutes");
+const userRoutes = require("./userRoutes");
 
 // Rotas públicas
 router.use("/health", healthRoutes);
@@ -35,5 +36,6 @@ router.use("/admin/:id/ambientes", authenticate, checkAdminId, ambienteRoutes);
 router.use("/admin/:id/disciplina", authenticate, checkAdminId, disciplinaRoutes);
 router.use("/admin/:id/horarios", authenticate, checkAdminId, horarioRoutes);
 router.use("/admin/:id/periodos", authenticate, checkAdminId, periodosRoutes);
+router.use("/admin/:id/user", authenticate, checkAdminId, userRoutes);
 
 module.exports = router;

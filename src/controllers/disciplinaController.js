@@ -7,10 +7,11 @@ async function requestNewDisciplina(req, res) {
     const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
     const defaultDocenteString = defaultStrings.firstLetterUppercase(req.body.docente);
     const defaultCursoString = defaultStrings.firstLetterUppercase(req.body.curso);
-    const newDisciplinaDto = new createDisciplinaDto(defaultNomeString, defaultDocenteString, defaultCursoString);
+    const defaultCodigoString = req.body.codigo.toUpperCase();
+    const newDisciplinaDto = new createDisciplinaDto(defaultNomeString, defaultDocenteString, defaultCursoString, defaultCodigoString);
 
     try {
-        const newDisciplina = new disciplina(null, newDisciplinaDto.nome, newDisciplinaDto.nome_docente, newDisciplinaDto.nome_curso)
+        const newDisciplina = new disciplina(null, newDisciplinaDto.nome, newDisciplinaDto.nome_docente, newDisciplinaDto.nome_curso, newDisciplinaDto.codigo)
         const createDisciplina = await newDisciplina.createDisciplina(newDisciplina);
         res.status(createDisciplina.status).json(createDisciplina);
     } catch (error) {
@@ -35,7 +36,7 @@ async function listDisciplinas(req, res) {
 async function requestAlterDisciplina(req, res) {
 
     const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
-    const alterDisciplina = new disciplina(req.body.id, defaultNomeString, req.body.nome_docente, req.body.nome_curso);
+    const alterDisciplina = new disciplina(req.body.id, defaultNomeString, req.body.nome_docente, req.body.nome_curso, req.body.codigo);
 
     try {
         const updateDisciplina = await alterDisciplina.updateDisciplina(alterDisciplina);

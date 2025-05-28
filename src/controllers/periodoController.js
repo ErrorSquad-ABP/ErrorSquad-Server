@@ -14,6 +14,22 @@ async function listPeriodos(req, res) {
   }
 }
 
+async function listPeriodoById(req, res) {
+  try {
+
+    const id = req.params.p_id;
+
+    const periodos = await periodo.getPeriodoById(id);
+    res.status(periodos.status).json({
+      message: periodos.mensagem,
+      data: periodos.data
+    });
+  } catch (error) {
+    console.error('Erro ao listar periodos:', error);
+    res.status(500).json({ erro: 'Erro interno ao buscar periodos' });
+  }
+}
+
 async function requestAlterPeriodo(req, res) {
 
   const alterPeriodoDto = new createPeriodoDto(req.body.id,
@@ -40,4 +56,5 @@ async function requestAlterPeriodo(req, res) {
 module.exports = {
   listPeriodos,
   requestAlterPeriodo,
+  listPeriodoById
 };
