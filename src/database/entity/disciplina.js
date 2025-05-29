@@ -87,6 +87,10 @@ class disciplina {
     return await disciplinaQuery.searchAllDisciplinas();
   }
 
+  static async getDisciplinaById(id) {
+    return await disciplinaQuery.searchDisciplinaById(id);
+  }
+
   async updateDisciplina(alterDisciplina) {
     try {
 
@@ -96,7 +100,7 @@ class disciplina {
 
       const nome_docente = alterDisciplina.nome_docente;
 
-      const nome_curso = alterDisciplina.nome_curso; 
+      const nome_curso = alterDisciplina.nome_curso;
 
       const codigo = alterDisciplina.codigo;
 

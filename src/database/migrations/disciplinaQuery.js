@@ -66,6 +66,47 @@ ORDER BY
 
 }
 
+async function searchDisciplinaById(id) {
+    const query =
+    `SELECT STRUCT (
+    disciplina.id AS id_disciplina,
+    disciplina.nome AS nome_disciplina,
+    curso.sigla AS sigla_curso,
+    docente.nome AS nome_docente,
+    disciplina.codigo AS codigo) AS disciplina
+FROM 
+    \`sitefatecdsm-01-2025.SiteFatecDSM.disciplina\` AS disciplina
+LEFT JOIN 
+    \`sitefatecdsm-01-2025.SiteFatecDSM.curso\` AS curso 
+    ON disciplina.id_curso = curso.id
+LEFT JOIN 
+    \`sitefatecdsm-01-2025.SiteFatecDSM.docente\` AS docente 
+    ON disciplina.id_docente = docente.id
+    WHERE disciplina.id = @id;`;
+
+    const options = {
+    query,
+    params: {
+      id: parseInt(id)
+    },
+    useLegacySql: false
+  };
+
+  const [rows] = await bigquery.query(options);
+
+  if (rows.length > 0) {
+
+    return { status: 200, data: rows, };
+
+  }
+
+  if (rows.length <= 0) {
+
+    return { status: 200, mensagem: "Sem disciplinas cadastradas." };
+
+  }
+}
+
 async function disciplinaExistsOrNotById(id) {
   const query = `
       SELECT * FROM \`sitefatecdsm-01-2025.SiteFatecDSM.disciplina\`
@@ -147,5 +188,6 @@ module.exports = {
   createNewDisciplina,
   disciplinaExistsOrNotById,
   updateExistingDisciplina,
-  deleteExistingDisciplina
+  deleteExistingDisciplina,
+  searchDisciplinaById
 };
