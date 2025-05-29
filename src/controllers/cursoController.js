@@ -34,6 +34,22 @@ async function listCursos(req, res) {
   }
 }
 
+async function listCursoById(req, res) {
+  try {
+
+    const id = req.params.c_id;
+
+    const cursos = await curso.getCursoById(id);
+    res.status(cursos.status).json({
+      message: cursos.mensagem,
+      data: cursos.data
+    });
+  } catch (error) {
+    console.error('Erro ao listar cursos:', error);
+    res.status(500).json({ erro: 'Erro interno ao buscar cursos' });
+  }
+}
+
 async function requestAlterCurso(req, res) {
 
   const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
@@ -68,5 +84,6 @@ module.exports = {
   listCursos,
   requestNewCurso,
   requestAlterCurso,
-  requestDeleteCurso
+  requestDeleteCurso,
+  listCursoById
 };

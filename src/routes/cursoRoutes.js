@@ -9,6 +9,9 @@ router.post("/", authenticate, cursoController.requestNewCurso);
 // Rota para listar cursos
 router.get("/", authenticate, cursoController.listCursos);
 
+// Rota para listar cursos por id
+router.get("/:c_id", authenticate, cursoController.listCursoById);
+
 // Rota para alterar curso
 router.put("/", authenticate, cursoController.requestAlterCurso);
 
