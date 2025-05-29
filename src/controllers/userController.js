@@ -22,6 +22,22 @@ async function requestAlterNameUser(req, res) {
 
 }
 
+async function listUserById(req, res) {
+  try {
+
+    const id = req.params.a_id;
+
+    const users = await user.getUserById(id);
+    res.status(users.status).json({
+      message: users.mensagem,
+      data: users.data
+    });
+  } catch (error) {
+    console.error('Erro ao listar usuários:', error);
+    res.status(500).json({ erro: 'Erro interno ao buscar usuários' });
+  }
+}
+
 async function requestAlterPasswordUser(req, res) {
 
   const id = req.body.id;
@@ -43,4 +59,4 @@ async function requestAlterPasswordUser(req, res) {
   }
 }
 
-module.exports = { requestAlterNameUser, requestAlterPasswordUser }
+module.exports = { requestAlterNameUser, requestAlterPasswordUser, listUserById }
