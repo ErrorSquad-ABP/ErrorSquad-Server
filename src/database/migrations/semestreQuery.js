@@ -67,7 +67,7 @@ ORDER BY
 
 }
 
-async function searchSemestreById() {
+async function searchSemestreById(id) {
 
   const query =
    `SELECT STRUCT (
@@ -75,18 +75,18 @@ async function searchSemestreById() {
     semestre_cronograma.nivel AS nivel_semestre_cronograma,
     semestre_cronograma.ano AS ano_semestre_cronograma,
     curso.sigla AS sigla_curso,
-    turno.nome AS nome_turno )
+    turno.nome AS nome_turno
+) AS semestre
 FROM 
-    \`sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma\` AS semestre_cronograma
-LEFT JOIN 
-    \`sitefatecdsm-01-2025.SiteFatecDSM.curso\` AS curso 
+\`sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma\` AS semestre_cronograma
+  LEFT JOIN 
+\`sitefatecdsm-01-2025.SiteFatecDSM.curso\` AS curso 
     ON semestre_cronograma.id_curso = curso.id
-LEFT JOIN 
-    \`sitefatecdsm-01-2025.SiteFatecDSM.turno\` AS turno 
+  LEFT JOIN 
+\`sitefatecdsm-01-2025.SiteFatecDSM.turno\` AS turno 
     ON semestre_cronograma.id_turno = turno.id
-    WHERE id = @id;
-ORDER BY 
-    semestre_cronograma.id ASC;`;
+WHERE semestre_cronograma.id = @id;
+`;
 
     const options = {
     query,
@@ -97,7 +97,7 @@ ORDER BY
   };
 
   const [rows] = await bigquery.query(options);
-
+  console.log('teste', rows, id)
   if (rows.length > 0) {
 
     return { status: 200, data: rows, };

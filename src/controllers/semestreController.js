@@ -36,7 +36,7 @@ async function listSemestreById(req, res) {
 
   try {
 
-    const id = req.params.p_id;
+    const id = req.params.s_id;
 
     const semestres = await semestre.getSemestreById(id);
     res.status(semestres.status).json({
