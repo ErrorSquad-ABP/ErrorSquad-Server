@@ -32,6 +32,23 @@ async function listSemestres(req, res) {
   }
 }
 
+async function listSemestreById(req, res) {
+
+  try {
+
+    const id = req.params.p_id;
+
+    const semestres = await semestre.getSemestreById(id);
+    res.status(semestres.status).json({
+      message: semestres.mensagem,
+      data: semestres.data
+    });
+  } catch (error) {
+    console.error('Erro ao listar semestres:', error);
+    res.status(500).json({ erro: 'Erro interno ao buscar semestres' });
+  }
+}
+
 async function requestAlterSemestre(req, res) {
 
   const defaultNomeCursoString = defaultStrings.firstLetterUppercase(req.body.nome_curso);
@@ -65,4 +82,5 @@ module.exports = {
   requestNewSemestre,
   requestAlterSemestre,
   requestDeleteSemestre,
+  listSemestreById
 };

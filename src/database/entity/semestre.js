@@ -93,6 +93,12 @@ class semestre {
 
   }
 
+  static async getSemestreById(id) {
+
+    return await semestreQuery.searchSemestreById(id);
+
+  }
+
   async updateSemestre(alterSemestre) {
     try {
 

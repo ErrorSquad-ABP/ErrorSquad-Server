@@ -9,6 +9,9 @@ router.post("/", authenticate, semestreController.requestNewSemestre);
 // Rota para listar semestres
 router.get("/", authenticate, semestreController.listSemestres);
 
+// Rota para selecionar semestre pelo id
+router.get("/:s_id", authenticate, semestreController.listSemestreById);
+
 // Rota para alterar semestre
 router.put("/", authenticate, semestreController.requestAlterSemestre);
 
