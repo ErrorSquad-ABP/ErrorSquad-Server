@@ -77,7 +77,7 @@ async function searchUserById(id) {
 
   const query =
     `SELECT (
-      SELECT AS STRUCT nome
+      SELECT AS STRUCT nome, email
       FROM \`sitefatecdsm-01-2025.SiteFatecDSM.admin\`
       WHERE id = @id
     ) AS admin;`;
