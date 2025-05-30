@@ -3,6 +3,9 @@ const router = express.Router();
 const userController = require("../controllers/userController");
 const authenticate = require("../middlewares/authMiddleware");
 
+// Rota para listar cursos por id
+router.get("/:a_id", authenticate, userController.listUserById);
+
 // Rota para alterar nome do user
 router.put("/alterName", authenticate, userController.requestAlterNameUser);
 

@@ -110,6 +110,12 @@ class curso {
 
   }
 
+  static async getCursoById(id) {
+
+    return await cursoQuery.searchCursoById(id);
+
+  }
+
   async updateCurso(alterCurso) {
     try {
 

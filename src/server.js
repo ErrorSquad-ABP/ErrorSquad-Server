@@ -57,5 +57,5 @@ io.on("connection", (socket) => {
 
 // Inicia o servidor na porta especificada
 server.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
+    console.log(`Servidor rodando na url http://localhost:${PORT}`);
 });

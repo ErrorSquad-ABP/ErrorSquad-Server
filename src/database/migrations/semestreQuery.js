@@ -67,6 +67,52 @@ ORDER BY
 
 }
 
+async function searchSemestreById(id) {
+
+  const query =
+   `SELECT STRUCT (
+    semestre_cronograma.id AS id_semestre_cronograma,
+    semestre_cronograma.nivel AS nivel_semestre_cronograma,
+    semestre_cronograma.ano AS ano_semestre_cronograma,
+    curso.sigla AS sigla_curso,
+    turno.nome AS nome_turno
+) AS semestre
+FROM 
+\`sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma\` AS semestre_cronograma
+  LEFT JOIN 
+\`sitefatecdsm-01-2025.SiteFatecDSM.curso\` AS curso 
+    ON semestre_cronograma.id_curso = curso.id
+  LEFT JOIN 
+\`sitefatecdsm-01-2025.SiteFatecDSM.turno\` AS turno 
+    ON semestre_cronograma.id_turno = turno.id
+WHERE semestre_cronograma.id = @id;
+`;
+
+    const options = {
+    query,
+    params: {
+      id: parseInt(id)
+    },
+    useLegacySql: false
+  };
+
+  const [rows] = await bigquery.query(options);
+  console.log('teste', rows, id)
+  if (rows.length > 0) {
+
+    return { status: 200, data: rows, };
+
+  }
+
+  if (rows.length <= 0) {
+
+    return { status: 200, mensagem: "Sem semestre cadastrados." };
+
+  }
+
+
+}
+
 async function semestreExistsOrNotById(id) {
   const query = `
     SELECT * FROM \`sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma\`
@@ -150,5 +196,6 @@ module.exports = {
   createNewSemestre,
   semestreExistsOrNotById,
   updateExistingSemestre,
-  deleteExistingSemestre
+  deleteExistingSemestre,
+  searchSemestreById
 };
