@@ -73,6 +73,40 @@ async function updateNameExistingUser(id, nome) {
   }
 }
 
+async function searchUserById(id) {
+
+  const query =
+    `SELECT (
+      SELECT AS STRUCT nome
+      FROM \`sitefatecdsm-01-2025.SiteFatecDSM.admin\`
+      WHERE id = @id
+    ) AS admin;`;
+
+    const options = {
+      query,
+      params: {
+        id: parseInt(id)
+      },
+      useLegacySql: false
+    };  
+
+  const [rows] = await bigquery.query( options );
+
+  if (rows.length > 0) {
+
+    return { status: 200, data: rows, };
+
+  }
+
+  if (rows.length <= 0) {
+
+    return { status: 200, mensagem: "Sem usuários cadastrados." };
+
+  }
+
+
+}
+
 async function getPasswordHashed( id ) {
   const query = `
       SELECT senha FROM \`sitefatecdsm-01-2025.SiteFatecDSM.admin\`
@@ -124,5 +158,6 @@ module.exports = {
   userExistsOrNotById,
   updateNameExistingUser,
   getPasswordHashed,
-  updatePasswordExistingUser
+  updatePasswordExistingUser,
+  searchUserById
 };

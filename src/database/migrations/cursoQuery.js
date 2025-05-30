@@ -54,6 +54,40 @@ async function searchAllCursos() {
 
 }
 
+async function searchCursoById(id) {
+
+  const query =
+    `SELECT (
+      SELECT AS STRUCT * 
+      FROM \`sitefatecdsm-01-2025.SiteFatecDSM.curso\`
+      WHERE id = @id
+    ) AS curso;`;
+
+    const options = {
+      query,
+      params: {
+        id: parseInt(id)
+      },
+      useLegacySql: false
+    };  
+
+  const [rows] = await bigquery.query( options );
+
+  if (rows.length > 0) {
+
+    return { status: 200, data: rows, };
+
+  }
+
+  if (rows.length <= 0) {
+
+    return { status: 200, mensagem: "Sem cursos cadastrados." };
+
+  }
+
+
+}
+
 async function cursoExistsOrNotById(id) {
   const query = `
     SELECT * FROM \`sitefatecdsm-01-2025.SiteFatecDSM.curso\`
@@ -140,5 +174,6 @@ module.exports = {
   createNewCurso,
   cursoExistsOrNotById,
   updateExistingCurso,
-  deleteExistingCurso
+  deleteExistingCurso,
+  searchCursoById
 };

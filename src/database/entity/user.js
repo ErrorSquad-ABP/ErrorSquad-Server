@@ -50,6 +50,12 @@ class user {
     }
   }
 
+  static async getUserById(id) {
+  
+    return await userQuery.searchUserById(id);
+  
+  }
+
   async updateName(newNameUser) {
 
     const id = newNameUser.id;
