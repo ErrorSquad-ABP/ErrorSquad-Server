@@ -62,6 +62,12 @@ class docente{
     
       }
 
+       static async getDocenteById(id) {
+
+        return await docenteQuery.searchDocenteById(id);
+    
+      }
+
       async updateDocente(alterDocente) {
         try {
     

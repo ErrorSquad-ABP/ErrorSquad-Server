@@ -36,7 +36,7 @@ async function listDisciplinas(req, res) {
 async function listDisciplinaById(req, res) {
     try {
 
-        const id = req.params.d_id
+        const id = req.params.d_id;
 
         const disciplinas = await disciplina.getDisciplinaById(id);
         res.status(disciplinas.status).json({

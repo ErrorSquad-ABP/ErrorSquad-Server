@@ -51,6 +51,40 @@ async function searchAllDocentes() {
 
 }
 
+async function searchDocenteById(id) {
+
+  const query =
+    `SELECT (
+  SELECT AS STRUCT *
+  FROM \`sitefatecdsm-01-2025.SiteFatecDSM.docente\`
+  WHERE id = @id
+) AS docente;`;
+
+  const options = {
+    query,
+    params: {
+      id: parseInt(id)
+    },
+    useLegacySql: false
+  };
+
+  const [rows] = await bigquery.query(options);
+
+  if (rows.length > 0) {
+
+    return { status: 200, data: rows, };
+
+  }
+
+  if (rows.length <= 0) {
+
+    return { status: 200, mensagem: "Sem Docentes cadastrados." };
+
+  }
+
+
+}
+
 async function docenteExistsOrNotById(id) {
   const query = `
     SELECT * FROM \`sitefatecdsm-01-2025.SiteFatecDSM.docente\`
@@ -131,5 +165,6 @@ module.exports = {
   createNewDocente,
   docenteExistsOrNotById,
   updateExistingDocente,
-  deleteExistingDocente
+  deleteExistingDocente,
+  searchDocenteById
 };

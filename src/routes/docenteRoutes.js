@@ -9,6 +9,9 @@ router.post("/", authenticate, docenteController.requestNewDocente);
 // Rota para listar docentes
 router.get("/", authenticate, docenteController.listDocente);
 
+// Rota para selecionar docente pelo Id
+router.get("/:d_id", authenticate, docenteController.listDocenteById);
+
 // Rota para alterar docente
 router.put("/", authenticate, docenteController.requestAlterDocente);
 

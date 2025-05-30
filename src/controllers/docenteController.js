@@ -31,6 +31,23 @@ async function listDocente(req, res) {
   }
 }
 
+async function listDocenteById(req, res) {
+
+  try {
+
+    const id = req.params.d_id;
+
+    const docentes = await docente.getDocenteById(id);
+    res.status(docentes.status).json({
+      message: docentes.mensagem,
+      data: docentes.data
+    });
+  } catch (error) {
+    console.error('Erro ao listar docente:', error);
+    res.status(500).json({ erro: 'Erro interno ao buscar docente' });
+  }
+}
+
 async function requestAlterDocente(req, res) {
 
   const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
@@ -62,5 +79,6 @@ module.exports = {
   listDocente,
   requestNewDocente,
   requestAlterDocente,
-  requestDeleteDocente
+  requestDeleteDocente,
+  listDocenteById
 };
