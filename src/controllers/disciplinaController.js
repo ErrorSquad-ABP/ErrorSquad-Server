@@ -33,6 +33,22 @@ async function listDisciplinas(req, res) {
     }
 }
 
+async function listDisciplinaById(req, res) {
+    try {
+
+        const id = req.params.d_id
+
+        const disciplinas = await disciplina.getDisciplinaById(id);
+        res.status(disciplinas.status).json({
+            message: disciplinas.mensagem,
+            data: disciplinas.data
+          });
+    } catch (error) {
+        console.error('Erro ao listar disciplinas:', error);
+        res.status(500).json({ erro: 'Erro interno ao buscar disciplinas' });
+    }
+}
+
 async function requestAlterDisciplina(req, res) {
 
     const defaultNomeString = defaultStrings.firstLetterUppercase(req.body.nome);
@@ -64,5 +80,6 @@ module.exports = {
     listDisciplinas,
     requestNewDisciplina,
     requestAlterDisciplina,
-    requestDeleteDisciplina
+    requestDeleteDisciplina,
+    listDisciplinaById
 };
