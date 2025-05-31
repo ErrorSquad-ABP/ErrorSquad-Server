@@ -128,7 +128,7 @@ class disciplina {
 
         }
 
-        return await disciplinaQuery.updateExistingDisciplina(id, nome, nome_docente, nome_curso)
+        return await disciplinaQuery.updateExistingDisciplina(id, nome, nome_docente, nome_curso, codigo)
       }
 
       if (!disciplinaExists) {
