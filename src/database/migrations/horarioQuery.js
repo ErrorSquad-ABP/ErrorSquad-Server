@@ -13,7 +13,7 @@ async function createNewHorario(hr_inicio, hr_fim) {
 
 /*`INSERT INTO horario(hr_inicio, hr_fim)
 VALUES
-(@hr_inicio::TIME, @hr_fim::TIME)`;
+(@hr_inicio::TIME, @hr_fim::TIME);`;
  */
 
 

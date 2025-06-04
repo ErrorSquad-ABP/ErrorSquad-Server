@@ -131,6 +131,14 @@ async function updateExistingPeriodo(id, disciplina, docente, ambiente) {
     @ambiente);
     `;
 
+/*
+    `UPDATE periodo
+    SET disciplina = @disciplina,
+    docente = @docente,
+    ambiente = @ambiente
+    WHERE id = @id;`;
+*/
+
   const options = {
     query,
     params: {

@@ -13,7 +13,7 @@ async function createNewAmbiente(nome, localizacao) {
 
 /*`INSERT INTO ambiente(nome, localizacao)
 VALUES
-(@nome, @localizacao)`;
+(@nome, @localizacao);`;
  */
   const options = {
     query,

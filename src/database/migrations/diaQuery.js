@@ -12,7 +12,7 @@ async function createNewDia(nome) {
 
 /*`INSERT INTO dia(nome)
 VALUES
-(@nome)`;
+(@nome);`;
  */
 
   const options = {

@@ -12,7 +12,7 @@ async function createNewDocente(nome, cor) {
 
 /*`INSERT INTO docente(nome, cor)
 VALUES
-(@nome, @cor)`;
+(@nome, @cor);`;
  */
 
   const options = {

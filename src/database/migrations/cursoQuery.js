@@ -13,7 +13,7 @@ async function createNewCurso(nome, coordenador, sigla, inicio, fim) {
 
 /*`INSERT INTO curso(nome, coordenador, sigla, inicio, fim)
 VALUES
-(@nome, @coordenador, @sigla, @inicio, @fim)`;
+(@nome, @coordenador, @sigla, @inicio, @fim);`;
  */
   const options = {
     query,

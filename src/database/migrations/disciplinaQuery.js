@@ -13,7 +13,7 @@ async function createNewDisciplina(nome, nome_docente, nome_curso, codigo) {
 
 /*`INSERT INTO disciplina(nome, nome_docente, nome_curso, codigo)
 VALUES
-(@nome, @nome_docente, @nome_curso, @codigo)`;
+(@nome, @nome_docente, @nome_curso, @codigo);`;
  */
 
   const options = {
@@ -141,6 +141,16 @@ async function updateExistingDisciplina(id, nome, nome_docente, nome_curso, codi
     @nome_docente,
     @nome_curso,
     @codigo);`;
+
+/*
+  `
+    UPDATE disciplina
+    SET nome = @nome,
+    nome_docente = @nome_docente,
+    nome_curso = @nome_curso,
+    codigo = @codigo
+    WHERE id = @id;`;
+*/
 
   const options = {
     query,

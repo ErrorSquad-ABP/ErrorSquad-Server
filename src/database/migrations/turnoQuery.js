@@ -12,7 +12,7 @@ async function createNewTurno( nome ) {
 
 /*`INSERT INTO turno(nome)
 VALUES
-(@nome)`;
+(@nome);`;
  */
 
   const options = {

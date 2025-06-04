@@ -9,11 +9,11 @@ async function createNewSemestre(nivel, ano, nome_curso, nome_turno) {
     @nome_curso,
     @nome_turno);`;
 
-//Comente o código acima e descomente o debaixo para rodar em PostgreSQL
+//Comente a query acima descomente a debaixo para rodar em PostgreSQL
 
 /*`INSERT INTO semestre(nivel, ano, nome_curso, nome_turno)
 VALUES
-(@nivel, @ano, @nome_curso, @nome_turno)`;
+(@nivel, @ano, @nome_curso, @nome_turno);`;
  */
 
   const options = {
@@ -148,6 +148,16 @@ async function updateExistingSemestre(id, nivel, ano, nome_curso, nome_turno) {
     @ano,
     @nome_curso,
     @nome_turno);`;
+
+/*
+  `
+    UPDATE semestre
+    SET nivel = @nivel,
+    ano = @ano,
+    nome_curso = @nome_curso,
+    nome_turno = @nome_turno
+    WHERE id = @id;`;
+     */
 
   const options = {
     query,
