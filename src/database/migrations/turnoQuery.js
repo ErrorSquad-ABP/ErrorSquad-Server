@@ -8,6 +8,13 @@ async function createNewTurno( nome ) {
     COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.turno), 0) + 1,
    @nome;`;
 
+//Comente a query acima e descomente a debaixo para rodar em PostgreSQL
+
+/*`INSERT INTO turno(nome)
+VALUES
+(@nome)`;
+ */
+
   const options = {
     query,
     params: {

@@ -9,6 +9,14 @@ async function createNewHorario(hr_inicio, hr_fim) {
    CAST(@hr_inicio AS TIME), 
    CAST(@hr_fim AS TIME);`;
 
+//Comente a query acima e descomente a debaixo para rodar em PostgreSQL
+
+/*`INSERT INTO horario(hr_inicio, hr_fim)
+VALUES
+(@hr_inicio::TIME, @hr_fim::TIME)`;
+ */
+
+
   const options = {
     query,
     params: {

@@ -8,6 +8,13 @@ async function createNewDia(nome) {
       COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.dia), 0) + 1,
      @nome;`;
 
+//Comente a query acima e descomente a debaixo para rodar em PostgreSQL
+
+/*`INSERT INTO dia(nome)
+VALUES
+(@nome)`;
+ */
+
   const options = {
     query,
     params: {

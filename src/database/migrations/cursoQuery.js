@@ -8,6 +8,13 @@ async function createNewCurso(nome, coordenador, sigla, inicio, fim) {
     COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.curso), 0) + 1,
    @nome, @coordenador, @sigla, @inicio, @fim;`;
   ''
+
+//Comente a query acima e descomente a debaixo para rodar em PostgreSQL
+
+/*`INSERT INTO curso(nome, coordenador, sigla, inicio, fim)
+VALUES
+(@nome, @coordenador, @sigla, @inicio, @fim)`;
+ */
   const options = {
     query,
     params: {

@@ -3,11 +3,18 @@ const bigquery = require('../../lib/bigquery');
 async function createNewAmbiente(nome, localizacao) {
 
   const query =
-    `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.ambiente (id, nome, localizacao)
+    `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.ambiente (nome, localizacao)
     SELECT 
     COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.ambiente), 0) + 1,
    @nome, @localizacao;`;
 
+
+//Comente a query acima e descomente a debaixo para rodar em PostgreSQL
+
+/*`INSERT INTO ambiente(nome, localizacao)
+VALUES
+(@nome, @localizacao)`;
+ */
   const options = {
     query,
     params: {

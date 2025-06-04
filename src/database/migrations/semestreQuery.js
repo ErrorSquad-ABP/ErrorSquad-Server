@@ -9,6 +9,13 @@ async function createNewSemestre(nivel, ano, nome_curso, nome_turno) {
     @nome_curso,
     @nome_turno);`;
 
+//Comente o código acima e descomente o debaixo para rodar em PostgreSQL
+
+/*`INSERT INTO semestre(nivel, ano, nome_curso, nome_turno)
+VALUES
+(@nivel, @ano, @nome_curso, @nome_turno)`;
+ */
+
   const options = {
     query,
     params: {

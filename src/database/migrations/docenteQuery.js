@@ -8,6 +8,13 @@ async function createNewDocente(nome, cor) {
     COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.docente), 0) + 1,
    @nome, @cor;`;
 
+//Comente a query acima e descomente a debaixo para rodar em PostgreSQL
+
+/*`INSERT INTO docente(nome, cor)
+VALUES
+(@nome, @cor)`;
+ */
+
   const options = {
     query,
     params: {

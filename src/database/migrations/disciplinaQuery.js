@@ -9,6 +9,13 @@ async function createNewDisciplina(nome, nome_docente, nome_curso, codigo) {
     @nome_curso,
     @codigo);`;
 
+//Comente a query acima e descomente a debaixo para rodar em PostgreSQL  
+
+/*`INSERT INTO disciplina(nome, nome_docente, nome_curso, codigo)
+VALUES
+(@nome, @nome_docente, @nome_curso, @codigo)`;
+ */
+
   const options = {
     query,
     params: {
