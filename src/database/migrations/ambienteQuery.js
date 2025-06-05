@@ -1,20 +1,20 @@
-const bigquery = require('../../lib/bigquery');
+const pool = require('../../lib/pool');
 
 async function createNewAmbiente(nome, localizacao) {
 
   const query =
-    `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.ambiente (nome, localizacao)
+   /* `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.ambiente (nome, localizacao)
     SELECT 
     COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.ambiente), 0) + 1,
-   @nome, @localizacao;`;
+   @nome, @localizacao;`;*/
 
 
 //Comente a query acima e descomente a debaixo para rodar em PostgreSQL
 
-/*`INSERT INTO ambiente(nome, localizacao)
+`INSERT INTO errorsquad.ambiente(nome, localizacao)
 VALUES
 (@nome, @localizacao);`;
- */
+ 
   const options = {
     query,
     params: {
@@ -25,7 +25,7 @@ VALUES
   };
 
   try {
-    await bigquery.query(options);
+    await pool.query(options);
     return { status: 201, mensagem: 'Ambiente inserido com sucesso!' };
   } catch (erro) {
     console.error('Erro ao inserir ambiente:', erro);
@@ -40,7 +40,7 @@ async function searchAllAmbientes() {
       FROM \`sitefatecdsm-01-2025.SiteFatecDSM.ambiente\`
       order by id asc`;
 
-  const [rows] = await bigquery.query({ query });
+  const [rows] = await pool.query({ query });
 
   if (rows.length > 0) {
 
@@ -71,7 +71,7 @@ async function ambienteExistsOrNotById(id) {
     useLegacySql: false
   };
 
-  const [rows] = await bigquery.query(options);
+  const [rows] = await pool.query(options);
 
   return rows.length > 0;
 }
@@ -94,7 +94,7 @@ async function updateExistingAmbiente(id, nome) {
 
 
   try {
-    const [rows] = await bigquery.query(options);
+    const [rows] = await pool.query(options);
     return { status: 200, mensagem: 'Ambiente atualizado com sucesso!' };
 
   } catch (erro) {
@@ -119,7 +119,7 @@ async function deleteExistingAmbiente(id) {
 
 
   try {
-    const [rows] = await bigquery.query(options);
+    const [rows] = await pool.query(options);
     return { sucesso: 200, mensagem: 'Ambiente deletado com sucesso!' };
 
   } catch (erro) {
