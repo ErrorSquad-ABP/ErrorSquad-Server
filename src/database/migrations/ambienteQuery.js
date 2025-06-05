@@ -14,18 +14,15 @@ async function createNewAmbiente(nome, localizacao) {
 
 `INSERT INTO errorsquad.ambiente(nome, localizacao)
 VALUES
-(@nome, @localizacao);`;
+($1, $2);`;
  
-  const options = {
-    query,
-    params: {
-      nome: String(nome),
-      localizacao: parseInt(localizacao)
-    },
-  };
+  const values = [
+    nome,
+    localizacao
+  ]
 
   try {
-    await pool.query(options);
+    await pool.query(query, values);
     return { status: 201, mensagem: 'Ambiente inserido com sucesso!' };
   } catch (erro) {
     console.error('Erro ao inserir ambiente:', erro);
