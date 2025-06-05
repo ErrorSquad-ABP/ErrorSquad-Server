@@ -1,4 +1,4 @@
-const bigquery = require('../../lib/bigquery');
+const pool = require('../../lib/pool');
 
 async function createNewSemestre(nivel, ano, nome_curso, nome_turno) {
 

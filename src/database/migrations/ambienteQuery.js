@@ -3,7 +3,8 @@ const pool = require('../../lib/pool');
 async function createNewAmbiente(nome, localizacao) {
 
   const query =
-   /* `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.ambiente (nome, localizacao)
+   /* `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.ambiente 
+   
     SELECT 
     COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.ambiente), 0) + 1,
    @nome, @localizacao;`;*/
@@ -21,7 +22,6 @@ VALUES
       nome: String(nome),
       localizacao: parseInt(localizacao)
     },
-    useLegacySql: false
   };
 
   try {

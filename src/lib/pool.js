@@ -4,11 +4,11 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const pool = new Pool({
-    host: process.env.BD_HOST,
-    user: process.env.BD_USER,
-    password: String(process.env.BD_PASSWORD),
-    database: process.env.BD_DATABASE,
-    port: process.env.BD_PORT
+    host: process.env.host,
+    user: process.env.user,
+    password: String(process.env.password),
+    database: process.env.database,
+    port: process.env.port
     });
 
 module.exports = pool;

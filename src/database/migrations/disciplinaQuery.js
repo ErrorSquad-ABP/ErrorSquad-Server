@@ -1,4 +1,4 @@
-const bigquery = require('../../lib/bigquery');
+const pool = require('../../lib/pool');
 
 async function createNewDisciplina(nome, nome_docente, nome_curso, codigo) {
 
