@@ -3,32 +3,20 @@ const pool = require('../../lib/pool');
 async function createNewDisciplina(nome, nome_docente, nome_curso, codigo) {
 
   const query =
-    `CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`inserir_disciplina_unico\`(
-    @nome,
-    @nome_docente,
-    @nome_curso,
-    @codigo);`;
+`CALL errorsquad.inserir_disciplina_unico(
+    $1, $2, $3, $4
+);`;
 
-//Comente a query acima e descomente a debaixo para rodar em PostgreSQL  
 
-/*`INSERT INTO disciplina(nome, nome_docente, nome_curso, codigo)
-VALUES
-(@nome, @nome_docente, @nome_curso, @codigo);`;
- */
-
-  const options = {
-    query,
-    params: {
-      nome: String(nome),
-      nome_docente: String(nome_docente),
-      nome_curso:String(nome_curso),
-      codigo:String(codigo)
-    },
-    useLegacySql: false
-  };
+  const values = [
+    nome,
+    nome_docente,
+    nome_curso,
+    codigo
+  ]
 
   try {
-    await bigquery.query(options);
+    await pool.query(query, values);
     return { status: 201, mensagem: 'Disciplina inserida com sucesso!' };
   } catch (erro) {
     console.error('Erro ao inserir disciplina:', erro);
@@ -56,7 +44,7 @@ LEFT JOIN
 ORDER BY 
     disciplina.id ASC;`;
 
-  const [rows] = await bigquery.query({ query });
+  const [rows] = await pool.query({ query });
 
   if (rows.length > 0) {
 
@@ -99,7 +87,7 @@ LEFT JOIN
     useLegacySql: false
   };
 
-  const [rows] = await bigquery.query(options);
+  const [rows] = await pool.query(options);
 
   if (rows.length > 0) {
 
@@ -128,7 +116,7 @@ async function disciplinaExistsOrNotById(id) {
     useLegacySql: false
   };
 
-  const [rows] = await bigquery.query(options);
+  const [rows] = await pool.query(options);
 
   return rows.length > 0;
 }
@@ -166,7 +154,7 @@ async function updateExistingDisciplina(id, nome, nome_docente, nome_curso, codi
 
 
   try {
-    const [rows] = await bigquery.query(options);
+    const [rows] = await pool.query(options);
     return { status: 200, mensagem: 'Disciplina atualizada com sucesso!' };
 
   } catch (erro) {
@@ -191,7 +179,7 @@ async function deleteExistingDisciplina(id) {
 
 
   try {
-    const [rows] = await bigquery.query(options);
+    const [rows] = await pool.query(options);
     return { sucesso: true, mensagem: 'Disciplina atualizada com sucesso!' };
 
   } catch (erro) {

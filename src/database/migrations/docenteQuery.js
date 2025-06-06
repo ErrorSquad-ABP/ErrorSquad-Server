@@ -3,29 +3,15 @@ const pool = require('../../lib/pool');
 async function createNewDocente(nome, cor) {
 
   const query =
-    `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.docente (id, nome, cor)
-    SELECT 
-    COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.docente), 0) + 1,
-   @nome, @cor;`;
-
-//Comente a query acima e descomente a debaixo para rodar em PostgreSQL
-
-/*`INSERT INTO docente(nome, cor)
+    `INSERT INTO errorsquad.docente(nome, cor)
 VALUES
-(@nome, @cor);`;
- */
-
-  const options = {
-    query,
-    params: {
-      nome: String(nome),
-      cor: String(cor)
-    },
-    useLegacySql: false
-  };
+($1, $2);`;
+ 
+  values = [nome, cor];
+  
 
   try {
-    await bigquery.query(options);
+    await pool.query(query, values);
     return { status: 201, mensagem: 'Docente inserido com sucesso!' };
   } catch (erro) {
     console.error('Erro ao inserir docente:', erro);
@@ -41,7 +27,7 @@ async function searchAllDocentes() {
     FROM \`sitefatecdsm-01-2025.SiteFatecDSM.docente\`
     order by id asc`;
 
-  const [rows] = await bigquery.query({ query });
+  const [rows] = await pool.query({ query });
 
   if (rows.length > 0) {
 
@@ -75,7 +61,7 @@ async function searchDocenteById(id) {
     useLegacySql: false
   };
 
-  const [rows] = await bigquery.query(options);
+  const [rows] = await pool.query(options);
 
   if (rows.length > 0) {
 
@@ -106,7 +92,7 @@ async function docenteExistsOrNotById(id) {
     useLegacySql: false
   };
 
-  const [rows] = await bigquery.query(options);
+  const [rows] = await pool.query(options);
 
   return rows.length > 0;
 }
@@ -132,7 +118,7 @@ async function updateExistingDocente(id, nome, cor) {
 
 
   try {
-    const [rows] = await bigquery.query(options);
+    const [rows] = await pool.query(options);
     return { status: 200, mensagem: 'Docente atualizado com sucesso!' };
 
   } catch (erro) {
@@ -157,7 +143,7 @@ async function deleteExistingDocente(id) {
 
 
   try {
-    const [rows] = await bigquery.query(options);
+    const [rows] = await pool.query(options);
     return { sucesso: true, mensagem: 'Docente atualizado com sucesso!' };
 
   } catch (erro) {

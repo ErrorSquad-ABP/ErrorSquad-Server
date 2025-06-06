@@ -3,32 +3,20 @@ const pool = require('../../lib/pool');
 async function createNewCurso(nome, coordenador, sigla, inicio, fim) {
 
   const query =
-    `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.curso (id, nome, coordenador, sigla, inicio, fim)
-    SELECT 
-    COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.curso), 0) + 1,
-   @nome, @coordenador, @sigla, @inicio, @fim;`;
-  ''
-
-//Comente a query acima e descomente a debaixo para rodar em PostgreSQL
-
-/*`INSERT INTO curso(nome, coordenador, sigla, inicio, fim)
+`INSERT INTO errorsquad.curso(nome, coordenador, sigla, inicio, fim)
 VALUES
-(@nome, @coordenador, @sigla, @inicio, @fim);`;
- */
-  const options = {
-    query,
-    params: {
-      nome: String(nome),
-      coordenador: String(coordenador),
-      sigla: String(sigla),
-      inicio: String(inicio),
-      fim: String(fim)
-    },
-    useLegacySql: false
-  };
+($1, $2, $3, $4, $5);`;
+ 
+  const values = [
+    nome,
+    coordenador,
+    sigla,
+    inicio,
+    fim
+  ]
 
   try {
-    await bigquery.query(options);
+    await pool.query(query, values);
     return { status: 201, mensagem: 'Curso inserido com sucesso!' };
   } catch (erro) {
     console.error('Erro ao inserir curso:', erro);
@@ -44,7 +32,7 @@ async function searchAllCursos() {
     FROM \`sitefatecdsm-01-2025.SiteFatecDSM.curso\`
     order by id asc`;
 
-  const [rows] = await bigquery.query({ query });
+  const [rows] = await pool.query({ query });
 
   if (rows.length > 0) {
 
@@ -78,7 +66,7 @@ async function searchCursoById(id) {
       useLegacySql: false
     };  
 
-  const [rows] = await bigquery.query( options );
+  const [rows] = await pool.query( options );
 
   if (rows.length > 0) {
 
@@ -109,7 +97,7 @@ async function cursoExistsOrNotById(id) {
     useLegacySql: false
   };
 
-  const [rows] = await bigquery.query(options);
+  const [rows] = await pool.query(options);
 
   return rows.length > 0;
 }
@@ -141,7 +129,7 @@ async function updateExistingCurso(id, nome, coordenador, sigla, inicio, fim) {
 
 
   try {
-    const [rows] = await bigquery.query(options);
+    const [rows] = await pool.query(options);
     return { status: 200, mensagem: 'Curso atualizado com sucesso!' };
 
   } catch (erro) {
@@ -166,7 +154,7 @@ async function deleteExistingCurso(id) {
 
 
   try {
-    const [rows] = await bigquery.query(options);
+    const [rows] = await pool.query(options);
     return { sucesso: true, mensagem: 'Curso atualizado com sucesso!' };
 
   } catch (erro) {
