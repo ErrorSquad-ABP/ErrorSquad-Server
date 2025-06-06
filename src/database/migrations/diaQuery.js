@@ -22,10 +22,10 @@ async function searchAllDias() {
 
   const query =
     `SELECT * 
-      FROM \`sitefatecdsm-01-2025.SiteFatecDSM.dia\`
+      FROM errorsquad.dia
       order by id asc`;
 
-  const [rows] = await pool.query({ query });
+  const { rows } = await pool.query(query);
 
   if (rows.length > 0) {
 

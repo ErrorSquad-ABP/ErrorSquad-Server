@@ -30,7 +30,7 @@ LEFT JOIN sitefatecdsm-01-2025.SiteFatecDSM.turno AS turno ON semestre_cronogram
 LEFT JOIN sitefatecdsm-01-2025.SiteFatecDSM.ambiente AS ambiente ON periodo.id_ambiente = ambiente.id;
   `;
 
-  const [rows] = await bigquery.query({ query });
+  const [rows] = await pool.query({ query });
   console.log(rows)
 
   if (rows.length > 0) {
@@ -85,7 +85,7 @@ WHERE periodo.id = @id;`;
     useLegacySql: false
   };
 
-  const [rows] = await bigquery.query(options);
+  const [rows] = await pool.query(options);
 
   if (rows.length > 0) {
 
@@ -104,19 +104,12 @@ WHERE periodo.id = @id;`;
 
 async function periodoExistsOrNotById(id) {
   const query = `
-    SELECT * FROM \`sitefatecdsm-01-2025.SiteFatecDSM.periodo\`
-    WHERE id = @id;
+    SELECT * FROM errorsquad.periodo
+    WHERE id = $1;
   `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id)
-    },
-    useLegacySql: false
-  };
-
-  const [rows] = await bigquery.query(options);
+  const values = [id];
+  const [rows] = await pool.query(query, values);
 
   return rows.length > 0;
 }
@@ -152,10 +145,10 @@ async function updateExistingPeriodo(id, disciplina, docente, ambiente) {
 
 
   try {
-    const [rows] = await bigquery.query(options);
+    const [rows] = await pool.query(options);
      // Verificar se a coluna 'erro' existe no resultado
     if (rows.length > 0 && rows[0].erro) {
-      throw new Error(rows[0].erro); // Lança o erro retornado pelo BigQuery
+      throw new Error(rows[0].erro); // Lança o erro retornado pelo pool
     }
     return { status: 200, mensagem: 'periodo atualizado com sucesso!' };
 

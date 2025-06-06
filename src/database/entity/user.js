@@ -17,7 +17,7 @@ class user {
     try {
       const userInfos = await userQuery.login(email);
 
-
+      console.log(userInfos)
       if (!userInfos) {
         return { status: 401, message: 'Credenciais incorretas.' };
       }

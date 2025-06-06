@@ -3,28 +3,31 @@ const pool = require('../../lib/pool');
 async function login(email) {
   const query = `
     SELECT id, nome, senha AS hashed_password
-    FROM \`sitefatecdsm-01-2025.SiteFatecDSM.admin\`
-    WHERE email = @email;
+    FROM errorsquad.admin
+    WHERE email = $1;
   `;
 
-  const options = {
-    query: query,
-    params: { email },
-  };
+  const values = [email];
 
-  const [rows] = await bigquery.query(options);
+  try {
+    const { rows } = await pool.query(query, values);
+    
+    if (rows.length === 0) {
+      return null;
+    }
 
-  if (rows.length === 0) {
-    return null; // Retorna null se nenhum usuário for encontrado
+    const user = rows[0];
+
+    return {
+      id: user.id,
+      nome: user.nome,
+      hashed_password: user.hashed_password,
+    };
+
+  } catch (error) {
+    console.error("Erro ao executar login:", error);
+    throw error; // ou return null;
   }
-
-  const user = rows[0];
-
-  return {
-    id: user.id,
-    nome: user.nome,
-    hashed_password: user.hashed_password,
-  };
 }
 
 async function userExistsOrNotById( id ) {
@@ -41,7 +44,7 @@ async function userExistsOrNotById( id ) {
     useLegacySql: false
   };
 
-  const [rows] = await bigquery.query(options);
+  const [rows] = await pool.query(options);
 
   return rows.length > 0;
 }
@@ -64,7 +67,7 @@ async function updateNameExistingUser(id, nome) {
 
 
   try {
-    await bigquery.query(options);
+    await pool.query(options);
     return { status: 200, mensagem: 'Nome do usuário atualizado com sucesso!' };
 
   } catch (erro) {
@@ -90,7 +93,7 @@ async function searchUserById(id) {
       useLegacySql: false
     };  
 
-  const [rows] = await bigquery.query( options );
+  const [rows] = await pool.query( options );
 
   if (rows.length > 0) {
 
@@ -121,7 +124,7 @@ async function getPasswordHashed( id ) {
     useLegacySql: false
   };
 
-  const [rows] = await bigquery.query(options);
+  const [rows] = await pool.query(options);
 
   return rows[0].senha
 }
@@ -144,7 +147,7 @@ async function updatePasswordExistingUser(id, senha) {
 
 
   try {
-    await bigquery.query(options);
+    await pool.query(options);
     return { status: 200, mensagem: 'Senha do usuário atualizada com sucesso!' };
 
   } catch (erro) {

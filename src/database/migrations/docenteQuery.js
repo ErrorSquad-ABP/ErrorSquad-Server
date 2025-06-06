@@ -24,10 +24,10 @@ async function searchAllDocentes() {
 
   const query =
     `SELECT * 
-    FROM \`sitefatecdsm-01-2025.SiteFatecDSM.docente\`
+    FROM errorsquad.docente
     order by id asc`;
 
-  const [rows] = await pool.query({ query });
+  const { rows } = await pool.query(query);
 
   if (rows.length > 0) {
 

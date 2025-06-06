@@ -3,7 +3,7 @@ const pool = require('../../lib/pool');
 async function createNewDisciplina(nome, nome_docente, nome_curso, codigo) {
 
   const query =
-`CALL errorsquad.inserir_disciplina_unico(
+`CALL errorsquad.inserir_disciplina_por_nome(
     $1, $2, $3, $4
 );`;
 
