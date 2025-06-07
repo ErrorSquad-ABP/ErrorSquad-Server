@@ -7,6 +7,7 @@ async function insertDisciplinaBatch(tableName, columns, records) {
   const nomes_disciplinas = [];
   const nomes_docentes = [];
   const siglas_cursos = [];
+  const codigo = [];
   
   // Preencher os arrays com os valores dos registros (sem aspas ou formatação SQL)
   records.forEach(record => {
@@ -14,6 +15,7 @@ async function insertDisciplinaBatch(tableName, columns, records) {
     const nome_disciplina = record[columns[0]];
     const nome_docente = record[columns[1]];
     const sigla_curso = record[columns[2]];
+    const codigo = record[columns[3]];
     
     if (nome_disciplina !== undefined && nome_disciplina !== null) {
       nomes_disciplinas.push(nome_disciplina);
@@ -26,13 +28,18 @@ async function insertDisciplinaBatch(tableName, columns, records) {
     if (sigla_curso !== undefined && sigla_curso !== null) {
       siglas_cursos.push(sigla_curso);
     }
+
+    if (codigo !== undefined && codigo !== null) {
+      codigo.push(codigo);
+    }
   });
 
   const query = `
   CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`inserir_disciplina_por_nome\`(
     @nomes_disciplinas,
     @nomes_docentes,
-    @siglas_cursos
+    @siglas_cursos,
+    @codigo
   );`;
   
   const options = { 
@@ -40,7 +47,8 @@ async function insertDisciplinaBatch(tableName, columns, records) {
     params: {
       nomes_disciplinas: nomes_disciplinas,
       nomes_docentes: nomes_docentes,
-      siglas_cursos: siglas_cursos
+      siglas_cursos: siglas_cursos,
+      codigo: codigo
     },
     useLegacySql: false 
   };
