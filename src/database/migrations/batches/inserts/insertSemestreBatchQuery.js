@@ -1,4 +1,4 @@
-const bigquery = require('../../../../lib/bigquery');
+const pool = require('../../../../lib/pool');
 
 async function insertSemestreBatch(tableName, columns, records) {
 
@@ -37,27 +37,17 @@ async function insertSemestreBatch(tableName, columns, records) {
   });
   
   const query = `
-  CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`inserir_semestre\`(
+  CALL errorSquad.inserir_semestre(
     @niveis_semestre,
     @anos_semestre,
     @siglas_curso,
     @nomes_turno
   );`;
   
-  const options = { 
-    query, 
-    params: {
-      niveis_semestre: niveis_semestre,
-      anos_semestre: anos_semestre,
-      siglas_curso: siglas_curso,
-      nomes_turno: nomes_turno,
-    },
-    
-    useLegacySql: false 
-  };
+  const values = [niveis_semestre, anos_semestre, siglas_curso, nomes_turno];
   
   try {
-    await bigquery.query(options);
+    await pool.query(values, query);
     console.log(`Inseridos ${records.length} registros em ${tableName}`);
     return { status: 201, mensagem: `Registros inseridos com sucesso em ${tableName}!` };
   } catch (erro) {
