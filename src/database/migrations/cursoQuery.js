@@ -16,7 +16,7 @@ VALUES
   ]
 
   try {
-    await pool.query(query, values);
+    const result = await pool.query(query, values);
     return { status: 201, mensagem: 'Curso inserido com sucesso!' };
   } catch (erro) {
     console.error('Erro ao inserir curso:', erro);
@@ -85,19 +85,13 @@ async function searchCursoById(id) {
 
 async function cursoExistsOrNotById(id) {
   const query = `
-    SELECT * FROM \`sitefatecdsm-01-2025.SiteFatecDSM.curso\`
-    WHERE id = @id;
+    SELECT * FROM errorsquad.curso
+    WHERE id = $1;
   `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id)
-    },
-    useLegacySql: false
-  };
+  const values = [id];
 
-  const [rows] = await pool.query(options);
+  const { rows } = await pool.query(query, values);
 
   return rows.length > 0;
 }
@@ -105,31 +99,19 @@ async function cursoExistsOrNotById(id) {
 
 async function updateExistingCurso(id, nome, coordenador, sigla, inicio, fim) {
   const query = `
-    UPDATE \`sitefatecdsm-01-2025.SiteFatecDSM.curso\`
-    SET nome = @nome,
-    coordenador = @coordenador,
-    sigla = @sigla,
-    inicio = @inicio,
-    fim = @fim
-    WHERE id = @id;
+    UPDATE errorsquad.curso
+    SET nome = $1,
+    coordenador = $2,
+    sigla = $3,
+    inicio = $4,
+    fim = $5
+    WHERE id = $6;
   `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-      nome: String(nome),
-      coordenador: String(coordenador),
-      sigla: String(sigla),
-      inicio: String(inicio),
-      fim: String(fim)
-    },
-    useLegacySql: false
-  };
-
+  const values = [nome, coordenador, sigla, inicio, fim, id]
 
   try {
-    const [rows] = await pool.query(options);
+    const result = await pool.query(query, values);
     return { status: 200, mensagem: 'Curso atualizado com sucesso!' };
 
   } catch (erro) {
@@ -140,21 +122,15 @@ async function updateExistingCurso(id, nome, coordenador, sigla, inicio, fim) {
 
 async function deleteExistingCurso(id) {
   const query = `
-    DELETE FROM \`sitefatecdsm-01-2025.SiteFatecDSM.curso\`
-    WHERE id = @id;
+    DELETE FROM errorsquad.curso
+    WHERE id = $1
   `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-    },
-    useLegacySql: false
-  };
+ const values = [id];
 
 
   try {
-    const [rows] = await pool.query(options);
+    const result = await pool.query(query, values);
     return { sucesso: true, mensagem: 'Curso atualizado com sucesso!' };
 
   } catch (erro) {

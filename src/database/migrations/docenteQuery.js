@@ -11,7 +11,7 @@ VALUES
   
 
   try {
-    await pool.query(query, values);
+   const result = await pool.query(query, values);
     return { status: 201, mensagem: 'Docente inserido com sucesso!' };
   } catch (erro) {
     console.error('Erro ao inserir docente:', erro);
@@ -80,19 +80,13 @@ async function searchDocenteById(id) {
 
 async function docenteExistsOrNotById(id) {
   const query = `
-    SELECT * FROM \`sitefatecdsm-01-2025.SiteFatecDSM.docente\`
-    WHERE id = @id;
+    SELECT * FROM errorsquad.docente
+    WHERE id = $1;
   `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id)
-    },
-    useLegacySql: false
-  };
+  const values = [id];
 
-  const [rows] = await pool.query(options);
+  const { rows } = await pool.query(query, values);
 
   return rows.length > 0;
 }
@@ -100,25 +94,16 @@ async function docenteExistsOrNotById(id) {
 
 async function updateExistingDocente(id, nome, cor) {
   const query = `
-    UPDATE \`sitefatecdsm-01-2025.SiteFatecDSM.docente\`
-    SET nome = @nome,
-    cor = @cor
-    WHERE id = @id;
+    UPDATE errorsquad.docente
+    SET nome = $1,
+    cor = $2
+    WHERE id = $3;
   `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-      nome: String(nome),
-      cor: String(cor)
-    },
-    useLegacySql: false
-  };
-
+  const values = [nome, cor, id];
 
   try {
-    const [rows] = await pool.query(options);
+    const result = await pool.query(query, values);
     return { status: 200, mensagem: 'Docente atualizado com sucesso!' };
 
   } catch (erro) {
@@ -129,21 +114,14 @@ async function updateExistingDocente(id, nome, cor) {
 
 async function deleteExistingDocente(id) {
   const query = `
-    DELETE FROM \`sitefatecdsm-01-2025.SiteFatecDSM.docente\`
-    WHERE id = @id;
+    DELETE FROM errorsquad.docente
+    WHERE id = $1;
   `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-    },
-    useLegacySql: false
-  };
-
+  const values = [id];
 
   try {
-    const [rows] = await pool.query(options);
+    const result = await pool.query(query, values);
     return { sucesso: true, mensagem: 'Docente atualizado com sucesso!' };
 
   } catch (erro) {

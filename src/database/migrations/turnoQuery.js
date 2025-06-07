@@ -11,7 +11,7 @@ VALUES
   const values = [nome];
 
   try {
-    await pool.query(query, values);
+    const result = await pool.query(query, values);
     return { status: 201, mensagem: 'Turno inserido com sucesso!' };
   } catch (erro) {
     console.error('Erro ao inserir turno:', erro);
@@ -46,19 +46,13 @@ async function searchAllTurnos() {
 
 async function turnoExistsOrNotById(id) {
   const query = `
-    SELECT * FROM \`sitefatecdsm-01-2025.SiteFatecDSM.turno\`
-    WHERE id = @id;
+    SELECT * FROM errorsquad.turno
+    WHERE id = $1;
   `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id)
-    },
-    useLegacySql: false
-  };
+  const values = [id];
 
-  const [rows] = await pool.query(options);
+  const { rows } = await pool.query(query, values);
 
   return rows.length > 0;
 }
@@ -66,23 +60,16 @@ async function turnoExistsOrNotById(id) {
 
 async function updateExistingTurno(id, nome) {
   const query = `
-    UPDATE \`sitefatecdsm-01-2025.SiteFatecDSM.turno\`
-    SET nome = @nome
-    WHERE id = @id;
+    UPDATE errorsquad.turno
+    SET nome = $1
+    WHERE id = $2;
   `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),      
-      nome: String(nome)     
-    },
-    useLegacySql: false      
-  };
+  const values = [nome, id];
 
 
   try {
-    const [rows] = await pool.query(options);
+    const result = await pool.query(query, values);
     return { status:200, mensagem: 'Turno atualizado com sucesso!' };
     
   } catch (erro) {
@@ -91,23 +78,17 @@ async function updateExistingTurno(id, nome) {
   }
 }
 
-async function deleteExistingTurno( id ) {
+async function deleteExistingTurno(id) {
   const query = `
-    DELETE FROM \`sitefatecdsm-01-2025.SiteFatecDSM.turno\`
-    WHERE id = @id;
+    DELETE FROM errorsquad.turno
+    WHERE id = $1;
   `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),          
-    },
-    useLegacySql: false      
-  };
+ const values = [id];
 
 
   try {
-    const [rows] = await pool.query(options);
+    const result = await pool.query(query, values);
     return { sucesso: true, mensagem: 'Turno atualizado com sucesso!' };
     
   } catch (erro) {

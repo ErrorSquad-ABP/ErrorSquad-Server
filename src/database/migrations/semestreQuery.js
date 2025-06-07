@@ -3,32 +3,14 @@ const pool = require('../../lib/pool');
 async function createNewSemestre(nivel, ano, nome_curso, nome_turno) {
 
   const query =
-    `CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`inserir_semestre_unico\`(
-    @nivel,
-    @ano,
-    @nome_curso,
-    @nome_turno);`;
+    `CALL errorsquad.inserir_semestre_unico
+    $1, $2, $3, $4);`;
 
-//Comente a query acima descomente a debaixo para rodar em PostgreSQL
 
-/*`INSERT INTO semestre(nivel, ano, nome_curso, nome_turno)
-VALUES
-(@nivel, @ano, @nome_curso, @nome_turno);`;
- */
-
-  const options = {
-    query,
-    params: {
-      nivel: parseInt(nivel),
-      ano: parseInt(ano),
-      nome_curso: String(nome_curso),
-      nome_turno: String(nome_turno),
-    },
-    useLegacySql: false
-  };
+  const values = [nivel, ano, nome_curso, nome_turno]
 
   try {
-    await bigquery.query(options);
+    const result = await pool.query(query, values);
     return { status: 201, mensagem: 'Nivel inserido com sucesso!' };
   } catch (erro) {
     console.error('Erro ao inserir nivel:', erro);
@@ -57,7 +39,7 @@ LEFT JOIN
 ORDER BY 
     semestre_cronograma.id ASC;`;
 
-  const [rows] = await bigquery.query({ query });
+  const [rows] = await pool.query({ query });
 
   if (rows.length > 0) {
 
@@ -103,7 +85,7 @@ WHERE semestre_cronograma.id = @id;
     useLegacySql: false
   };
 
-  const [rows] = await bigquery.query(options);
+  const [rows] = await pool.query(options);
   console.log('teste', rows, id)
   if (rows.length > 0) {
 
@@ -134,7 +116,7 @@ async function semestreExistsOrNotById(id) {
     useLegacySql: false
   };
 
-  const [rows] = await bigquery.query(options);
+  const [rows] = await pool.query(options);
 
   return rows.length > 0;
 }
@@ -173,7 +155,7 @@ async function updateExistingSemestre(id, nivel, ano, nome_curso, nome_turno) {
 
 
   try {
-    await bigquery.query(options);
+    await pool.query(options);
     return { status: 200, mensagem: 'Semestre atualizado com sucesso!' };
 
   } catch (erro) {
@@ -198,7 +180,7 @@ async function deleteExistingSemestre(id) {
 
 
   try {
-    const [rows] = await bigquery.query(options);
+    const [rows] = await pool.query(options);
     return { sucesso: true, mensagem: 'Semestre atualizado com sucesso!' };
 
   } catch (erro) {

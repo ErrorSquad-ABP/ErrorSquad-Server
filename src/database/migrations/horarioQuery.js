@@ -12,7 +12,7 @@ VALUES
   const values = [hr_inicio, hr_fim];
 
   try {
-    await pool.query(query, values);
+    const result = await pool.query(query, values);
     return { status: 201, mensagem: 'Horário inserido com sucesso!' };
   } catch (erro) {
     console.error('Erro ao inserir horário:', erro);
@@ -47,19 +47,13 @@ async function searchAllHorarios() {
 
 async function horarioExistsOrNotById(id) {
   const query = `
-    SELECT * FROM \`sitefatecdsm-01-2025.SiteFatecDSM.horario\`
-    WHERE id = @id;
+    SELECT * FROM errorsquad.horario
+    WHERE id = $1;
   `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id)
-    },
-    useLegacySql: false
-  };
+  const values = [id];
 
-  const [rows] = await pool.query(options);
+  const { rows } = await pool.query(query , values);
 
   return rows.length > 0;
 }
@@ -67,25 +61,17 @@ async function horarioExistsOrNotById(id) {
 
 async function updateExistingHorario(id, hr_inicio, hr_fim) {
   const query = `
-    UPDATE \`sitefatecdsm-01-2025.SiteFatecDSM.horario\`
-    SET hr_inicio = @hr_inicio,
-    hr_fim = @hr_fim
-    WHERE id = @id;
+    UPDATE errorsquad.horario
+    SET hr_inicio = $1
+    hr_fim = $2
+    WHERE id = $3;
   `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-      hr_inicio: (hr_inicio),
-      hr_fim: (hr_fim)
-    },
-    useLegacySql: false
-  };
+  const values = [hr_inicio, hr_fim, id];
 
 
   try {
-    const [rows] = await pool.query(options);
+    const result = await pool.query(query, values);
     return { status: 200, mensagem: 'Horário atualizado com sucesso!' };
 
   } catch (erro) {
@@ -96,21 +82,15 @@ async function updateExistingHorario(id, hr_inicio, hr_fim) {
 
 async function deleteExistingHorario(id) {
   const query = `
-    DELETE FROM \`sitefatecdsm-01-2025.SiteFatecDSM.horario\`
-    WHERE id = @id;
+    DELETE FROM errorsquad.horario
+    WHERE id = $1;
   `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-    },
-    useLegacySql: false
-  };
+  const values = [id];
 
 
   try {
-    const [rows] = await pool.query(options);
+    const result = await pool.query(query, values);
     return { sucesso: true, mensagem: 'Horário atualizado com sucesso!' };
 
   } catch (erro) {

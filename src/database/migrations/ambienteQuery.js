@@ -3,26 +3,20 @@ const pool = require('../../lib/pool');
 async function createNewAmbiente(nome, localizacao) {
 
   const query =
-   /* `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.ambiente 
-   
-    SELECT 
-    COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.ambiente), 0) + 1,
-   @nome, @localizacao;`;*/
 
 
-//Comente a query acima e descomente a debaixo para rodar em PostgreSQL
-
-`INSERT INTO errorsquad.ambiente(nome, localizacao)
-VALUES
-($1, $2);`;
+  `CALL errorsquad.inserir_ambiente(
+    $1, $2, $3
+);`;
  
   const values = [
     nome,
-    localizacao
+    localizacao,
+    nome_andar
   ]
 
   try {
-    await pool.query(query, values);
+    const result = await pool.query(query, values);
     return { status: 201, mensagem: 'Ambiente inserido com sucesso!' };
   } catch (erro) {
     console.error('Erro ao inserir ambiente:', erro);
@@ -78,7 +72,7 @@ async function updateExistingAmbiente(id, nome) {
   const values = [nome, id];
 
   try {
-    const [rows] = await pool.query(query, values);
+    const result = await pool.query(query, values);
     return { status: 200, mensagem: 'Ambiente atualizado com sucesso!' };
 
   } catch (erro) {
@@ -89,21 +83,15 @@ async function updateExistingAmbiente(id, nome) {
 
 async function deleteExistingAmbiente(id) {
   const query = `
-      DELETE FROM \`sitefatecdsm-01-2025.SiteFatecDSM.ambiente\`
-      WHERE id = @id;
+      DELETE FROM errorsquad.ambiente
+      WHERE id = $1;
     `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-    },
-    useLegacySql: false
-  };
+  const values = [id];
 
 
   try {
-    const [rows] = await pool.query(options);
+    const result = await pool.query(query, values);
     return { sucesso: 200, mensagem: 'Ambiente deletado com sucesso!' };
 
   } catch (erro) {
