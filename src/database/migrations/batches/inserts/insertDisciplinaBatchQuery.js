@@ -30,7 +30,7 @@ async function insertDisciplinaBatch(tableName, columns, records) {
     }
 
     if (codigo !== undefined && codigo !== null) {
-      codigo_disciplina.push(codigo);
+      codigo_disciplina.push(codigo_disciplina);
     }
   });
 
