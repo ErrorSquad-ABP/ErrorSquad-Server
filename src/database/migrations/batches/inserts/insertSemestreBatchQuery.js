@@ -38,22 +38,21 @@ async function insertSemestreBatch(tableName, columns, records) {
   
   const query = `
   CALL errorSquad.inserir_semestre(
-    @niveis_semestre,
-    @anos_semestre,
-    @siglas_curso,
-    @nomes_turno
-  );`;
-  
-  const values = [niveis_semestre, anos_semestre, siglas_curso, nomes_turno];
-  
-  try {
-    await pool.query(values, query);
-    console.log(`Inseridos ${records.length} registros em ${tableName}`);
-    return { status: 201, mensagem: `Registros inseridos com sucesso em ${tableName}!` };
-  } catch (erro) {
-    console.error(`Erro ao inserir em batch em ${tableName}:`, erro);
-    throw erro;
-  }
+    $1, $2, $3, $4
+  );
+`;
+
+const values = [niveis_semestre, anos_semestre, siglas_curso, nomes_turno];
+
+try {
+  await pool.query(query, values); // agora correto
+  console.log(`Inseridos ${records.length} registros em ${tableName}`);
+  return { status: 201, mensagem: `Registros inseridos com sucesso em ${tableName}!` };
+} catch (erro) {
+  console.error(`Erro ao inserir em batch em ${tableName}:`, erro);
+  throw erro;
+}
+
 }
 
 module.exports = { insertSemestreBatch }
