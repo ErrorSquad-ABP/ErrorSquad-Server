@@ -51,22 +51,18 @@ async function searchAllCursos() {
 
 async function searchCursoById(id) {
 
-  const query =
-    `SELECT (
-      SELECT AS STRUCT * 
-      FROM \`sitefatecdsm-01-2025.SiteFatecDSM.curso\`
-      WHERE id = @id
-    ) AS curso;`;
+  const query = `SELECT (
+  SELECT row_to_json(c)
+  FROM (
+    SELECT *
+    FROM errorsquad.curso
+    WHERE id = $1
+  ) c
+) AS curso;`;
 
-    const options = {
-      query,
-      params: {
-        id: parseInt(id)
-      },
-      useLegacySql: false
-    };  
+    const values = [id];
 
-  const [rows] = await pool.query( options );
+  const { rows } = await pool.query(query, values);
 
   if (rows.length > 0) {
 

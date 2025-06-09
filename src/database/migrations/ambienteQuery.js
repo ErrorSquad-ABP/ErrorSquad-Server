@@ -1,6 +1,6 @@
 const pool = require('../../lib/pool');
 
-async function createNewAmbiente(nome, localizacao) {
+async function createNewAmbiente(nome, localizacao, nome_andar) {
 
   const query =
 

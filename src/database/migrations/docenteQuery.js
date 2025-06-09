@@ -46,22 +46,18 @@ async function searchAllDocentes() {
 
 async function searchDocenteById(id) {
 
-  const query =
-    `SELECT (
-  SELECT AS STRUCT *
-  FROM \`sitefatecdsm-01-2025.SiteFatecDSM.docente\`
-  WHERE id = @id
+  const query = `SELECT (
+  SELECT row_to_json(d)
+  FROM (
+    SELECT *
+    FROM errorsquad.docente
+    WHERE id = $1
+  ) d
 ) AS docente;`;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id)
-    },
-    useLegacySql: false
-  };
+  const values = [id];
 
-  const [rows] = await pool.query(options);
+  const { rows } = await pool.query(query, values);
 
   if (rows.length > 0) {
 

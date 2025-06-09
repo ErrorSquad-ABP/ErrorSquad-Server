@@ -69,32 +69,16 @@ async function searchAllInfos() {
 
 async function swapPeriodos(id1, id1_dia, id1_horario, id2, id2_dia, id2_horario) {
   const query = `
-    CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`swap_periodos\`(
-      @id1,
-      @id1_dia,
-      @id1_horario,
-      @id2,
-      @id2_dia,
-      @id2_horario
+    CALL errorsquad.swap_periodos (
+      $1, $2, $3, $4, $5, $6
     );
   `;
 
-  const options = {
-    query,
-    params: {
-      id1: parseInt(id1),
-      id1_dia: parseInt(id1_dia),
-      id1_horario: parseInt(id1_horario),
-      id2: parseInt(id2),
-      id2_dia: parseInt(id2_dia),
-      id2_horario: parseInt(id2_horario),
-    },
-    useLegacySql: false,
-  };
+  const values = [id1, id1_dia, id1_horario, id2, id2_dia, id2_horario];
 
   try {
 
-    const [rows] = await bigquery.query(options)
+    const { rows } = await bigquery.query(query, values)
     console.log(rows)
     const card1 = {
       id: rows[0].id,
