@@ -1,24 +1,17 @@
-const bigquery = require('../../lib/bigquery');
+const pool = require('../../lib/pool');
 
 async function createNewDocente(nome, cor) {
 
   const query =
-    `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.docente (id, nome, cor)
-    SELECT 
-    COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.docente), 0) + 1,
-   @nome, @cor;`;
-
-  const options = {
-    query,
-    params: {
-      nome: String(nome),
-      cor: String(cor)
-    },
-    useLegacySql: false
-  };
+    `INSERT INTO errorsquad.docente(nome, cor)
+VALUES
+($1, $2);`;
+ 
+  values = [nome, cor];
+  
 
   try {
-    await bigquery.query(options);
+   const result = await pool.query(query, values);
     return { status: 201, mensagem: 'Docente inserido com sucesso!' };
   } catch (erro) {
     console.error('Erro ao inserir docente:', erro);
@@ -31,10 +24,10 @@ async function searchAllDocentes() {
 
   const query =
     `SELECT * 
-    FROM \`sitefatecdsm-01-2025.SiteFatecDSM.docente\`
+    FROM errorsquad.docente
     order by id asc`;
 
-  const [rows] = await bigquery.query({ query });
+  const { rows } = await pool.query(query);
 
   if (rows.length > 0) {
 
@@ -53,22 +46,18 @@ async function searchAllDocentes() {
 
 async function searchDocenteById(id) {
 
-  const query =
-    `SELECT (
-  SELECT AS STRUCT *
-  FROM \`sitefatecdsm-01-2025.SiteFatecDSM.docente\`
-  WHERE id = @id
+  const query = `SELECT (
+  SELECT row_to_json(d)
+  FROM (
+    SELECT *
+    FROM errorsquad.docente
+    WHERE id = $1
+  ) d
 ) AS docente;`;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id)
-    },
-    useLegacySql: false
-  };
+  const values = [id];
 
-  const [rows] = await bigquery.query(options);
+  const { rows } = await pool.query(query, values);
 
   if (rows.length > 0) {
 
@@ -87,19 +76,13 @@ async function searchDocenteById(id) {
 
 async function docenteExistsOrNotById(id) {
   const query = `
-    SELECT * FROM \`sitefatecdsm-01-2025.SiteFatecDSM.docente\`
-    WHERE id = @id;
+    SELECT * FROM errorsquad.docente
+    WHERE id = $1;
   `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id)
-    },
-    useLegacySql: false
-  };
+  const values = [id];
 
-  const [rows] = await bigquery.query(options);
+  const { rows } = await pool.query(query, values);
 
   return rows.length > 0;
 }
@@ -107,25 +90,16 @@ async function docenteExistsOrNotById(id) {
 
 async function updateExistingDocente(id, nome, cor) {
   const query = `
-    UPDATE \`sitefatecdsm-01-2025.SiteFatecDSM.docente\`
-    SET nome = @nome,
-    cor = @cor
-    WHERE id = @id;
+    UPDATE errorsquad.docente
+    SET nome = $1,
+    cor = $2
+    WHERE id = $3;
   `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-      nome: String(nome),
-      cor: String(cor)
-    },
-    useLegacySql: false
-  };
-
+  const values = [nome, cor, id];
 
   try {
-    const [rows] = await bigquery.query(options);
+    const result = await pool.query(query, values);
     return { status: 200, mensagem: 'Docente atualizado com sucesso!' };
 
   } catch (erro) {
@@ -136,21 +110,14 @@ async function updateExistingDocente(id, nome, cor) {
 
 async function deleteExistingDocente(id) {
   const query = `
-    DELETE FROM \`sitefatecdsm-01-2025.SiteFatecDSM.docente\`
-    WHERE id = @id;
+    DELETE FROM errorsquad.docente
+    WHERE id = $1;
   `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-    },
-    useLegacySql: false
-  };
-
+  const values = [id];
 
   try {
-    const [rows] = await bigquery.query(options);
+    const result = await pool.query(query, values);
     return { sucesso: true, mensagem: 'Docente atualizado com sucesso!' };
 
   } catch (erro) {

@@ -1,70 +1,60 @@
-const bigquery = require('../../lib/bigquery');
+const pool = require('../../lib/pool');
 
 async function login(email) {
   const query = `
     SELECT id, nome, senha AS hashed_password
-    FROM \`sitefatecdsm-01-2025.SiteFatecDSM.admin\`
-    WHERE email = @email;
+    FROM errorsquad.admin
+    WHERE email = $1;
   `;
 
-  const options = {
-    query: query,
-    params: { email },
-  };
+  const values = [email];
 
-  const [rows] = await bigquery.query(options);
+  try {
+    const { rows } = await pool.query(query, values);
+    
+    if (rows.length === 0) {
+      return null;
+    }
 
-  if (rows.length === 0) {
-    return null; // Retorna null se nenhum usuário for encontrado
+    const user = rows[0];
+
+    return {
+      id: user.id,
+      nome: user.nome,
+      hashed_password: user.hashed_password,
+    };
+
+  } catch (error) {
+    console.error("Erro ao executar login:", error);
+    throw error; // ou return null;
   }
-
-  const user = rows[0];
-
-  return {
-    id: user.id,
-    nome: user.nome,
-    hashed_password: user.hashed_password,
-  };
 }
 
 async function userExistsOrNotById( id ) {
   const query = `
-      SELECT * FROM \`sitefatecdsm-01-2025.SiteFatecDSM.admin\`
-      WHERE id = @id;
+      SELECT * FROM errorsquad.admin
+      WHERE id = $1;
     `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id)
-    },
-    useLegacySql: false
-  };
+  const values = [id];
 
-  const [rows] = await bigquery.query(options);
+  const { rows } = await pool.query(query, values);
 
   return rows.length > 0;
 }
 
 async function updateNameExistingUser(id, nome) {
   const query = `
-      UPDATE \`sitefatecdsm-01-2025.SiteFatecDSM.admin\`
-      SET nome = @nome
-      WHERE id = @id;
+      UPDATE errorsquad.admin
+      SET nome = $1
+      WHERE id = $2;
     `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-      nome: String(nome)
-    },
-    useLegacySql: false
-  };
+  const values = [nome, id];
 
 
   try {
-    await bigquery.query(options);
+    const result = await pool.query(query, values);
     return { status: 200, mensagem: 'Nome do usuário atualizado com sucesso!' };
 
   } catch (erro) {
@@ -75,22 +65,18 @@ async function updateNameExistingUser(id, nome) {
 
 async function searchUserById(id) {
 
-  const query =
-    `SELECT (
-      SELECT AS STRUCT nome, email
-      FROM \`sitefatecdsm-01-2025.SiteFatecDSM.admin\`
-      WHERE id = @id
-    ) AS admin;`;
+  const query = `SELECT (
+  SELECT row_to_json(a)
+  FROM (
+    SELECT *
+    FROM errorsquad.admin
+    WHERE id = $1
+  ) a
+) AS admin;`;
 
-    const options = {
-      query,
-      params: {
-        id: parseInt(id)
-      },
-      useLegacySql: false
-    };  
+    const values = [id];
 
-  const [rows] = await bigquery.query( options );
+  const {rows} = await pool.query( query, values );
 
   if (rows.length > 0) {
 
@@ -107,44 +93,35 @@ async function searchUserById(id) {
 
 }
 
-async function getPasswordHashed( id ) {
+async function getPasswordHashed(id) {
   const query = `
-      SELECT senha FROM \`sitefatecdsm-01-2025.SiteFatecDSM.admin\`
-      WHERE id = @id;
-    `;
+    SELECT senha FROM errorsquad.admin
+    WHERE id = $1;
+  `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id)
-    },
-    useLegacySql: false
-  };
+  const values = [id];
 
-  const [rows] = await bigquery.query(options);
+  const { rows } = await pool.query(query, values);
 
-  return rows[0].senha
+  if (rows.length === 0) {
+    return null; // ou lançar erro se quiser: throw new Error('Admin não encontrado');
+  }
+
+  return rows[0].senha;
 }
 
 async function updatePasswordExistingUser(id, senha) {
   const query = `
-      UPDATE \`sitefatecdsm-01-2025.SiteFatecDSM.admin\`
-      SET senha = @senha
-      WHERE id = @id;
+      UPDATE errorsquad.admin
+      SET senha = $1
+      WHERE id = $2;
     `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-      senha: String(senha)
-    },
-    useLegacySql: false
-  };
+  const values = [senha, id];
 
 
   try {
-    await bigquery.query(options);
+    const result = await pool.query(query, values);
     return { status: 200, mensagem: 'Senha do usuário atualizada com sucesso!' };
 
   } catch (erro) {

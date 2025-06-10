@@ -1,25 +1,18 @@
-const bigquery = require('../../lib/bigquery');
+const pool = require('../../lib/pool');
 
 async function createNewHorario(hr_inicio, hr_fim) {
 
   const query =
-    `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.horario ( id ,hr_inicio, hr_fim )
-    SELECT 
-    COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.horario), 0) + 1,
-   CAST(@hr_inicio AS TIME), 
-   CAST(@hr_fim AS TIME);`;
+   `INSERT INTO errorsquad.horario(hr_inicio, hr_fim)
+VALUES
+($1, $2);`;
+ 
 
-  const options = {
-    query,
-    params: {
-      hr_inicio,
-      hr_fim
-    },
-    useLegacySql: false
-  };
+
+  const values = [hr_inicio, hr_fim];
 
   try {
-    await bigquery.query(options);
+    const result = await pool.query(query, values);
     return { status: 201, mensagem: 'Horário inserido com sucesso!' };
   } catch (erro) {
     console.error('Erro ao inserir horário:', erro);
@@ -32,10 +25,10 @@ async function searchAllHorarios() {
 
   const query =
     `SELECT * 
-    FROM \`sitefatecdsm-01-2025.SiteFatecDSM.horario\`
+    FROM errorsquad.horario
     order by id asc`;
 
-  const [rows] = await bigquery.query({ query });
+  const { rows } = await pool.query(query);
 
   if (rows.length > 0) {
 
@@ -54,19 +47,13 @@ async function searchAllHorarios() {
 
 async function horarioExistsOrNotById(id) {
   const query = `
-    SELECT * FROM \`sitefatecdsm-01-2025.SiteFatecDSM.horario\`
-    WHERE id = @id;
+    SELECT * FROM errorsquad.horario
+    WHERE id = $1;
   `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id)
-    },
-    useLegacySql: false
-  };
+  const values = [id];
 
-  const [rows] = await bigquery.query(options);
+  const { rows } = await pool.query(query , values);
 
   return rows.length > 0;
 }
@@ -74,25 +61,17 @@ async function horarioExistsOrNotById(id) {
 
 async function updateExistingHorario(id, hr_inicio, hr_fim) {
   const query = `
-    UPDATE \`sitefatecdsm-01-2025.SiteFatecDSM.horario\`
-    SET hr_inicio = @hr_inicio,
-    hr_fim = @hr_fim
-    WHERE id = @id;
+    UPDATE errorsquad.horario
+    SET hr_inicio = $1,
+    hr_fim = $2
+    WHERE id = $3;
   `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-      hr_inicio: (hr_inicio),
-      hr_fim: (hr_fim)
-    },
-    useLegacySql: false
-  };
+  const values = [hr_inicio, hr_fim, id];
 
 
   try {
-    const [rows] = await bigquery.query(options);
+    const result = await pool.query(query, values);
     return { status: 200, mensagem: 'Horário atualizado com sucesso!' };
 
   } catch (erro) {
@@ -103,21 +82,15 @@ async function updateExistingHorario(id, hr_inicio, hr_fim) {
 
 async function deleteExistingHorario(id) {
   const query = `
-    DELETE FROM \`sitefatecdsm-01-2025.SiteFatecDSM.horario\`
-    WHERE id = @id;
+    DELETE FROM errorsquad.horario
+    WHERE id = $1;
   `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-    },
-    useLegacySql: false
-  };
+  const values = [id];
 
 
   try {
-    const [rows] = await bigquery.query(options);
+    const result = await pool.query(query, values);
     return { sucesso: true, mensagem: 'Horário atualizado com sucesso!' };
 
   } catch (erro) {

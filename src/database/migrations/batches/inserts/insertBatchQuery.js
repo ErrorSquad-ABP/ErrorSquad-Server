@@ -1,42 +1,29 @@
-const bigquery = require('../../../../lib/bigquery');
+const pool = require('../../../../lib/pool');
 
 async function insertBatch(tableName, columns, records) {
   if (!records || records.length === 0) return;
 
-  let values;
-  
-  // Generate the STRUCT values based on column types
-  values = records.map((record, index) => {
-    const structFields = [];
-    structFields.push(`${index + 1} AS seq_num`);
-    
-    columns.forEach(col => {
-      if (tableName === 'horario' && (col === 'hr_inicio' || col === 'hr_fim')) {
-        structFields.push(`TIME '${record[col]}' AS ${col}`);
-      } else if (record[col] !== undefined && record[col] !== null) {
-        if (typeof record[col] === 'string') {
-          structFields.push(`'${record[col].replace(/'/g, "''")}' AS ${col}`);
-        } 
-      } else {
-        structFields.push(`NULL AS ${col}`);
-      }
+  const placeholders = [];
+  const values = [];
+
+  records.forEach((record, i) => {
+    const valuePlaceholders = [];
+
+    columns.forEach((col, j) => {
+      values.push(record[col]); // adiciona o valor real
+      valuePlaceholders.push(`$${values.length}`); // $1, $2, ...
     });
-    
-    return `STRUCT(${structFields.join(', ')})`;
-  }).join(', ');
-  
+
+    placeholders.push(`(${valuePlaceholders.join(', ')})`);
+  });
+
   const query = `
-    INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.${tableName} (id, ${columns.join(', ')})
-    SELECT
-      COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.${tableName}), 0) + seq_num,
-      ${columns.map(col => col).join(', ')}
-    FROM UNNEST ([${values}]);
+    INSERT INTO errorsquad.${tableName} (${columns.join(', ')})
+    VALUES ${placeholders.join(', ')};
   `;
 
-  const options = { query, useLegacySql: false };
-
   try {
-    await bigquery.query(options);
+    await pool.query(query, values);
     console.log(`Inseridos ${records.length} registros em ${tableName}`);
     return { status: 201, mensagem: `Registros inseridos com sucesso em ${tableName}!` };
   } catch (erro) {

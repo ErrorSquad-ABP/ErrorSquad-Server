@@ -1,24 +1,22 @@
-const bigquery = require('../../lib/bigquery');
+const pool = require('../../lib/pool');
 
-async function createNewAmbiente(nome, localizacao) {
+async function createNewAmbiente(nome, localizacao, nome_andar) {
 
   const query =
-    `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.ambiente (id, nome, localizacao)
-    SELECT 
-    COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.ambiente), 0) + 1,
-   @nome, @localizacao;`;
 
-  const options = {
-    query,
-    params: {
-      nome: String(nome),
-      localizacao: parseInt(localizacao)
-    },
-    useLegacySql: false
-  };
+
+  `CALL errorsquad.inserir_ambiente(
+    $1, $2, $3
+);`;
+ 
+  const values = [
+    nome,
+    localizacao,
+    nome_andar
+  ]
 
   try {
-    await bigquery.query(options);
+    const result = await pool.query(query, values);
     return { status: 201, mensagem: 'Ambiente inserido com sucesso!' };
   } catch (erro) {
     console.error('Erro ao inserir ambiente:', erro);
@@ -30,10 +28,10 @@ async function searchAllAmbientes() {
 
   const query =
     `SELECT * 
-      FROM \`sitefatecdsm-01-2025.SiteFatecDSM.ambiente\`
+      FROM errorsquad.ambiente
       order by id asc`;
 
-  const [rows] = await bigquery.query({ query });
+  const {rows} = await pool.query(query);
 
   if (rows.length > 0) {
 
@@ -52,42 +50,29 @@ async function searchAllAmbientes() {
 
 async function ambienteExistsOrNotById(id) {
   const query = `
-      SELECT * FROM \`sitefatecdsm-01-2025.SiteFatecDSM.ambiente\`
-      WHERE id = @id;
+      SELECT * FROM errorsquad.ambiente
+      WHERE id = $1;
     `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id)
-    },
-    useLegacySql: false
-  };
+  const values = [id]
 
-  const [rows] = await bigquery.query(options);
+  const { rows } = await pool.query(query, values);
+
 
   return rows.length > 0;
 }
 
 async function updateExistingAmbiente(id, nome) {
   const query = `
-      UPDATE \`sitefatecdsm-01-2025.SiteFatecDSM.ambiente\`
-      SET nome = @nome
-      WHERE id = @id;
+      UPDATE errorsquad.ambiente
+      SET nome = $1
+      WHERE id = $2;
     `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-      nome: String(nome)
-    },
-    useLegacySql: false
-  };
-
+  const values = [nome, id];
 
   try {
-    const [rows] = await bigquery.query(options);
+    const result = await pool.query(query, values);
     return { status: 200, mensagem: 'Ambiente atualizado com sucesso!' };
 
   } catch (erro) {
@@ -98,21 +83,15 @@ async function updateExistingAmbiente(id, nome) {
 
 async function deleteExistingAmbiente(id) {
   const query = `
-      DELETE FROM \`sitefatecdsm-01-2025.SiteFatecDSM.ambiente\`
-      WHERE id = @id;
+      DELETE FROM errorsquad.ambiente
+      WHERE id = $1;
     `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-    },
-    useLegacySql: false
-  };
+  const values = [id];
 
 
   try {
-    const [rows] = await bigquery.query(options);
+    const result = await pool.query(query, values);
     return { sucesso: 200, mensagem: 'Ambiente deletado com sucesso!' };
 
   } catch (erro) {

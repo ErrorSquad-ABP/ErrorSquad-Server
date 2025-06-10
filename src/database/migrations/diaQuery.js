@@ -1,23 +1,16 @@
-const bigquery = require('../../lib/bigquery');
+const pool = require('../../lib/pool');
 
 async function createNewDia(nome) {
 
   const query =
-    `INSERT INTO sitefatecdsm-01-2025.SiteFatecDSM.dia (id, nome)
-      SELECT 
-      COALESCE((SELECT MAX(id) FROM sitefatecdsm-01-2025.SiteFatecDSM.dia), 0) + 1,
-     @nome;`;
+`INSERT INTO errorsquad.dia(nome)
+VALUES
+($1);`;
 
-  const options = {
-    query,
-    params: {
-      nome: String(nome)
-    },
-    useLegacySql: false
-  };
+  const values = [nome];
 
   try {
-    await bigquery.query(options);
+    const result = await pool.query(query, values);
     return { status: 201, mensagem: 'Dia inserido com sucesso!' };
   } catch (erro) {
     console.error('Erro ao inserir dia:', erro);
@@ -29,10 +22,10 @@ async function searchAllDias() {
 
   const query =
     `SELECT * 
-      FROM \`sitefatecdsm-01-2025.SiteFatecDSM.dia\`
+      FROM errorsquad.dia
       order by id asc`;
 
-  const [rows] = await bigquery.query({ query });
+  const { rows } = await pool.query(query);
 
   if (rows.length > 0) {
 
@@ -51,42 +44,29 @@ async function searchAllDias() {
 
 async function diaExistsOrNotById(id) {
   const query = `
-      SELECT * FROM \`sitefatecdsm-01-2025.SiteFatecDSM.dia\`
-      WHERE id = @id;
+      SELECT * FROM errorsquad.dia
+      WHERE id = $1;
     `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id)
-    },
-    useLegacySql: false
-  };
+  const values = [id];
 
-  const [rows] = await bigquery.query(options);
+  const { rows } = await pool.query(query, values);
+
 
   return rows.length > 0;
 }
 
 async function updateExistingDia(id, nome) {
   const query = `
-      UPDATE \`sitefatecdsm-01-2025.SiteFatecDSM.dia\`
-      SET nome = @nome
-      WHERE id = @id;
+      UPDATE errorsquad.dia
+      SET nome = $1
+      WHERE id = $2;
     `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-      nome: String(nome)
-    },
-    useLegacySql: false
-  };
-
+  const values = [nome, id]
 
   try {
-    const [rows] = await bigquery.query(options);
+    const result = await pool.query(query, values);
     return { status: 200, mensagem: 'Dia atualizado com sucesso!' };
 
   } catch (erro) {
@@ -97,21 +77,14 @@ async function updateExistingDia(id, nome) {
 
 async function deleteExistingDia(id) {
   const query = `
-      DELETE FROM \`sitefatecdsm-01-2025.SiteFatecDSM.dia\`
-      WHERE id = @id;
+      DELETE FROM errorsquad.dia
+      WHERE id = $1;
     `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-    },
-    useLegacySql: false
-  };
-
+  const values = [id]
 
   try {
-    const [rows] = await bigquery.query(options);
+    const result = await pool.query(query, values);
     return { sucesso: true, mensagem: 'Dia atualizado com sucesso!' };
 
   } catch (erro) {
