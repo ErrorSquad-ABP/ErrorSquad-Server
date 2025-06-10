@@ -155,7 +155,7 @@ class curso {
           throw new Error("Data de fim do curso é obrigatório para criação.");
         }
 
-        return await cursoQuery.updateExistingCurso(id, nome, coordenador, sigla)
+        return await cursoQuery.updateExistingCurso(id, nome, coordenador, sigla, inicio, fim)
       }
 
       if (!cursoExists) {
