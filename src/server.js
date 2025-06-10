@@ -9,7 +9,7 @@ const app = express();
 const PORT = process.env.PORT;
 
 const corsOptions = {
-    origin: ['http://127.0.0.1:5500', 'https://placeholder-front.onrender.com', 'http://localhost:3001'], // Substitua pela origem permitida
+    origin: ['https://gerenciamento-pedagogico.vercel.app', 'https://placeholder-front.onrender.com', 'http://localhost:3001'], // Substitua pela origem permitida
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 };

@@ -1,11 +1,12 @@
 {
   "name": "errorsquad-server",
   "version": "1.0.0",
-  "description": "<div align=\"center\">\r   <h1>\r     <img src=\"https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=30&duration=3000&pause=1000&color=4A90E2&center=true&vCenter=true&repeat=true&width=1000&lines=Interface+Web+de+Hor%C3%A1rios+Acad%C3%AAmicos+%7C+Backend+%F0%9F%92%BB\" alt=\"Typing SVG\" />",
-  "main": "index.js",
+  "description": "Backend API para Interface Web de Horários Acadêmicos",
+  "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "build": "echo 'Build completed'"
   },
   "keywords": [],
   "author": "",
@@ -17,13 +18,16 @@
     "csv-parser": "^3.2.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "install": "^0.13.0",
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.2",
-    "nodemon": "^3.1.10",
-    "npm": "^11.2.0",
     "pg": "^8.14.1",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
