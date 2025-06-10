@@ -94,6 +94,7 @@ async function cursoExistsOrNotById(id) {
 
 
 async function updateExistingCurso(id, nome, coordenador, sigla, inicio, fim) {
+
   const query = `
     UPDATE errorsquad.curso
     SET nome = $1,
@@ -105,14 +106,17 @@ async function updateExistingCurso(id, nome, coordenador, sigla, inicio, fim) {
   `;
 
   const values = [nome, coordenador, sigla, inicio, fim, id]
-
+  
   try {
     const result = await pool.query(query, values);
+    console.log("Teste", nome, coordenador, sigla, inicio, fim, id);
     return { status: 200, mensagem: 'Curso atualizado com sucesso!' };
-
+   
   } catch (erro) {
     console.error('Erro ao alterar curso:', erro);
+    console.log("Teste", nome, coordenador, sigla, inicio, fim, id);
     return { status: 400, mensagem: 'Problemas com o banco de dados.' };
+    
   }
 }
 

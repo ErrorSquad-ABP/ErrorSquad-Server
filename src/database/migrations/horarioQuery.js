@@ -62,7 +62,7 @@ async function horarioExistsOrNotById(id) {
 async function updateExistingHorario(id, hr_inicio, hr_fim) {
   const query = `
     UPDATE errorsquad.horario
-    SET hr_inicio = $1
+    SET hr_inicio = $1,
     hr_fim = $2
     WHERE id = $3;
   `;

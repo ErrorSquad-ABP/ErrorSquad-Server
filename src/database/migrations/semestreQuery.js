@@ -113,7 +113,7 @@ async function semestreExistsOrNotById(id) {
 async function updateExistingSemestre(id, nivel, ano, nome_curso, nome_turno) {
   const query = `
     CALL errorsquad.alterar_semestre_unico(
-    $1, $2, $3, $4, $5;`;
+    $1, $2, $3, $4, $5);`;
 
 
   const values = [id, nivel, ano, nome_curso, nome_turno];

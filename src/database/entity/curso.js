@@ -123,13 +123,13 @@ class curso {
 
       const nome = alterCurso.nome;
 
-      const coordenador = newCurso.coordenador;
+      const coordenador = alterCurso.coordenador;
 
-      const sigla = newCurso.sigla;
+      const sigla = alterCurso.sigla;
 
-      const inicio = newCurso.inicio;
+      const inicio = alterCurso.inicio;
 
-      const fim = newCurso.fim;
+      const fim = alterCurso.fim;
 
       const cursoExists = await cursoQuery.cursoExistsOrNotById(id);
 

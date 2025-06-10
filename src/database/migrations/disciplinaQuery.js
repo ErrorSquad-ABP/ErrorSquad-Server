@@ -3,7 +3,7 @@ const pool = require('../../lib/pool');
 async function createNewDisciplina(nome, nome_docente, nome_curso, codigo) {
 
   const query =
-`CALL errorsquad.inserir_disciplina_por_nome(
+`CALL errorsquad.inserir_disciplina_unico(
     $1, $2, $3, $4
 );`;
 
@@ -16,7 +16,7 @@ async function createNewDisciplina(nome, nome_docente, nome_curso, codigo) {
   ]
 
   try {
-    await pool.query(query, values);
+    const result = await pool.query(query, values);
     return { status: 201, mensagem: 'Disciplina inserida com sucesso!' };
   } catch (erro) {
     console.error('Erro ao inserir disciplina:', erro);
