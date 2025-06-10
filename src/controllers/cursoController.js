@@ -56,7 +56,7 @@ async function requestAlterCurso(req, res) {
 
   const defaultCoordenadorString = defaultStrings.firstLetterUppercase(req.body.coordenador);
 
-  const alterCurso = new curso(req.body.id, defaultNomeString, defaultCoordenadorString, req.body.sigla);
+  const alterCurso = new curso(req.body.id, defaultNomeString, defaultCoordenadorString, req.body.sigla, req.body.inicio, req.body.fim);
 
   try {
     const updateCurso = await alterCurso.updateCurso(alterCurso);

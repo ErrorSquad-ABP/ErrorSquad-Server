@@ -34,6 +34,8 @@ async function insertDisciplinaBatch(tableName, columns, records) {
   const values = [nomes_disciplinas, nomes_docentes, siglas_cursos, codigos];
   console.log("query", query,"values", values);
 
+
+   
   try {
     await pool.query(query, values);
     console.log(`Inseridos ${records.length} registros em ${tableName}`);

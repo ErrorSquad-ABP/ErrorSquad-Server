@@ -123,13 +123,13 @@ class curso {
 
       const nome = alterCurso.nome;
 
-      const coordenador = newCurso.coordenador;
+      const coordenador = alterCurso.coordenador;
 
-      const sigla = newCurso.sigla;
+      const sigla = alterCurso.sigla;
 
-      const inicio = newCurso.inicio;
+      const inicio = alterCurso.inicio;
 
-      const fim = newCurso.fim;
+      const fim = alterCurso.fim;
 
       const cursoExists = await cursoQuery.cursoExistsOrNotById(id);
 
@@ -155,7 +155,7 @@ class curso {
           throw new Error("Data de fim do curso é obrigatório para criação.");
         }
 
-        return await cursoQuery.updateExistingCurso(id, nome, coordenador, sigla)
+        return await cursoQuery.updateExistingCurso(id, nome, coordenador, sigla, inicio, fim)
       }
 
       if (!cursoExists) {

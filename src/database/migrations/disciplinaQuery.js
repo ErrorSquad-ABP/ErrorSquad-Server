@@ -1,27 +1,22 @@
-const bigquery = require('../../lib/bigquery');
+const pool = require('../../lib/pool');
 
 async function createNewDisciplina(nome, nome_docente, nome_curso, codigo) {
 
   const query =
-    `CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`inserir_disciplina_unico\`(
-    @nome,
-    @nome_docente,
-    @nome_curso,
-    @codigo);`;
+`CALL errorsquad.inserir_disciplina_unico(
+    $1, $2, $3, $4
+);`;
 
-  const options = {
-    query,
-    params: {
-      nome: String(nome),
-      nome_docente: String(nome_docente),
-      nome_curso:String(nome_curso),
-      codigo:String(codigo)
-    },
-    useLegacySql: false
-  };
+
+  const values = [
+    nome,
+    nome_docente,
+    nome_curso,
+    codigo
+  ]
 
   try {
-    await bigquery.query(options);
+    const result = await pool.query(query, values);
     return { status: 201, mensagem: 'Disciplina inserida com sucesso!' };
   } catch (erro) {
     console.error('Erro ao inserir disciplina:', erro);
@@ -39,17 +34,17 @@ async function searchAllDisciplinas() {
     docente.nome AS nome_docente,
     disciplina.codigo AS codigo
 FROM 
-    \`sitefatecdsm-01-2025.SiteFatecDSM.disciplina\` AS disciplina
+    errorsquad.disciplina AS disciplina
 LEFT JOIN 
-    \`sitefatecdsm-01-2025.SiteFatecDSM.curso\` AS curso 
+    errorsquad.curso AS curso 
     ON disciplina.id_curso = curso.id
 LEFT JOIN 
-    \`sitefatecdsm-01-2025.SiteFatecDSM.docente\` AS docente 
+    errorsquad.docente AS docente 
     ON disciplina.id_docente = docente.id
 ORDER BY 
     disciplina.id ASC;`;
 
-  const [rows] = await bigquery.query({ query });
+  const { rows } = await pool.query(query);
 
   if (rows.length > 0) {
 
@@ -68,31 +63,28 @@ ORDER BY
 
 async function searchDisciplinaById(id) {
     const query =
-    `SELECT STRUCT (
+     `SELECT row_to_json(disciplina_data) AS disciplina
+FROM (
+  SELECT 
     disciplina.id AS id_disciplina,
     disciplina.nome AS nome_disciplina,
     curso.sigla AS sigla_curso,
     docente.nome AS nome_docente,
-    disciplina.codigo AS codigo) AS disciplina
-FROM 
-    \`sitefatecdsm-01-2025.SiteFatecDSM.disciplina\` AS disciplina
-LEFT JOIN 
-    \`sitefatecdsm-01-2025.SiteFatecDSM.curso\` AS curso 
+    disciplina.codigo AS codigo
+  FROM 
+    errorsquad.disciplina AS disciplina
+  LEFT JOIN 
+    errorsquad.curso AS curso 
     ON disciplina.id_curso = curso.id
-LEFT JOIN 
-    \`sitefatecdsm-01-2025.SiteFatecDSM.docente\` AS docente 
+  LEFT JOIN 
+    errorsquad.docente AS docente 
     ON disciplina.id_docente = docente.id
-    WHERE disciplina.id = @id;`;
+  WHERE disciplina.id = $1
+) AS disciplina_data;`;
 
-    const options = {
-    query,
-    params: {
-      id: parseInt(id)
-    },
-    useLegacySql: false
-  };
+    const values = [id];
 
-  const [rows] = await bigquery.query(options);
+  const { rows } = await pool.query(query, values);
 
   if (rows.length > 0) {
 
@@ -109,47 +101,28 @@ LEFT JOIN
 
 async function disciplinaExistsOrNotById(id) {
   const query = `
-      SELECT * FROM \`sitefatecdsm-01-2025.SiteFatecDSM.disciplina\`
-      WHERE id = @id;
+      SELECT * FROM errorsquad.disciplina
+      WHERE id = $1;
     `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id)
-    },
-    useLegacySql: false
-  };
+  const values = [id];
 
-  const [rows] = await bigquery.query(options);
+  const {rows} = await pool.query(query, values);
 
   return rows.length > 0;
 }
 
 async function updateExistingDisciplina(id, nome, nome_docente, nome_curso, codigo) {
   const query = `
-    CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`alterar_disciplina_unico\`(
-    @id,
-    @nome,
-    @nome_docente,
-    @nome_curso,
-    @codigo);`;
+    CALL errorsquad.alterar_disciplina_unico(
+    $1, $2, $3, $4, $5);`;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-      nome: String(nome),
-      nome_docente: String(nome_docente),
-      nome_curso: String(nome_curso),
-      codigo: String(codigo)
-    },
-    useLegacySql: false
-  };
+
+  const values = [id, nome, nome_docente, nome_curso, codigo]
 
 
   try {
-    const [rows] = await bigquery.query(options);
+    const result = await pool.query(query, values);
     return { status: 200, mensagem: 'Disciplina atualizada com sucesso!' };
 
   } catch (erro) {
@@ -160,21 +133,15 @@ async function updateExistingDisciplina(id, nome, nome_docente, nome_curso, codi
 
 async function deleteExistingDisciplina(id) {
   const query = `
-      DELETE FROM \`sitefatecdsm-01-2025.SiteFatecDSM.disciplina\`
-      WHERE id = @id;
+      DELETE FROM errorsquad.disciplina
+      WHERE id = $1;
     `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-    },
-    useLegacySql: false
-  };
+  const values = [id];
 
 
   try {
-    const [rows] = await bigquery.query(options);
+    const result = await pool.query(query, values);
     return { sucesso: true, mensagem: 'Disciplina atualizada com sucesso!' };
 
   } catch (erro) {

@@ -1,27 +1,16 @@
-const bigquery = require('../../lib/bigquery');
+const pool = require('../../lib/pool');
 
 async function createNewSemestre(nivel, ano, nome_curso, nome_turno) {
 
   const query =
-    `CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`inserir_semestre_unico\`(
-    @nivel,
-    @ano,
-    @nome_curso,
-    @nome_turno);`;
+    `CALL errorsquad.inserir_semestre_unico (
+    $1, $2, $3, $4);`;
 
-  const options = {
-    query,
-    params: {
-      nivel: parseInt(nivel),
-      ano: parseInt(ano),
-      nome_curso: String(nome_curso),
-      nome_turno: String(nome_turno),
-    },
-    useLegacySql: false
-  };
+
+  const values = [nivel, ano, nome_curso, nome_turno]
 
   try {
-    await bigquery.query(options);
+    const result = await pool.query(query, values);
     return { status: 201, mensagem: 'Nivel inserido com sucesso!' };
   } catch (erro) {
     console.error('Erro ao inserir nivel:', erro);
@@ -40,17 +29,17 @@ async function searchAllSemestres() {
     curso.sigla AS sigla_curso,
     turno.nome AS nome_turno
 FROM 
-    \`sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma\` AS semestre_cronograma
+    errorsquad.semestre_cronograma AS semestre_cronograma
 LEFT JOIN 
-    \`sitefatecdsm-01-2025.SiteFatecDSM.curso\` AS curso 
+    errorsquad.curso AS curso 
     ON semestre_cronograma.id_curso = curso.id
 LEFT JOIN 
-    \`sitefatecdsm-01-2025.SiteFatecDSM.turno\` AS turno 
+    errorsquad.turno AS turno 
     ON semestre_cronograma.id_turno = turno.id
 ORDER BY 
     semestre_cronograma.id ASC;`;
 
-  const [rows] = await bigquery.query({ query });
+  const {rows} = await pool.query(query);
 
   if (rows.length > 0) {
 
@@ -70,33 +59,27 @@ ORDER BY
 async function searchSemestreById(id) {
 
   const query =
-   `SELECT STRUCT (
+   `SELECT row_to_json(semestre_data) AS semestre FROM (
+    SELECT
     semestre_cronograma.id AS id_semestre_cronograma,
     semestre_cronograma.nivel AS nivel_semestre_cronograma,
     semestre_cronograma.ano AS ano_semestre_cronograma,
     curso.sigla AS sigla_curso,
     turno.nome AS nome_turno
-) AS semestre
 FROM 
-\`sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma\` AS semestre_cronograma
+errorsquad.semestre_cronograma AS semestre_cronograma
   LEFT JOIN 
-\`sitefatecdsm-01-2025.SiteFatecDSM.curso\` AS curso 
+errorsquad.curso AS curso 
     ON semestre_cronograma.id_curso = curso.id
   LEFT JOIN 
-\`sitefatecdsm-01-2025.SiteFatecDSM.turno\` AS turno 
+errorsquad.turno AS turno 
     ON semestre_cronograma.id_turno = turno.id
-WHERE semestre_cronograma.id = @id;
+WHERE semestre_cronograma.id = $1) AS semestre_data;
 `;
 
-    const options = {
-    query,
-    params: {
-      id: parseInt(id)
-    },
-    useLegacySql: false
-  };
+    const values = [id];
 
-  const [rows] = await bigquery.query(options);
+  const {rows} = await pool.query(query, values);
   console.log('teste', rows, id)
   if (rows.length > 0) {
 
@@ -115,19 +98,13 @@ WHERE semestre_cronograma.id = @id;
 
 async function semestreExistsOrNotById(id) {
   const query = `
-    SELECT * FROM \`sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma\`
-    WHERE id = @id;
+    SELECT * FROM errorsquad.semestre_cronograma
+    WHERE id = $1;
   `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-    },
-    useLegacySql: false
-  };
+  const values = [id];
 
-  const [rows] = await bigquery.query(options);
+  const {rows} = await pool.query(query, values);
 
   return rows.length > 0;
 }
@@ -135,28 +112,15 @@ async function semestreExistsOrNotById(id) {
 
 async function updateExistingSemestre(id, nivel, ano, nome_curso, nome_turno) {
   const query = `
-    CALL \`sitefatecdsm-01-2025\`.\`SiteFatecDSM\`.\`alterar_semestre_unico\`(
-    @id,
-    @nivel,
-    @ano,
-    @nome_curso,
-    @nome_turno);`;
+    CALL errorsquad.alterar_semestre_unico(
+    $1, $2, $3, $4, $5);`;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-      nivel: parseInt(nivel),
-      ano: parseInt(ano),
-      nome_curso: String(nome_curso),
-      nome_turno: String(nome_turno),
-    },
-    useLegacySql: false
-  };
+
+  const values = [id, nivel, ano, nome_curso, nome_turno];
 
 
   try {
-    await bigquery.query(options);
+    const result = await pool.query(query, values);
     return { status: 200, mensagem: 'Semestre atualizado com sucesso!' };
 
   } catch (erro) {
@@ -167,21 +131,15 @@ async function updateExistingSemestre(id, nivel, ano, nome_curso, nome_turno) {
 
 async function deleteExistingSemestre(id) {
   const query = `
-    DELETE FROM \`sitefatecdsm-01-2025.SiteFatecDSM.semestre_cronograma\`
-    WHERE id = @id;
+    DELETE FROM errorsquad.semestre_cronograma
+    WHERE id = $1;
   `;
 
-  const options = {
-    query,
-    params: {
-      id: parseInt(id),
-    },
-    useLegacySql: false
-  };
+  const values = [id];
 
 
   try {
-    const [rows] = await bigquery.query(options);
+    const result = await pool.query(query, values);
     return { sucesso: true, mensagem: 'Semestre atualizado com sucesso!' };
 
   } catch (erro) {
