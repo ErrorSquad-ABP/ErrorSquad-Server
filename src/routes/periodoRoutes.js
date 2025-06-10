@@ -6,7 +6,7 @@ const authenticate = require("../middlewares/authMiddleware");
 // Rota para listar periodo
 router.get("/", authenticate, periodoController.listPeriodos);
 
-router.get("/periodos", authenticate, periodoController.listPeriodos);
+router.get("/periodos", periodoController.listPeriodos);
 
 // Rota para selecionar periodo pelo id
 router.get("/:p_id", authenticate, periodoController.listPeriodoById);
