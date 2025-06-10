@@ -21,6 +21,7 @@ const userRoutes = require("./userRoutes");
 // Rotas públicas
 router.use("/health", healthRoutes);
 router.use("/login", loginRoutes); //Retornar um id e um token jwt
+router.use("/guest", periodosRoutes);
 
 // Rotas protegidas para administração (com id na URL)
 router.use("/admin/:id", authenticate); // Aplica a autenticação a todas as rotas /admin/id
