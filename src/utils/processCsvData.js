@@ -71,7 +71,7 @@ async function processCSVData(data) {
       nome_curso: String(item.nome_curso),
       nome_turno: String(item.nome_turno)
     })) : [];
-    
+    console.log("disciplinaaaaa",disciplinas)
     // Executar todas as inserções em paralelo para máxima performance
     await Promise.resolve()
       .then(() => Promise.all([
