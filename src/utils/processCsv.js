@@ -73,7 +73,7 @@ async function processCsv(filePath) {
         }
       }
     }
-    
+    console.log("aaaaaaaa",tables, namesOftables)
     return { tables, namesOfTables };
   } catch (error) {
     console.error('Erro ao processar o CSV no service:', error);
