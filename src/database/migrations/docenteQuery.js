@@ -6,12 +6,12 @@ async function createNewDocente(nome, cor) {
     `INSERT INTO errorsquad.docente(nome, cor)
 VALUES
 ($1, $2);`;
- 
+
   values = [nome, cor];
-  
+
 
   try {
-   const result = await pool.query(query, values);
+    const result = await pool.query(query, values);
     return { status: 201, mensagem: 'Docente inserido com sucesso!' };
   } catch (erro) {
     console.error('Erro ao inserir docente:', erro);
@@ -27,21 +27,26 @@ async function searchAllDocentes() {
     FROM errorsquad.docente
     order by id asc`;
 
-  const { rows } = await pool.query(query);
+  try {
+    const { rows } = await pool.query(query);
 
-  if (rows.length > 0) {
+    if (rows.length > 0) {
 
-    return { status: 200, data: rows, };
+      return { status: 200, data: rows, };
 
+    }
+
+    if (rows.length <= 0) {
+
+      return { status: 200, mensagem: "Sem Docentes cadastrados." };
+
+    }
+
+
+  } catch (erro) {
+    console.error('Erro ao buscar docentes:', erro);
+    return { status: 400, mensagem: 'Problemas com o banco de dados.' };
   }
-
-  if (rows.length <= 0) {
-
-    return { status: 200, mensagem: "Sem Docentes cadastrados." };
-
-  }
-
-
 }
 
 async function searchDocenteById(id) {
@@ -56,22 +61,26 @@ async function searchDocenteById(id) {
 ) AS docente;`;
 
   const values = [id];
+  try {
+    const { rows } = await pool.query(query, values);
 
-  const { rows } = await pool.query(query, values);
+    if (rows.length > 0) {
 
-  if (rows.length > 0) {
+      return { status: 200, data: rows, };
 
-    return { status: 200, data: rows, };
+    }
 
+    if (rows.length <= 0) {
+
+      return { status: 200, mensagem: "Sem Docentes cadastrados." };
+
+    }
+
+
+  } catch (erro) {
+    console.error('Erro ao buscar docente:', erro);
+    return { status: 400, mensagem: 'Problemas com o banco de dados.' };
   }
-
-  if (rows.length <= 0) {
-
-    return { status: 200, mensagem: "Sem Docentes cadastrados." };
-
-  }
-
-
 }
 
 async function docenteExistsOrNotById(id) {

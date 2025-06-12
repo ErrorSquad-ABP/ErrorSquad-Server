@@ -32,6 +32,9 @@ async function searchAllCursos() {
     FROM errorsquad.curso
     order by id asc`;
 
+
+
+try {
   const { rows } = await pool.query( query );
 
   if (rows.length > 0) {
@@ -47,7 +50,10 @@ async function searchAllCursos() {
   }
 
 
-}
+} catch (erro) {
+  console.error('Erro ao buscar cursos:', erro);
+  return { status: 400, mensagem: 'Problemas com o banco de dados.' };
+}}
 
 async function searchCursoById(id) {
 
@@ -62,6 +68,7 @@ async function searchCursoById(id) {
 
     const values = [id];
 
+try {
   const { rows } = await pool.query(query, values);
 
   if (rows.length > 0) {
@@ -77,7 +84,10 @@ async function searchCursoById(id) {
   }
 
 
-}
+} catch (erro) {
+  console.error('Erro ao buscar curso:', erro);
+  return { status: 400, mensagem: 'Problemas com o banco de dados.' };
+}}
 
 async function cursoExistsOrNotById(id) {
   const query = `
@@ -109,12 +119,10 @@ async function updateExistingCurso(id, nome, coordenador, sigla, inicio, fim) {
   
   try {
     const result = await pool.query(query, values);
-    console.log("Teste", nome, coordenador, sigla, inicio, fim, id);
     return { status: 200, mensagem: 'Curso atualizado com sucesso!' };
    
   } catch (erro) {
     console.error('Erro ao alterar curso:', erro);
-    console.log("Teste", nome, coordenador, sigla, inicio, fim, id);
     return { status: 400, mensagem: 'Problemas com o banco de dados.' };
     
   }

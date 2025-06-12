@@ -29,22 +29,23 @@ async function searchAllPeriodos() {
       LEFT JOIN errorsquad.ambiente AS ambiente ON periodo.id_ambiente = ambiente.id
     ) AS periodo_data;
   `;
-try {
-  const { rows } = await pool.query(query);
-  const periodos = rows[0].periodos;
-  console.log('Teste', rows)
+  try {
+    const { rows } = await pool.query(query);
+    const periodos = rows[0].periodos;
+    console.log('Teste', rows)
 
-  if (periodos.length > 0) {
+    if (periodos.length > 0) {
 
-    return { status: 200, data: periodos, };
+      return { status: 200, data: periodos, };
 
-  }
+    }
 
-  if (rows.periodos == null) {
+    if (rows.periodos == null) {
 
-    return { status: 200, mensagem: "Sem periodos cadastrados." };
+      return { status: 200, mensagem: "Sem periodos cadastrados." };
 
-  } } catch (erro) {
+    }
+  } catch (erro) {
     console.error('Erro ao inserir periodo:', erro);
     return { status: 400, mensagem: 'Problemas com o banco de dados.' };
   }
@@ -83,23 +84,27 @@ FROM (
   WHERE periodo.id = $1
 ) AS periodo_data;`;
 
-    const values = [id];
+  const values = [id];
+  try {
+    const { rows } = await pool.query(query, values);
 
-  const { rows } = await pool.query(query, values);
+    if (rows.length > 0) {
 
-  if (rows.length > 0) {
+      return { status: 200, data: rows, };
 
-    return { status: 200, data: rows, };
+    }
 
+    if (rows.length <= 0) {
+
+      return { status: 200, mensagem: "Sem periodos cadastrados." };
+
+    }
+
+
+  } catch (erro) {
+    console.error('Erro ao buscar periodo:', erro);
+    return { status: 400, mensagem: 'Problemas com o banco de dados.' };
   }
-
-  if (rows.length <= 0) {
-
-    return { status: 200, mensagem: "Sem periodos cadastrados." };
-
-  }
-
-
 }
 
 async function periodoExistsOrNotById(id) {
@@ -129,7 +134,7 @@ async function updateExistingPeriodo(id, disciplina, docente, ambiente) {
     if (result.rows && result.rows.length > 0 && result.rows[0].erro) {
       throw new Error(result.rows[0].erro);
     }
-    console.log('Cachorro', id, disciplina, docente, ambiente )
+    console.log('Cachorro', id, disciplina, docente, ambiente)
     return { status: 200, mensagem: 'Período atualizado com sucesso!' };
 
   } catch (erro) {

@@ -39,7 +39,7 @@ LEFT JOIN
 ORDER BY 
     semestre_cronograma.id ASC;`;
 
-  const {rows} = await pool.query(query);
+ try {const {rows} = await pool.query(query);
 
   if (rows.length > 0) {
 
@@ -51,6 +51,9 @@ ORDER BY
 
     return { status: 200, mensagem: "Sem semestre cadastrados." };
 
+  }} catch (erro) {
+    console.error('Erro ao buscar semestres:', erro);
+    return { status: 400, mensagem: 'Problemas com o banco de dados.' };
   }
 
 
@@ -79,7 +82,7 @@ WHERE semestre_cronograma.id = $1) AS semestre_data;
 
     const values = [id];
 
-  const {rows} = await pool.query(query, values);
+  try {const {rows} = await pool.query(query, values);
   console.log('teste', rows, id)
   if (rows.length > 0) {
 
@@ -92,7 +95,10 @@ WHERE semestre_cronograma.id = $1) AS semestre_data;
     return { status: 200, mensagem: "Sem semestre cadastrados." };
 
   }
-
+} catch (erro) {
+  console.error('Erro ao buscar semestre:', erro);
+    return { status: 400, mensagem: 'Problemas com o banco de dados.' };
+}
 
 }
 

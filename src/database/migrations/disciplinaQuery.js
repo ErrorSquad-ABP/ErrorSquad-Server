@@ -3,7 +3,7 @@ const pool = require('../../lib/pool');
 async function createNewDisciplina(nome, nome_docente, nome_curso, codigo) {
 
   const query =
-`CALL errorsquad.inserir_disciplina_unico(
+    `CALL errorsquad.inserir_disciplina_unico(
     $1, $2, $3, $4
 );`;
 
@@ -44,26 +44,32 @@ LEFT JOIN
 ORDER BY 
     disciplina.id ASC;`;
 
-  const { rows } = await pool.query(query);
 
-  if (rows.length > 0) {
+  try {
+    const { rows } = await pool.query(query);
 
-    return { status: 200, data: rows, };
+    if (rows.length > 0) {
 
+      return { status: 200, data: rows, };
+
+    }
+
+    if (rows.length <= 0) {
+
+      return { status: 200, mensagem: "Sem disciplinas cadastradas." };
+
+    }
+
+
+  } catch (erro) {
+    console.error('Erro ao buscar disciplinas:', erro);
+    return { status: 400, mensagem: 'Problemas com o banco de dados.' };
   }
-
-  if (rows.length <= 0) {
-
-    return { status: 200, mensagem: "Sem disciplinas cadastradas." };
-
-  }
-
-
 }
 
 async function searchDisciplinaById(id) {
-    const query =
-     `SELECT row_to_json(disciplina_data) AS disciplina
+  const query =
+    `SELECT row_to_json(disciplina_data) AS disciplina
 FROM (
   SELECT 
     disciplina.id AS id_disciplina,
@@ -82,7 +88,7 @@ FROM (
   WHERE disciplina.id = $1
 ) AS disciplina_data;`;
 
-    const values = [id];
+  const values = [id];
 
   const { rows } = await pool.query(query, values);
 
@@ -107,7 +113,7 @@ async function disciplinaExistsOrNotById(id) {
 
   const values = [id];
 
-  const {rows} = await pool.query(query, values);
+  const { rows } = await pool.query(query, values);
 
   return rows.length > 0;
 }

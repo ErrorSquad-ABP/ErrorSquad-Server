@@ -1,12 +1,12 @@
 const pool = require('../../lib/pool');
 
-async function createNewTurno( nome ) {
+async function createNewTurno(nome) {
 
-  const query = 
-   `INSERT INTO errorsquad.turno(nome)
+  const query =
+    `INSERT INTO errorsquad.turno(nome)
 VALUES
 ($1);`;
- 
+
 
   const values = [nome];
 
@@ -21,24 +21,29 @@ VALUES
 
 
 async function searchAllTurnos() {
-  
-  const query = 
-   `SELECT * 
+
+  const query =
+    `SELECT * 
     FROM errorsquad.turno
     order by id asc`;
 
-  const { rows } = await pool.query(query);
+  try {
+    const { rows } = await pool.query(query);
 
-  if ( rows.length > 0 ){
+    if (rows.length > 0) {
 
-    return { status: 200, data: rows, };
+      return { status: 200, data: rows, };
 
-  }
+    }
 
-  if ( rows.length <= 0 ){
+    if (rows.length <= 0) {
 
-    return { status:200, mensagem: "Sem turnos cadastrados." };
+      return { status: 200, mensagem: "Sem turnos cadastrados." };
 
+    }
+  } catch (erro) {
+    console.error('Erro ao buscar turnos:', erro);
+    return { status: 400, mensagem: 'Problemas com o banco de dados.' };
   }
 
 
@@ -70,8 +75,8 @@ async function updateExistingTurno(id, nome) {
 
   try {
     const result = await pool.query(query, values);
-    return { status:200, mensagem: 'Turno atualizado com sucesso!' };
-    
+    return { status: 200, mensagem: 'Turno atualizado com sucesso!' };
+
   } catch (erro) {
     console.error('Erro ao alterar turno:', erro);
     return { status: 400, mensagem: 'Problemas com o banco de dados.' };
@@ -84,13 +89,13 @@ async function deleteExistingTurno(id) {
     WHERE id = $1;
   `;
 
- const values = [id];
+  const values = [id];
 
 
   try {
     const result = await pool.query(query, values);
     return { sucesso: true, mensagem: 'Turno atualizado com sucesso!' };
-    
+
   } catch (erro) {
     console.error('Erro ao alterar turno:', erro);
     return { status: 400, mensagem: 'Problemas com o banco de dados.' };

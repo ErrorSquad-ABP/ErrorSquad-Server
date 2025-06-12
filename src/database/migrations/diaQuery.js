@@ -3,7 +3,7 @@ const pool = require('../../lib/pool');
 async function createNewDia(nome) {
 
   const query =
-`INSERT INTO errorsquad.dia(nome)
+    `INSERT INTO errorsquad.dia(nome)
 VALUES
 ($1);`;
 
@@ -25,21 +25,28 @@ async function searchAllDias() {
       FROM errorsquad.dia
       order by id asc`;
 
-  const { rows } = await pool.query(query);
 
-  if (rows.length > 0) {
+  try {
 
-    return { status: 200, data: rows, };
+    const { rows } = await pool.query(query);
 
+    if (rows.length > 0) {
+
+      return { status: 200, data: rows, };
+
+    }
+
+    if (rows.length <= 0) {
+
+      return { status: 200, mensagem: "Sem dias cadastrados." };
+
+    }
+
+
+  } catch (erro) {
+    console.error('Erro ao buscar dias:', erro);
+    return { status: 400, mensagem: 'Problemas com o banco de dados.' };
   }
-
-  if (rows.length <= 0) {
-
-    return { status: 200, mensagem: "Sem dias cadastrados." };
-
-  }
-
-
 }
 
 async function diaExistsOrNotById(id) {

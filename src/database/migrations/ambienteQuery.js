@@ -31,6 +31,8 @@ async function searchAllAmbientes() {
       FROM errorsquad.ambiente
       order by id asc`;
 
+
+try {
   const {rows} = await pool.query(query);
 
   if (rows.length > 0) {
@@ -45,7 +47,10 @@ async function searchAllAmbientes() {
 
   }
 
-
+} catch (erro) {
+    console.error('Erro ao buscar ambientes:', erro);
+    return { status: 400, mensagem: 'Problemas com o banco de dados.' };
+}
 }
 
 async function ambienteExistsOrNotById(id) {
@@ -57,8 +62,6 @@ async function ambienteExistsOrNotById(id) {
   const values = [id]
 
   const { rows } = await pool.query(query, values);
-
-
   return rows.length > 0;
 }
 

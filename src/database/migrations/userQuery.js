@@ -76,7 +76,7 @@ async function searchUserById(id) {
 
     const values = [id];
 
-  const {rows} = await pool.query( query, values );
+  try {const {rows} = await pool.query( query, values );
 
   if (rows.length > 0) {
 
@@ -88,6 +88,9 @@ async function searchUserById(id) {
 
     return { status: 200, mensagem: "Sem usuários cadastrados." };
 
+  }} catch (erro) {
+    console.error('Erro ao buscar usuário:', erro);
+    return { status: 400, mensagem: 'Problemas com o banco de dados.' };
   }
 
 

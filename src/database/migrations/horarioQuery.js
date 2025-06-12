@@ -3,10 +3,10 @@ const pool = require('../../lib/pool');
 async function createNewHorario(hr_inicio, hr_fim) {
 
   const query =
-   `INSERT INTO errorsquad.horario(hr_inicio, hr_fim)
+    `INSERT INTO errorsquad.horario(hr_inicio, hr_fim)
 VALUES
 ($1, $2);`;
- 
+
 
 
   const values = [hr_inicio, hr_fim];
@@ -28,21 +28,27 @@ async function searchAllHorarios() {
     FROM errorsquad.horario
     order by id asc`;
 
-  const { rows } = await pool.query(query);
 
-  if (rows.length > 0) {
+  try {
+    const { rows } = await pool.query(query);
 
-    return { status: 200, data: rows, };
+    if (rows.length > 0) {
 
+      return { status: 200, data: rows, };
+
+    }
+
+    if (rows.length <= 0) {
+
+      return { status: 200, mensagem: "Sem horários cadastrados." };
+
+    }
+
+
+  } catch (erro) {
+    console.error('Erro ao buscar horários:', erro);
+    return { status: 400, mensagem: 'Problemas com o banco de dados.' };
   }
-
-  if (rows.length <= 0) {
-
-    return { status: 200, mensagem: "Sem horários cadastrados." };
-
-  }
-
-
 }
 
 async function horarioExistsOrNotById(id) {
@@ -53,7 +59,7 @@ async function horarioExistsOrNotById(id) {
 
   const values = [id];
 
-  const { rows } = await pool.query(query , values);
+  const { rows } = await pool.query(query, values);
 
   return rows.length > 0;
 }
