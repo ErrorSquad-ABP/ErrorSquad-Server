@@ -22,7 +22,7 @@ async function createNewSemestre(nivel, ano, nome_curso, nome_turno) {
 async function searchAllSemestres() {
 
   const query =
-   `SELECT 
+    `SELECT 
     semestre_cronograma.id AS id_semestre_cronograma,
     semestre_cronograma.nivel AS nivel_semestre_cronograma,
     semestre_cronograma.ano AS ano_semestre_cronograma,
@@ -39,19 +39,21 @@ LEFT JOIN
 ORDER BY 
     semestre_cronograma.id ASC;`;
 
- try {const {rows} = await pool.query(query);
+  try {
+    const { rows } = await pool.query(query);
 
-  if (rows.length > 0) {
+    if (rows.length > 0) {
 
-    return { status: 200, data: rows, };
+      return { status: 200, data: rows, };
 
-  }
+    }
 
-  if (rows.length <= 0) {
+    if (rows.length <= 0) {
 
-    return { status: 200, mensagem: "Sem semestre cadastrados." };
+      return { status: 200, mensagem: "Sem semestre cadastrados." };
 
-  }} catch (erro) {
+    }
+  } catch (erro) {
     console.error('Erro ao buscar semestres:', erro);
     return { status: 400, mensagem: 'Problemas com o banco de dados.' };
   }
@@ -62,7 +64,7 @@ ORDER BY
 async function searchSemestreById(id) {
 
   const query =
-   `SELECT row_to_json(semestre_data) AS semestre FROM (
+    `SELECT row_to_json(semestre_data) AS semestre FROM (
     SELECT
     semestre_cronograma.id AS id_semestre_cronograma,
     semestre_cronograma.nivel AS nivel_semestre_cronograma,
@@ -80,25 +82,25 @@ errorsquad.turno AS turno
 WHERE semestre_cronograma.id = $1) AS semestre_data;
 `;
 
-    const values = [id];
+  const values = [id];
 
-  try {const {rows} = await pool.query(query, values);
-  console.log('teste', rows, id)
-  if (rows.length > 0) {
+  try {
+    const { rows } = await pool.query(query, values);
+    if (rows.length > 0) {
 
-    return { status: 200, data: rows, };
+      return { status: 200, data: rows, };
 
-  }
+    }
 
-  if (rows.length <= 0) {
+    if (rows.length <= 0) {
 
-    return { status: 200, mensagem: "Sem semestre cadastrados." };
+      return { status: 200, mensagem: "Sem semestre cadastrados." };
 
-  }
-} catch (erro) {
-  console.error('Erro ao buscar semestre:', erro);
+    }
+  } catch (erro) {
+    console.error('Erro ao buscar semestre:', erro);
     return { status: 400, mensagem: 'Problemas com o banco de dados.' };
-}
+  }
 
 }
 
@@ -110,7 +112,7 @@ async function semestreExistsOrNotById(id) {
 
   const values = [id];
 
-  const {rows} = await pool.query(query, values);
+  const { rows } = await pool.query(query, values);
 
   return rows.length > 0;
 }
