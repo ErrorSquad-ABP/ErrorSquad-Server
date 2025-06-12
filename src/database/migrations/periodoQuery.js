@@ -32,7 +32,6 @@ async function searchAllPeriodos() {
   try {
     const { rows } = await pool.query(query);
     const periodos = rows[0].periodos;
-    console.log('Teste', rows)
 
     if (periodos.length > 0) {
 
