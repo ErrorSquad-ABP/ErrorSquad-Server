@@ -58,10 +58,13 @@ async function horarioExistsOrNotById(id) {
   `;
 
   const values = [id];
+  try {
+    const { rows } = await pool.query(query, values);
 
-  const { rows } = await pool.query(query, values);
-
-  return rows.length > 0;
+    return rows.length > 0;
+  } catch (erro) {
+    return { status: 400, mensagem: 'Problemas com o banco de dados.' };
+  }
 }
 
 

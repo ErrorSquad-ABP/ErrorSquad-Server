@@ -89,19 +89,23 @@ FROM (
 ) AS disciplina_data;`;
 
   const values = [id];
+  try {
+    const { rows } = await pool.query(query, values);
 
-  const { rows } = await pool.query(query, values);
+    if (rows.length > 0) {
 
-  if (rows.length > 0) {
+      return { status: 200, data: rows, };
 
-    return { status: 200, data: rows, };
+    }
 
-  }
+    if (rows.length <= 0) {
 
-  if (rows.length <= 0) {
+      return { status: 200, mensagem: "Sem disciplinas cadastradas." };
 
-    return { status: 200, mensagem: "Sem disciplinas cadastradas." };
-
+    }
+  } catch (erro) {
+    console.error('Erro ao buscar disciplina:', erro);
+    return { status: 400, mensagem: 'Problemas com o banco de dados.' };
   }
 }
 
@@ -112,10 +116,13 @@ async function disciplinaExistsOrNotById(id) {
     `;
 
   const values = [id];
+  try {
+    const { rows } = await pool.query(query, values);
 
-  const { rows } = await pool.query(query, values);
-
-  return rows.length > 0;
+    return rows.length > 0;
+  } catch (erro) {
+    return { status: 400, mensagem: 'Problemas com o banco de dados.' };
+  }
 }
 
 async function updateExistingDisciplina(id, nome, nome_docente, nome_curso, codigo) {

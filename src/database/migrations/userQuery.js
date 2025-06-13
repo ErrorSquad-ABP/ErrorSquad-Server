@@ -11,7 +11,7 @@ async function login(email) {
 
   try {
     const { rows } = await pool.query(query, values);
-    
+
     if (rows.length === 0) {
       return null;
     }
@@ -30,17 +30,20 @@ async function login(email) {
   }
 }
 
-async function userExistsOrNotById( id ) {
+async function userExistsOrNotById(id) {
   const query = `
       SELECT * FROM errorsquad.admin
       WHERE id = $1;
     `;
 
   const values = [id];
+  try {
+    const { rows } = await pool.query(query, values);
 
-  const { rows } = await pool.query(query, values);
-
-  return rows.length > 0;
+    return rows.length > 0;
+  } catch (erro) {
+    return { status: 400, mensagem: 'Problemas com o banco de dados.' };
+  }
 }
 
 async function updateNameExistingUser(id, nome) {
@@ -74,21 +77,23 @@ async function searchUserById(id) {
   ) a
 ) AS admin;`;
 
-    const values = [id];
+  const values = [id];
 
-  try {const {rows} = await pool.query( query, values );
+  try {
+    const { rows } = await pool.query(query, values);
 
-  if (rows.length > 0) {
+    if (rows.length > 0) {
 
-    return { status: 200, data: rows, };
+      return { status: 200, data: rows, };
 
-  }
+    }
 
-  if (rows.length <= 0) {
+    if (rows.length <= 0) {
 
-    return { status: 200, mensagem: "Sem usuários cadastrados." };
+      return { status: 200, mensagem: "Sem usuários cadastrados." };
 
-  }} catch (erro) {
+    }
+  } catch (erro) {
     console.error('Erro ao buscar usuário:', erro);
     return { status: 400, mensagem: 'Problemas com o banco de dados.' };
   }
@@ -103,14 +108,17 @@ async function getPasswordHashed(id) {
   `;
 
   const values = [id];
+  try {
+    const { rows } = await pool.query(query, values);
 
-  const { rows } = await pool.query(query, values);
+    if (rows.length === 0) {
+      return null; // ou lançar erro se quiser: throw new Error('Admin não encontrado');
+    }
 
-  if (rows.length === 0) {
-    return null; // ou lançar erro se quiser: throw new Error('Admin não encontrado');
+    return rows[0].senha;
+  } catch (erro) {
+    return { status: 500, mensagem: 'Erro interno. Tente novamente mais tarde.' };
   }
-
-  return rows[0].senha;
 }
 
 async function updatePasswordExistingUser(id, senha) {

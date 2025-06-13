@@ -113,9 +113,13 @@ async function periodoExistsOrNotById(id) {
   `;
 
   const values = [id];
-  const { rows } = await pool.query(query, values);
+  try {
+    const { rows } = await pool.query(query, values);
 
-  return rows.length > 0;
+    return rows.length > 0;
+  } catch (erro) {
+    return { status: 400, mensagem: 'Problemas com o banco de dados.' };
+  }
 }
 
 

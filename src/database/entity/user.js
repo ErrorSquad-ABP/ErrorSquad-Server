@@ -50,62 +50,71 @@ class user {
   }
 
   static async getUserById(id) {
-  
+
     return await userQuery.searchUserById(id);
-  
+
   }
 
   async updateName(newNameUser) {
 
-    const id = newNameUser.id;
+    try {
 
-    const nome = newNameUser.nome;
+      const id = newNameUser.id;
 
-    const userExists = await userQuery.userExistsOrNotById(id);
+      const nome = newNameUser.nome;
 
-    if (!userExists) {
-      return { status: 404, message: "Usuário não encontrado" };
-    }
+      const userExists = await userQuery.userExistsOrNotById(id);
 
-    if (userExists) {
-
-      if (!nome || nome.trim() === "") {
-        throw new Error("Novo nome de Usuário é obrigatório para atualização.");
+      if (!userExists) {
+        return { status: 404, message: "Usuário não encontrado" };
       }
 
-      return await userQuery.updateNameExistingUser(id, nome)
+      if (userExists) {
+
+        if (!nome || nome.trim() === "") {
+          throw new Error("Novo nome de Usuário é obrigatório para atualização.");
+        }
+
+        return await userQuery.updateNameExistingUser(id, nome)
+      }
+    } catch (erro) {
+      return { status: 500, mensagem: 'Erro interno. Tente novamente mais tarde.' };
     }
   }
 
-  async updatePassword( newPasswordUser, senhaAtual) {
+  async updatePassword(newPasswordUser, senhaAtual) {
 
-    const id = newPasswordUser.id;
+    try {
+      const id = newPasswordUser.id;
 
-    const novaSenha = newPasswordUser.senha;
+      const novaSenha = newPasswordUser.senha;
 
-    const userExists = await userQuery.userExistsOrNotById(id);
+      const userExists = await userQuery.userExistsOrNotById(id);
 
-    if (!userExists) {
-      return { status: 404, message: "Usuário não encontrado" };
-    }
-
-    const userPasswordHashed = await userQuery.getPasswordHashed(id);
-
-    const isPasswordValid = await hashVerify.verifyPassword(String(senhaAtual), String(userPasswordHashed));
-
-     if (!isPasswordValid) {
-      return { status: 401, message: "Credenciais incorretas" };
-    }
-
-    if (userExists && isPasswordValid) {
-
-      if (!novaSenha || novaSenha.trim() === "") {
-        throw new Error("Nova senha de Usuário é obrigatório para atualização.");
+      if (!userExists) {
+        return { status: 404, message: "Usuário não encontrado" };
       }
 
-      const novaSenhaHashed = await hash.encryptPassword(novaSenha)
+      const userPasswordHashed = await userQuery.getPasswordHashed(id);
 
-      return await userQuery.updatePasswordExistingUser(id, novaSenhaHashed)
+      const isPasswordValid = await hashVerify.verifyPassword(String(senhaAtual), String(userPasswordHashed));
+
+      if (!isPasswordValid) {
+        return { status: 401, message: "Credenciais incorretas" };
+      }
+
+      if (userExists && isPasswordValid) {
+
+        if (!novaSenha || novaSenha.trim() === "") {
+          throw new Error("Nova senha de Usuário é obrigatório para atualização.");
+        }
+
+        const novaSenhaHashed = await hash.encryptPassword(novaSenha)
+
+        return await userQuery.updatePasswordExistingUser(id, novaSenhaHashed)
+      }
+    } catch (erro) {
+      return { status: 500, mensagem: 'Erro interno. Tente novamente mais tarde.' };
     }
   }
 }

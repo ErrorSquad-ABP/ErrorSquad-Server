@@ -5,10 +5,10 @@ async function createNewAmbiente(nome, localizacao, nome_andar) {
   const query =
 
 
-  `CALL errorsquad.inserir_ambiente(
+    `CALL errorsquad.inserir_ambiente(
     $1, $2, $3
 );`;
- 
+
   const values = [
     nome,
     localizacao,
@@ -32,25 +32,25 @@ async function searchAllAmbientes() {
       order by id asc`;
 
 
-try {
-  const {rows} = await pool.query(query);
+  try {
+    const { rows } = await pool.query(query);
 
-  if (rows.length > 0) {
+    if (rows.length > 0) {
 
-    return { status: 200, data: rows, };
+      return { status: 200, data: rows, };
 
-  }
+    }
 
-  if (rows.length <= 0) {
+    if (rows.length <= 0) {
 
-    return { status: 200, mensagem: "Sem ambientes cadastrados." };
+      return { status: 200, mensagem: "Sem ambientes cadastrados." };
 
-  }
+    }
 
-} catch (erro) {
+  } catch (erro) {
     console.error('Erro ao buscar ambientes:', erro);
     return { status: 400, mensagem: 'Problemas com o banco de dados.' };
-}
+  }
 }
 
 async function ambienteExistsOrNotById(id) {
@@ -60,9 +60,12 @@ async function ambienteExistsOrNotById(id) {
     `;
 
   const values = [id]
-
-  const { rows } = await pool.query(query, values);
-  return rows.length > 0;
+  try {
+    const { rows } = await pool.query(query, values);
+    return rows.length > 0;
+  } catch (erro) {
+    return { status: 400, mensagem: 'Problemas com o banco de dados.' };
+  }
 }
 
 async function updateExistingAmbiente(id, nome) {
