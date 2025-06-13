@@ -74,8 +74,9 @@ async function searchAllInfos() {
 }
 
 async function swapPeriodos(id1, id1_dia, id1_horario, id2, id2_dia, id2_horario) {
+  // Agora usa SELECT em vez de CALL porque convertemos para FUNCTION
   const query = `
-    CALL errorsquad.swap_periodos (
+    SELECT * FROM errorsquad.swap_periodos(
       $1, $2, $3, $4, $5, $6
     );
   `;
@@ -83,20 +84,26 @@ async function swapPeriodos(id1, id1_dia, id1_horario, id2, id2_dia, id2_horario
   const values = [id1, id1_dia, id1_horario, id2, id2_dia, id2_horario];
 
   try {
-
-    const { rows } = await pool.query(query, values)
-    console.log(rows)
+    const { rows } = await pool.query(query, values);
+    console.log("Resultado da troca:", rows);
+    
+    // Verifica se temos os dois registros esperados
+    if (rows.length !== 2) {
+      throw new Error(`Esperado 2 registros, recebido ${rows.length}`);
+    }
+    
+    // O primeiro registro é sempre o id1, o segundo é o id2
     const card1 = {
       id: rows[0].id,
       id_dia: rows[0].id_dia,
       id_horario: rows[0].id_horario
-    }
+    };
 
-     const card2 = {
+    const card2 = {
       id: rows[1].id,
       id_dia: rows[1].id_dia,
       id_horario: rows[1].id_horario
-    }
+    };
 
    
     
