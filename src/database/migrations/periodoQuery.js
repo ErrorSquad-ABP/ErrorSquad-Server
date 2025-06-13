@@ -36,7 +36,7 @@ try {
 
   if (periodos.length > 0) {
 
-    return { status: 200, data: periodos, };
+    return { status: 200, data: rows, };
 
   }
 
